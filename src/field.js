@@ -11,8 +11,15 @@ class Field {
 
     get validation() {
         const validation = {}
-        validation[this.name] = {type: "number"}
+        validation[this.name] = {type: this._typeValidationString}
         return validation
+    }
+
+    get _typeValidationString() {
+        const type = this.type
+        if (type === Number) return "number"
+        if (type === String) return "string"
+        return undefined
     }
 }
 

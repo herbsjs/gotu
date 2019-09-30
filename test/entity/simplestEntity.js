@@ -42,23 +42,5 @@ describe('A entity', () => {
             //then
             assert.strictEqual(entity_['field1'], 1)
         })
-
-        it('should validate type and have valid value', () => {
-            //given
-            const entity_ = givenTheSimplestEntity()
-            entity_.field1 = 1
-            //then
-            assert.strictEqual(entity_.isValid(), true)
-            assert.deepStrictEqual(entity_.errors, {})
-        })
-
-        it('should validate type and have invalid value', () => {
-            //given
-            const entity_ = givenTheSimplestEntity()
-            entity_.field1 = "1"
-            //then
-            assert.strictEqual(entity_.isValid(), false)
-            assert.deepStrictEqual(entity_.errors, { field1: ["Field1 must be of type number"] })
-        })
     })
 })

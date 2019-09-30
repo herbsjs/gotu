@@ -1,4 +1,5 @@
 const { field } = require('../../src/field')
+
 const assert = require('assert')
 
 describe('A field', () => {
