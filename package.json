@@ -31,7 +31,9 @@
   "author": "David Lojudice Sb",
   "license": "ISC",
   "homepage": "https://github.com/dalssoft/yard#readme",
-  "dependencies": {},
+  "dependencies": {
+    "validate.js": "^0.13.1"
+  },
   "devDependencies": {
     "mocha": "^6.2.0"
   }

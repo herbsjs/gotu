@@ -5,6 +5,7 @@
 - [ ] Field entity type definition and validation (ex: "user": User)
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
 - [ ] Field list type definition and validation (ex: "users": [User])
+- [ ] Default values 
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [ ] Field validation error message (ex: payment.errors )
 - [ ] Entity hidrate (ex: fromJson)
