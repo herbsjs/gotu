@@ -19,6 +19,7 @@ class Field {
         const type = this.type
         if (type === Number) return "number"
         if (type === String) return "string"
+        if (type === Date) return "date"
         return undefined
     }
 }
