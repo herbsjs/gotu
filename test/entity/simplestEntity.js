@@ -27,13 +27,5 @@ describe('A entity', () => {
             //then
             assert.strictEqual(entity_['field1'], 1)
         })
-
-        it('should set a value to a field', () => {
-            //given
-            const entity_ = givenTheSimplestEntity()
-            entity_.field1 = 1
-            //then
-            assert.strictEqual(entity_['field1'], 1)
-        })
     })
 })

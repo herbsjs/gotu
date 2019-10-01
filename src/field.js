@@ -34,4 +34,4 @@ const field = (type) => {
     return new Field(type)
 }
 
-module.exports = { field }
+module.exports = { field, Field }

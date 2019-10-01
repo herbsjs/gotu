@@ -4,8 +4,13 @@ Entities are the first natural place we should aim to place business logic in do
 
 Yard helps you define your business entities in your code.
 
+### Installing
+    $ npm install yard
+
+### Using
+
 ```javascript
-const entity_ = 
+const user = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -13,6 +18,21 @@ const entity_ =
         hasAccess: field(Boolean)
     })
 ```
+
+## Validation
+
+```javascript
+const user = 
+    entity('User', {
+        name: field(String)
+    })
+
+user.name = 1
+user.validate() 
+user.errors // { name: ["name must be of type string"] }
+user.isValid // false
+```
+
 
 ## Field definition
 
@@ -31,7 +51,7 @@ A field in an entity can be of basic types, the same as those used by JavaScript
 `Date`: represents a single moment in time in a platform-independent format. 
 
 ```javascript
-const entity_ = 
+const user = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -40,6 +60,20 @@ const entity_ =
     })
 ```
 
+## Method definition
+
+A method can be defined to create custom behaviour in an entity:
+
+```javascript
+const user = 
+    entity('User', {
+        name: field(String),
+        role: field(String),
+        hasAccess() { return this.role === "admin" },
+    })
+
+const access = user.hasAccess()
+```
 
 ## TODO
 
@@ -47,6 +81,7 @@ const entity_ =
 - [ ] Field entity type definition and validation (ex: "user": User)
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
 - [ ] Field list type definition and validation (ex: "users": [User])
+- [X] Entity custom methods (ex: payment.calculate())
 - [ ] Default values 
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [ ] Field validation error message (ex: payment.errors )

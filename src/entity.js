@@ -1,4 +1,5 @@
 const validateJS = require("validate.js")
+const { Field } = require('./field')
 
 class Entity {
     constructor(name) {
@@ -27,10 +28,15 @@ class EntityBuilder {
     build() {
         const newEntity = new Entity(this.name)
         const validations = {}
-        for (const [key, field] of Object.entries(this.body)) {
-            field.name = key
-            newEntity[key] = field.defaultValue
-            const validation = newEntity.meta.validations[key] = field.validation
+        for (const [name, info] of Object.entries(this.body)) {
+            if (!(info instanceof Field)) {
+                newEntity[name] = info
+                info.bind(newEntity)
+                continue    
+            }
+            info.name = name
+            newEntity[name] = info.defaultValue
+            const validation = newEntity.meta.validations[name] = info.validation
             Object.assign(validations, validation)
         }
         newEntity.meta.validations = validations
