@@ -7,35 +7,35 @@ describe('A field', () => {
     describe('with a number type', () => {
 
         const givenAnEntityWithANumberField = () => {
-            const entity_ = entity('A entity', {
+            const AnEntity = entity('A entity', {
                 field1: field(Number)
             })
-            return entity_
+            return new AnEntity()
         }
 
         it('should set a default value to a field', () => {
             //given
-            const entity_ = givenAnEntityWithANumberField()
+            const instance = givenAnEntityWithANumberField()
             //then
-            assert.strictEqual(entity_['field1'], 0)
+            assert.strictEqual(instance['field1'], 0)
         })
 
         it('should validate type and have valid value', () => {
             //given
-            const entity_ = givenAnEntityWithANumberField()
-            entity_.field1 = 1
+            const instance = givenAnEntityWithANumberField()
+            instance.field1 = 1
             //then
-            assert.strictEqual(entity_.isValid(), true)
-            assert.deepStrictEqual(entity_.errors, {})
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
         })
 
         it('should validate type and have invalid value', () => {
             //given
-            const entity_ = givenAnEntityWithANumberField()
-            entity_.field1 = "1"
+            const instance = givenAnEntityWithANumberField()
+            instance.field1 = "1"
             //then
-            assert.strictEqual(entity_.isValid(), false)
-            assert.deepStrictEqual(entity_.errors, { field1: ["Field1 must be of type number"] })
+            assert.strictEqual(instance.isValid(), false)
+            assert.deepStrictEqual(instance.errors, { field1: ["Field1 must be of type number"] })
         })
 
     })

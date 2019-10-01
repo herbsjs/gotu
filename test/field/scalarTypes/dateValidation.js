@@ -7,35 +7,35 @@ describe('A field', () => {
     describe('with a date type', () => {
 
         const givenAnEntityWithADateField = () => {
-            const entity_ = entity('A entity', {
+            const AnEntity = entity('A entity', {
                 field1: field(Date)
             })
-            return entity_
+            return new AnEntity()
         }
 
         it('should set a default value to a field', () => {
             //given
-            const entity_ = givenAnEntityWithADateField()
+            const instance = givenAnEntityWithADateField()
             //then
-            assert.strictEqual(entity_['field1'], null)
+            assert.strictEqual(instance['field1'], null)
         })
 
         it('should validate type and have valid value', () => {
             //given
-            const entity_ = givenAnEntityWithADateField()
-            entity_.field1 = new Date('2019-09-30T23:45:34.324Z')
+            const instance = givenAnEntityWithADateField()
+            instance.field1 = new Date('2019-09-30T23:45:34.324Z')
             //then
-            assert.strictEqual(entity_.isValid(), true)
-            assert.deepStrictEqual(entity_.errors, {})
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
         })
 
         it('should validate type and have invalid value', () => {
             //given
-            const entity_ = givenAnEntityWithADateField()
-            entity_.field1 = Date('2019-09-30T23:45:34.324Z')
+            const instance = givenAnEntityWithADateField()
+            instance.field1 = Date('2019-09-30T23:45:34.324Z')
             //then
-            assert.strictEqual(entity_.isValid(), false)
-            assert.deepStrictEqual(entity_.errors, { field1: ["Field1 must be of type date"] })
+            assert.strictEqual(instance.isValid(), false)
+            assert.deepStrictEqual(instance.errors, { field1: ["Field1 must be of type date"] })
         })
 
     })

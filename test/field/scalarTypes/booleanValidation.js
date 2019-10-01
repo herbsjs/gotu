@@ -7,35 +7,35 @@ describe('A field', () => {
     describe('with a boolean type', () => {
 
         const givenAnEntityWithABooleanField = () => {
-            const entity_ = entity('A entity', {
+            const AnEntity = entity('A entity', {
                 field1: field(Boolean)
             })
-            return entity_
+            return new AnEntity()
         }
 
         it('should set a default value to a field', () => {
             //given
-            const entity_ = givenAnEntityWithABooleanField()
+            const instance = givenAnEntityWithABooleanField()
             //then
-            assert.strictEqual(entity_['field1'], null)
+            assert.strictEqual(instance['field1'], null)
         })
 
         it('should validate type and have valid value', () => {
             //given
-            const entity_ = givenAnEntityWithABooleanField()
-            entity_.field1 = true
+            const instance = givenAnEntityWithABooleanField()
+            instance.field1 = true
             //then
-            assert.strictEqual(entity_.isValid(), true)
-            assert.deepStrictEqual(entity_.errors, {})
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
         })
 
         it('should validate type and have invalid value', () => {
             //given
-            const entity_ = givenAnEntityWithABooleanField()
-            entity_.field1 = 1
+            const instance = givenAnEntityWithABooleanField()
+            instance.field1 = 1
             //then
-            assert.strictEqual(entity_.isValid(), false)
-            assert.deepStrictEqual(entity_.errors, { field1: ["Field1 must be of type boolean"] })
+            assert.strictEqual(instance.isValid(), false)
+            assert.deepStrictEqual(instance.errors, { field1: ["Field1 must be of type boolean"] })
         })
 
     })

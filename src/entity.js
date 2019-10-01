@@ -1,13 +1,7 @@
 const validateJS = require("validate.js")
 const { Field } = require('./field')
 
-class Entity {
-    constructor(name) {
-        this.meta = {}
-        this.meta.name = name
-        this.meta.validations = {}
-        this.errors = {}
-    }
+class BaseEntity {
 
     validate() {
         this.errors = validateJS(this, this.meta.validations) || {}
@@ -26,21 +20,26 @@ class EntityBuilder {
     }
 
     build() {
-        const newEntity = new Entity(this.name)
+        class Entity extends BaseEntity { }
+        Entity.prototype.meta = {
+            name: this.name,
+            validations: {}
+        }
+        Entity.prototype.errors = {}
+        
         const validations = {}
         for (const [name, info] of Object.entries(this.body)) {
             if (!(info instanceof Field)) {
-                newEntity[name] = info
-                info.bind(newEntity)
-                continue    
+                Entity.prototype[name] = info
+                continue
             }
             info.name = name
-            newEntity[name] = info.defaultValue
-            const validation = newEntity.meta.validations[name] = info.validation
+            Entity.prototype[name] = info.defaultValue
+            const validation = info.validation
             Object.assign(validations, validation)
         }
-        newEntity.meta.validations = validations
-        return newEntity
+        Entity.prototype.meta.validations = validations
+        return Entity
     }
 }
 

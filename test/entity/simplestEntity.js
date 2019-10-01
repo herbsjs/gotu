@@ -7,25 +7,26 @@ describe('A entity', () => {
     describe('the simplest entity', () => {
 
         const givenTheSimplestEntity = () => {
-            const entity_ = entity('A entity', {
+            const AnEntity = entity('A entity', {
                 field1: field(Number)
             })
-            return entity_
+            return new AnEntity()
         }
 
         it('should initiate', () => {
             //given
-            const entity_ = givenTheSimplestEntity()
+            const instance = givenTheSimplestEntity()
             //then
-            assert.equal(entity_.meta.name, 'A entity')
+            assert.equal(instance.meta.name, 'A entity')
         })
 
         it('should set a value to a field', () => {
             //given
-            const entity_ = givenTheSimplestEntity()
-            entity_.field1 = 1
+            const instance = givenTheSimplestEntity()
+            //when
+            instance.field1 = 1
             //then
-            assert.strictEqual(entity_['field1'], 1)
+            assert.strictEqual(instance['field1'], 1)
         })
     })
 })
