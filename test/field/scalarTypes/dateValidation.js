@@ -1,5 +1,5 @@
-const { entity } = require('../../src/entity')
-const { field } = require('../../src/field')
+const { entity } = require('../../../src/entity')
+const { field } = require('../../../src/field')
 const assert = require('assert')
 
 describe('A field', () => {
