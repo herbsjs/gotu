@@ -10,7 +10,7 @@ Yard helps you define your business entities in your code.
 ### Using
 
 ```javascript
-const user = 
+const UserEntity = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -22,11 +22,12 @@ const user =
 ## Validation
 
 ```javascript
-const user = 
+const UserEntity = 
     entity('User', {
         name: field(String)
     })
 
+const user = new UserEntity()
 user.name = 1
 user.validate() 
 user.errors // { name: ["name must be of type string"] }
@@ -51,7 +52,7 @@ A field in an entity can be of basic types, the same as those used by JavaScript
 `Date`: represents a single moment in time in a platform-independent format. 
 
 ```javascript
-const user = 
+const UserEntity = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -65,13 +66,14 @@ const user =
 A method can be defined to create custom behaviour in an entity:
 
 ```javascript
-const user = 
+const UserEntity = 
     entity('User', {
         name: field(String),
         role: field(String),
         hasAccess() { return this.role === "admin" },
     })
 
+const user = new UserEntity()
 const access = user.hasAccess()
 ```
 
