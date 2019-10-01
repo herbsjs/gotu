@@ -17,6 +17,10 @@ const User =
         accessCount: field(Number),
         hasAccess: field(Boolean)
     })
+
+const user = new User()
+user.name = "Beth"
+user.validate()
 ```
 
 ## Validation
@@ -38,6 +42,8 @@ user.isValid // false
 
 ### `fromJSON(value)`
 
+Returns a new instance of a entity
+
 ```javascript
 const User = 
     entity('User', {
@@ -50,6 +56,13 @@ const user = User.fromJSON({ name: 'Beth'})
 const user = User.fromJSON(`{ "name": "Beth"}`)
 ```
 
+### `JSON.stringify(entity)`
+
+To serialize an entity to JSON string use `JSON.stringify` function.
+
+```javascript
+const json = JSON.stringify(user) // { "name": "Beth"}
+```
 
 ## Field definition
 
@@ -104,7 +117,7 @@ const access = user.hasAccess()
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [ ] Field validation error message (ex: payment.errors )
 - [X] Entity hidrate (ex: fromJson)
-- [ ] Entity serialize (ex: toJson)
+- [X] Entity serialize (ex: toJson)
 - [ ] Extend / Custom field validation (ex: email, greater than, etc)
 - [ ] Valitation contexts (ex: Payment validation for [1] credit card or [2] check)
 - [ ] Conditional Validation (ex: if email is present, emailConfirmation must be present)

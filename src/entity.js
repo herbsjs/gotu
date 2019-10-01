@@ -4,7 +4,7 @@ const { Field } = require('./field')
 class BaseEntity {
 
     validate() {
-        this.errors = validateJS(this, this.meta.validations) || {}
+        this.__proto__.errors = validateJS(this, this.meta.validations) || {}
     }
 
     isValid() {
@@ -22,7 +22,6 @@ class BaseEntity {
             const fieldMeta = instance.meta.schema[field]
             if (!(fieldMeta instanceof Field)) continue
             instance[field] = Field.parse(fieldMeta.type, data[field])
-            //instance[field] = data[field]
         }
 
         return instance
