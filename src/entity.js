@@ -11,6 +11,22 @@ class BaseEntity {
         this.validate()
         return Object.keys(this.errors).length === 0
     }
+
+    static fromJSON(json) {
+        let data = json
+        if (typeof json === "string") data = JSON.parse(json)
+
+        const instance = new this()
+
+        for (const field in instance.meta.schema) {
+            const fieldMeta = instance.meta.schema[field]
+            if (!(fieldMeta instanceof Field)) continue
+            instance[field] = Field.parse(fieldMeta.type, data[field])
+            //instance[field] = data[field]
+        }
+
+        return instance
+    }
 }
 
 class EntityBuilder {
@@ -23,18 +39,21 @@ class EntityBuilder {
         class Entity extends BaseEntity { }
         Entity.prototype.meta = {
             name: this.name,
-            validations: {}
+            validations: {},
+            schema: {}
         }
         Entity.prototype.errors = {}
-        
+
         const validations = {}
         for (const [name, info] of Object.entries(this.body)) {
             if (!(info instanceof Field)) {
                 Entity.prototype[name] = info
+                Entity.prototype.meta.schema[name] = Function
                 continue
             }
             info.name = name
             Entity.prototype[name] = info.defaultValue
+            Entity.prototype.meta.schema[name] = info
             const validation = info.validation
             Object.assign(validations, validation)
         }

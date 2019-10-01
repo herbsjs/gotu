@@ -28,6 +28,11 @@ class Field {
         if (type === Boolean) return "boolean"
         return undefined
     }
+
+    static parse(type, value) {
+        if (type === Date) return new Date(value)
+        return value
+    }
 }
 
 const field = (type) => {

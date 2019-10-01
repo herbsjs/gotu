@@ -10,7 +10,7 @@ Yard helps you define your business entities in your code.
 ### Using
 
 ```javascript
-const UserEntity = 
+const User = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -22,16 +22,32 @@ const UserEntity =
 ## Validation
 
 ```javascript
-const UserEntity = 
+const User = 
     entity('User', {
         name: field(String)
     })
 
-const user = new UserEntity()
+const user = new User()
 user.name = 1
 user.validate() 
 user.errors // { name: ["name must be of type string"] }
 user.isValid // false
+```
+
+## Serialization
+
+### `fromJSON(value)`
+
+```javascript
+const User = 
+    entity('User', {
+        name: field(String)
+    })
+
+// from hash
+const user = User.fromJSON({ name: 'Beth'})
+// or string
+const user = User.fromJSON(`{ "name": "Beth"}`)
 ```
 
 
@@ -52,7 +68,7 @@ A field in an entity can be of basic types, the same as those used by JavaScript
 `Date`: represents a single moment in time in a platform-independent format. 
 
 ```javascript
-const UserEntity = 
+const User = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -66,14 +82,14 @@ const UserEntity =
 A method can be defined to create custom behaviour in an entity:
 
 ```javascript
-const UserEntity = 
+const User = 
     entity('User', {
         name: field(String),
         role: field(String),
         hasAccess() { return this.role === "admin" },
     })
 
-const user = new UserEntity()
+const user = new User()
 const access = user.hasAccess()
 ```
 
@@ -87,7 +103,7 @@ const access = user.hasAccess()
 - [ ] Default values 
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [ ] Field validation error message (ex: payment.errors )
-- [ ] Entity hidrate (ex: fromJson)
+- [X] Entity hidrate (ex: fromJson)
 - [ ] Entity serialize (ex: toJson)
 - [ ] Extend / Custom field validation (ex: email, greater than, etc)
 - [ ] Valitation contexts (ex: Payment validation for [1] credit card or [2] check)
