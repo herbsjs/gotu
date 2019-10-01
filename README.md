@@ -1,7 +1,49 @@
 # yard
 
+Entities are the first natural place we should aim to place business logic in domain-driven applications.
 
-- [ ] Field basic JS type definition and validation (ex: "name": String)
+Yard helps you define your business entities in your code.
+
+```javascript
+const entity_ = 
+    entity('User', {
+        name: field(String),
+        lastAccess: field(Date),
+        accessCount: field(Number),
+        hasAccess: field(Boolean)
+    })
+```
+
+## Field definition
+
+A entity field type has a name, type and validation.
+
+### Scalar types
+
+A field in an entity can be of basic types, the same as those used by JavaScript:
+
+`Number`: Number type is double-precision 64-bit binary format IEEE 754 value
+
+`String`: A UTF‐16 character sequence
+
+`Boolean`: true or false
+
+`Date`: represents a single moment in time in a platform-independent format. 
+
+```javascript
+const entity_ = 
+    entity('User', {
+        name: field(String),
+        lastAccess: field(Date),
+        accessCount: field(Number),
+        hasAccess: field(Boolean)
+    })
+```
+
+
+## TODO
+
+- [X] Field basic JS type definition and validation (ex: "name": String)
 - [ ] Field entity type definition and validation (ex: "user": User)
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
 - [ ] Field list type definition and validation (ex: "users": [User])
