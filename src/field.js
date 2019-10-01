@@ -20,6 +20,7 @@ class Field {
         if (type === Number) return "number"
         if (type === String) return "string"
         if (type === Date) return "date"
+        if (type === Boolean) return "boolean"
         return undefined
     }
 }
