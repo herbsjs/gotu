@@ -13,6 +13,13 @@ describe('A field', () => {
             return entity_
         }
 
+        it('should set a default value to a field', () => {
+            //given
+            const entity_ = givenAnEntityWithANumberField()
+            //then
+            assert.strictEqual(entity_['field1'], 0)
+        })
+
         it('should validate type and have valid value', () => {
             //given
             const entity_ = givenAnEntityWithANumberField()

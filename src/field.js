@@ -6,7 +6,12 @@ class Field {
     }
 
     get defaultValue() {
-        return 0
+        const type = this.type
+        if (type === Number) return 0
+        if (type === String) return ""
+        if (type === Date) return null
+        if (type === Boolean) return null
+        return undefined
     }
 
     get validation() {
