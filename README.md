@@ -25,6 +25,10 @@ user.validate()
 
 ## Validation
 
+A value of an field can be validated against the field type or its custom validation. 
+
+### Type Validation
+
 ```javascript
 const User = 
     entity('User', {
@@ -32,11 +36,36 @@ const User =
     })
 
 const user = new User()
-user.name = 1
+user.name = 42
 user.validate() 
 user.errors // { name: ["name must be of type string"] }
 user.isValid // false
 ```
+
+### Custom Validation
+
+For custom validation yard uses [validate.js](https://validatejs.org/) library under the hood.
+
+Use `{ validation: ... }` to specify a valid validate.js [validation](https://validatejs.org/#validators) (sorry) on the field definition. 
+
+```javascript
+const User = 
+    entity('User', {
+        ...
+        password: field(String, { 
+            presence: true, 
+            length: { minimum: 6 },
+            message: "must be at least 6 characters"
+        })
+    })
+
+const user = new User()
+user.password = '1234'
+user.validate() 
+user.errors // { password: ["Password must be at least 6 characters"] }
+user.isValid // false
+```
+
 
 ## Serialization
 
@@ -144,8 +173,9 @@ const access = user.hasAccess()
 - [ ] I18n field validation error message
 - [X] Entity hidrate (ex: fromJson)
 - [X] Entity serialize (ex: toJson)
-- [ ] Extend / Custom field validation (ex: email, greater than, etc)
+- [X] Extend / Custom field validation (ex: email, greater than, etc)
+- [ ] Be able to change validation lib (validate.js)
 - [ ] Valitation contexts (ex: Payment validation for [1] credit card or [2] check)
-- [ ] Conditional Validation (ex: if email is present, emailConfirmation must be present)
+- [X] Conditional Validation (ex: if email is present, emailConfirmation must be present)
 - [ ] Entities Inheritance (schema and validations inheritance)
 

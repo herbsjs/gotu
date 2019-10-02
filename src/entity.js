@@ -1,4 +1,5 @@
 const validateJS = require("validate.js")
+const dayJS = require('dayjs')
 const { Field } = require('./field')
 
 class BaseEntity {
@@ -60,6 +61,18 @@ class EntityBuilder {
         return Entity
     }
 }
+
+// Date time parser - https://validatejs.org/#validators-datetime
+validateJS.extend(validateJS.validators.datetime, {
+    parse: function (value, options) {
+        return +dayJS(value);
+    },
+    format: function (value, options) {
+        var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
+        return dayJS(value).format(format);
+    }
+})
+
 
 const entity = (name, body) => {
     const builder = new EntityBuilder(name, body)
