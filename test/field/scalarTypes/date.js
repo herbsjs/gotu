@@ -20,6 +20,17 @@ describe('A field', () => {
             assert.strictEqual(instance['field1'], null)
         })
 
+        it('should set a different default value to a field', () => {
+            //given
+            const AnEntity = entity('A entity', {
+                field1: field(Date, { default: new Date('2000-01-01') }),
+            })
+            //when
+            const instance = new AnEntity()
+            //then
+            assert.deepStrictEqual(instance['field1'], new Date('2000-01-01'))
+        })
+
         it('should validate type and have valid value', () => {
             //given
             const instance = givenAnEntityWithADateField()

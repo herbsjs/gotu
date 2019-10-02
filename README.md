@@ -66,7 +66,7 @@ const json = JSON.stringify(user) // { "name": "Beth"}
 
 ## Field definition
 
-A entity field type has a name, type and validation.
+A entity field type has a name, type, default value, validation and more.
 
 ### Scalar types
 
@@ -90,6 +90,31 @@ const User =
     })
 ```
 
+### Default value
+
+It is possible to define a default value when an entity instance is initiate.
+
+```javascript
+const User = 
+    entity('User', {
+        ...
+        hasAccess: field(Boolean, { default: false })
+    })
+
+
+const user = new User()
+user.hasAccess // false
+```
+
+For scalar types a default value is assumed if a default value is not given:
+
+|Type|Default Value|
+|---|---|
+|`Number`|0|
+|`String`|""|
+|`Boolean`|false|
+|`Date`|null|
+
 ## Method definition
 
 A method can be defined to create custom behaviour in an entity:
@@ -97,7 +122,7 @@ A method can be defined to create custom behaviour in an entity:
 ```javascript
 const User = 
     entity('User', {
-        name: field(String),
+        ...
         role: field(String),
         hasAccess() { return this.role === "admin" },
     })
@@ -113,9 +138,10 @@ const access = user.hasAccess()
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
 - [ ] Field list type definition and validation (ex: "users": [User])
 - [X] Entity custom methods (ex: payment.calculate())
-- [ ] Default values 
+- [X] Default values 
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [ ] Field validation error message (ex: payment.errors )
+- [ ] I18n field validation error message
 - [X] Entity hidrate (ex: fromJson)
 - [X] Entity serialize (ex: toJson)
 - [ ] Extend / Custom field validation (ex: email, greater than, etc)

@@ -20,6 +20,17 @@ describe('A field', () => {
             assert.strictEqual(instance['field1'], "")
         })
 
+        it('should set a different default value to a field', () => {
+            //given
+            const AnEntity = entity('A entity', {
+                field1: field(String, { default: "Of Life" }),
+            })
+            //when
+            const instance = new AnEntity()
+            //then
+            assert.deepStrictEqual(instance['field1'], "Of Life")
+        })
+
         it('should validate type and have valid value', () => {
             //given
             const instance = givenAnEntityWithAStringField()

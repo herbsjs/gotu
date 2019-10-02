@@ -1,16 +1,20 @@
 
 class Field {
-    constructor(type) {
+    constructor(type, options = {}) {
         this.name = ""
         this.type = type
+        this.options = options
     }
 
     get defaultValue() {
+
+        if (this.options.default) return this.options.default
+
         const type = this.type
         if (type === Number) return 0
         if (type === String) return ""
         if (type === Date) return null
-        if (type === Boolean) return null
+        if (type === Boolean) return false
         return undefined
     }
 
@@ -35,8 +39,8 @@ class Field {
     }
 }
 
-const field = (type) => {
-    return new Field(type)
+const field = (type, options) => {
+    return new Field(type, options)
 }
 
 module.exports = { field, Field }
