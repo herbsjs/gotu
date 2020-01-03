@@ -1,33 +1,5 @@
-const validateJS = require("validate.js")
-const dayJS = require('dayjs')
 const { Field } = require('./field')
-
-class BaseEntity {
-
-    validate() {
-        this.__proto__.errors = validateJS(this, this.meta.validations) || {}
-    }
-
-    isValid() {
-        this.validate()
-        return Object.keys(this.errors).length === 0
-    }
-
-    static fromJSON(json) {
-        let data = json
-        if (typeof json === "string") data = JSON.parse(json)
-
-        const instance = new this()
-
-        for (const field in instance.meta.schema) {
-            const fieldMeta = instance.meta.schema[field]
-            if (!(fieldMeta instanceof Field)) continue
-            instance[field] = Field.parse(fieldMeta.type, data[field])
-        }
-
-        return instance
-    }
-}
+const { BaseEntity } = require('./baseEntity')
 
 class EntityBuilder {
     constructor(name, body) {
@@ -61,18 +33,6 @@ class EntityBuilder {
         return Entity
     }
 }
-
-// Date time parser - https://validatejs.org/#validators-datetime
-validateJS.extend(validateJS.validators.datetime, {
-    parse: function (value, options) {
-        return +dayJS(value);
-    },
-    format: function (value, options) {
-        var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
-        return dayJS(value).format(format);
-    }
-})
-
 
 const entity = (name, body) => {
     const builder = new EntityBuilder(name, body)

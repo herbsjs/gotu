@@ -1,8 +1,8 @@
 # yard
 
-Entities are the first natural place we should aim to place business logic in domain-driven applications.
+Yard helps define your business entities (*)
 
-Yard helps you define your business entities in your code.
+(*) Entities: they are the first natural place we should aim to place business logic in domain-driven applications.
 
 ### Installing
     $ npm install yard
@@ -15,11 +15,13 @@ const User =
         name: field(String),
         lastAccess: field(Date),
         accessCount: field(Number),
-        hasAccess: field(Boolean)
+        hasAccess: field(Boolean),
+        plan: field(Plan),
     })
 
 const user = new User()
 user.name = "Beth"
+user.plan.monthlyCost = 10
 user.validate()
 ```
 
@@ -30,15 +32,24 @@ A value of an field can be validated against the field type or its custom valida
 ### Type Validation
 
 ```javascript
+
+const Plan = 
+    entity('Plan', {
+        ...
+        monthlyCost: field(Number),
+    })
+
 const User = 
     entity('User', {
-        name: field(String)
+        name: field(String),
+        plan: field(Plan)
     })
 
 const user = new User()
 user.name = 42
+user.plan.monthlyCost = true
 user.validate() 
-user.errors // { name: ["name must be of type string"] }
+user.errors // { name: ["name must be of type string"], plan: { monthlyCost: ["monthlyCost must be of type number"] } }
 user.isValid // false
 ```
 
@@ -65,7 +76,6 @@ user.validate()
 user.errors // { password: ["Password must be at least 6 characters"] }
 user.isValid // false
 ```
-
 
 ## Serialization
 
@@ -101,9 +111,9 @@ A entity field type has a name, type, default value, validation and more.
 
 A field in an entity can be of basic types, the same as those used by JavaScript:
 
-`Number`: Number type is double-precision 64-bit binary format IEEE 754 value
+`Number`: double-precision 64-bit binary format IEEE 754 value
 
-`String`: A UTF‐16 character sequence
+`String`: a UTF‐16 character sequence
 
 `Boolean`: true or false
 
@@ -116,6 +126,24 @@ const User =
         lastAccess: field(Date),
         accessCount: field(Number),
         hasAccess: field(Boolean)
+    })
+```
+
+### Entity type
+
+For complex types, with deep relationship between entities, a field can be of entity type:
+
+```javascript
+const Plan = 
+    entity('Plan', {
+        ...
+        monthlyCost: field(Number),
+    })
+
+const User = 
+    entity('User', {
+        ...
+        plan: field(Plan)
     })
 ```
 
@@ -135,6 +163,20 @@ const user = new User()
 user.hasAccess // false
 ```
 
+If the default value is a `function` it will call the function and return the value as default value:
+
+```javascript
+const User = 
+    entity('User', {
+        ...
+        hasAccess: field(Boolean, { default: () => false })
+    })
+
+
+const user = new User()
+user.hasAccess // false
+```
+
 For scalar types a default value is assumed if a default value is not given:
 
 |Type|Default Value|
@@ -143,6 +185,19 @@ For scalar types a default value is assumed if a default value is not given:
 |`String`|""|
 |`Boolean`|false|
 |`Date`|null|
+
+For entity types the default value is a new instance of that type. It is possible to use `null` as default:
+
+```javascript
+const User = 
+    entity('User', {
+        ...
+        plan: field(Plan, { default: null })
+    })
+
+const user = new User()
+user.plan // null
+```
 
 ## Method definition
 
@@ -163,13 +218,14 @@ const access = user.hasAccess()
 ## TODO
 
 - [X] Field basic JS type definition and validation (ex: "name": String)
-- [ ] Field entity type definition and validation (ex: "user": User)
+- [X] Field entity type definition and validation (ex: "user": User)
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
 - [ ] Field list type definition and validation (ex: "users": [User])
 - [X] Entity custom methods (ex: payment.calculate())
 - [X] Default values 
 - [ ] Entity (complex) validation (ex: payment.validate() )
-- [ ] Field validation error message (ex: payment.errors )
+- [X] Field validation error message (ex: payment.errors )
+- [ ] Field validation error code (ex: payment.errors )
 - [ ] I18n field validation error message
 - [X] Entity hidrate (ex: fromJson)
 - [X] Entity serialize (ex: toJson)

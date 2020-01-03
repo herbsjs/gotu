@@ -31,6 +31,17 @@ describe('A field', () => {
             assert.deepStrictEqual(instance['field1'], true)
         })
 
+        it('should set a different default value (using function) to a field', () => {
+            //given
+            const AnEntity = entity('A entity', {
+                field1: field(Boolean, { default: () => true }),
+            })
+            //when
+            const instance = new AnEntity()
+            //then
+            assert.deepStrictEqual(instance['field1'], true)
+        })
+
         it('should validate type and have valid value', () => {
             //given
             const instance = givenAnEntityWithABooleanField()
