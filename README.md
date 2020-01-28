@@ -235,3 +235,22 @@ const access = user.hasAccess()
 - [X] Conditional Validation (ex: if email is present, emailConfirmation must be present)
 - [ ] Entities Inheritance (schema and validations inheritance)
 
+### Contribute
+Come with us to make an awesome *Gotu*.
+
+Now, if you do not have technical knowledge and also have intend to help us, do not feel shy, [click here](https://github.com/dalssoft/gotu/issues) to open an issue and collaborate their ideas, the contribution may be a criticism or a compliment (why not?)
+
+We have some conventions to contribute to the *Gotu* project, see more information in our [CONTRIBUTING.md](CONTRIBUTING.md). So please, read this before send to us a [pull requests](https://github.com/dalssoft/gotu/pulls).
+
+### The Herb
+
+Gotu Kola has been used historically to relieve congestion from upper respiratory infections and colds and for wound healing. It is very popular for treating varicose veins and memory loss.
+
+https://www.herbslist.net/
+
+https://en.wikipedia.org/wiki/Centella_asiatica
+
+### License
+
+**Gotu** is released under the
+[MIT license](https://github.com/dalssoft/gotu/blob/development/LICENSE.md).
