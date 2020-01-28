@@ -1,8 +1,8 @@
 {
-  "name": "yard",
+  "name": "anise",
   "version": "1.0.0",
   "description": "Domain entities javascript library.",
-  "main": "/src/yard.js",
+  "main": "/src/anise.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dalssoft/yard.git"
+    "url": "https://github.com/dalssoft/anise.git"
   },
   "bugs": {
-    "url": "https://github.com/dalssoft/yard/issues/"
+    "url": "https://github.com/dalssoft/anise/issues/"
   },
   "engines": {
     "node": ">= 12.3.0"
@@ -30,7 +30,7 @@
   ],
   "author": "David Lojudice Sb",
   "license": "ISC",
-  "homepage": "https://github.com/dalssoft/yard#readme",
+  "homepage": "https://github.com/dalssoft/anise#readme",
   "dependencies": {
     "dayjs": "^1.8.16",
     "validate.js": "^0.13.1"
