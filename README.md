@@ -1,4 +1,4 @@
-# yard
+# yard 
 
 Yard helps define your business entities (*)
 
