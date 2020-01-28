@@ -1,6 +1,6 @@
-# Gotu 
+# Gotu Kola
 
-Gotu helps define your business entities (*) 
+Gotu Kola helps define your business entities (*) 
 
 (*) Entities: they are the first natural place we should aim to place business logic in domain-driven applications.
 
