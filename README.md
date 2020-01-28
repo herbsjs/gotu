@@ -60,6 +60,8 @@ For custom validation Gotu uses [validate.js](https://validatejs.org/) library u
 Use `{ validation: ... }` to specify a valid validate.js [validation](https://validatejs.org/#validators) (sorry) on the field definition. 
 
 ```javascript
+const { entity, field } = require('gotu')
+
 const User = 
     entity('User', {
         ...
