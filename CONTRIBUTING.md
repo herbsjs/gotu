@@ -1,6 +1,6 @@
-# Contributing to Anise
+# Contributing to Gotu
 
-We'd love for you to contribute to our source code and to make anise even better than it is today!
+We'd love for you to contribute to our source code and to make gotu even better than it is today!
 Here are the guidelines we'd like you to follow:
 
  - [Got a Question or Issue](#issue)
@@ -11,20 +11,20 @@ Here are the guidelines we'd like you to follow:
 
 ## <a name="issue"></a> Got a Question or Issue?
 If you got a question, find a bug or an issue in the source code or a mistake in the documentation, you can help us by
-submitting an issue to our [GitHub Repository](https://github.com/dalssoft/anise/issues). Even better you can submit a Pull Request
+submitting an issue to our [GitHub Repository](https://github.com/dalssoft/gotu/issues). Even better you can submit a Pull Request
 with a fix.
 
 **Please see the Submission Guidelines below**.
 
 ## <a name="feature"></a> Want a Feature?
-You can request a new feature by submitting an issue to our [GitHub Repository](https://github.com/dalssoft/anise/issues).  If you would like to implement
+You can request a new feature by submitting an issue to our [GitHub Repository](https://github.com/dalssoft/gotu/issues).  If you would like to implement
 a new feature then consider what kind of change it is:
 
 * **Major Changes** that you wish to contribute to the project should be discussed first in issue on our
-[GitHub Repository](https://github.com/dalssoft/anise/issues) so that we can better coordinate our efforts, prevent
+[GitHub Repository](https://github.com/dalssoft/gotu/issues) so that we can better coordinate our efforts, prevent
 duplication of work, and help you to craft the change so that it is successfully accepted into the
 project.
-* **Small Changes** can be crafted and submitted to the [GitHub Repository](https://github.com/dalssoft/anise/pulls) as a Pull Request.
+* **Small Changes** can be crafted and submitted to the [GitHub Repository](https://github.com/dalssoft/gotu/pulls) as a Pull Request.
 
 
 ## <a name="submit"></a> Submission Guidelines
@@ -38,7 +38,7 @@ Providing the following information will increase the chances of your issue bein
 
 * **Overview of the Issue** - if an error is being thrown a non-minified stack trace helps
 * **Motivation for or Use Case** - explain why this is a bug for you
-* **anise Version(s)** - is it a regression?
+* **gotu Version(s)** - is it a regression?
 * **Browsers and Operating System** - is this a problem with all browsers or only IE8?
 * **Reproduce the Error** - provide a live example (using [Codepen](http://codepen.io/), [Plunker](https://plnkr.co/) or
   [JSFiddle](https://jsfiddle.net/) or an unambiguous set of steps.
@@ -46,14 +46,14 @@ Providing the following information will increase the chances of your issue bein
 * **Suggest a Fix** - if you can't fix the bug yourself, perhaps you can point to what might be
   causing the problem (line of code or commit)
 
-Here is a great example of a well defined issue: https://github.com/dalssoft/anise/issues/1
+Here is a great example of a well defined issue: https://github.com/dalssoft/gotu/issues/1
 
 **If you get help, help others. Good karma rulez!**
 
 ### Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
-* Search [GitHub](https://github.com/dalssoft/anise/pulls) for an open or closed Pull Request that relates to your
+* Search [GitHub](https://github.com/dalssoft/gotu/pulls) for an open or closed Pull Request that relates to your
   submission. You don't want to duplicate effort.
 * Make your changes in a new git branch, using [git-flow](http://nvie.com/posts/a-successful-git-branching-model/):
   * ***feature***
@@ -80,7 +80,7 @@ Before you submit your pull request consider the following guidelines:
   git checkout -b feature/my-feature-description development
   ```
 
-* Run the full anise test suite, and ensure that all tests pass.
+* Run the full gotu test suite, and ensure that all tests pass.
 * Commit your changes using a descriptive commit message that follows our
   [Git Commit Guidelines](#commit) for future change logs.
     ```shell
@@ -100,10 +100,10 @@ Before you submit your pull request consider the following guidelines:
   git push origin feature/my-feature-description
   ```
 
-* In GitHub, send a pull request to `anise:master`.
+* In GitHub, send a pull request to `gotu:master`.
 * If we suggest changes then:
   * Make the required updates.
-  * Re-run the anise test suite to ensure tests are still passing.
+  * Re-run the gotu test suite to ensure tests are still passing.
   * Commit your changes to your branch (e.g. `feature/my-feature`).
   * Push the changes to your GitHub repository (this will update your Pull Request).
 
@@ -156,13 +156,13 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 * With the exceptions listed below, we follow the rules contained in dotfile `.eslint` [ESLint](http://eslint.org/):
     * Wrap all code at **120 characters**.
     * We **don't go crazy with type annotations** for private internal APIs unless it's an internal API
-      that is used throughout anise. The best guidance is to do what makes the most sense.
+      that is used throughout gotu. The best guidance is to do what makes the most sense.
 
 ## <a name="commit"></a> Git Commit Guidelines
 
 We have very precise rules over how our git commit messages can be formatted. This leads to **more
 readable messages** that are easy to follow when looking through the **project history**.  But also,
-we use the git commit messages to **generate the anise change log**.
+we use the git commit messages to **generate the gotu change log**.
 
 ### Commit Message Format
 Each commit message consists of a **header**, a **body** and a **footer**. The header has a special

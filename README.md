@@ -1,11 +1,11 @@
-# Anise 
+# Gotu 
 
-Anise helps define your business entities (*) 
+Gotu helps define your business entities (*) 
 
 (*) Entities: they are the first natural place we should aim to place business logic in domain-driven applications.
 
 ### Installing
-    $ npm install anise
+    $ npm install gotu
 
 ### Using
 
@@ -55,7 +55,7 @@ user.isValid // false
 
 ### Custom Validation
 
-For custom validation Anise uses [validate.js](https://validatejs.org/) library under the hood.
+For custom validation Gotu uses [validate.js](https://validatejs.org/) library under the hood.
 
 Use `{ validation: ... }` to specify a valid validate.js [validation](https://validatejs.org/#validators) (sorry) on the field definition. 
 
