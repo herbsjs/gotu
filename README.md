@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/herbsjs/gotu/master/docs/logo.png" height="220"></p>
+
 # Gotu Kola
 
 Gotu Kola helps define your business entities (*) 
