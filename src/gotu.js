@@ -1,4 +1,4 @@
-module.exports = {
-    entity: require('./entity'),
-    field: require('./field')
-}
+const { entity } = require('./entity')
+const { field } = require('./field')
+
+module.exports = { entity, field }
