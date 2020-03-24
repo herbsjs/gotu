@@ -67,7 +67,7 @@ Use `{ validation: ... }` to specify a valid validate.js [validation](https://va
 const User = 
     entity('User', {
         ...
-        password: field(String, { 
+        password: field(String, validation: { 
             presence: true, 
             length: { minimum: 6 },
             message: "must be at least 6 characters"
