@@ -29,7 +29,7 @@
     "clean architecture"
   ],
   "author": "David Lojudice Sb",
-  "license": "ISC",
+  "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
     "dayjs": "^1.8.16",
