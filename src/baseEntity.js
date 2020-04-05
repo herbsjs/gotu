@@ -41,7 +41,7 @@ class BaseEntity {
     static fromJSON(json) {
 
         function parse(type, value) {
-            if (type === Date) return new Date(value)
+            if (type === Date && value) return new Date(value)
             if (type.prototype instanceof BaseEntity) {
                 const entity = type.fromJSON(value)
                 return entity
