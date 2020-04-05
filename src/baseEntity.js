@@ -1,6 +1,5 @@
 const { validate, errorCodes, checker } = require("suma")
 const validateValue = validate
-// const validateValue = require("../../suma/src/suma").validate
 
 class BaseEntity {
 
