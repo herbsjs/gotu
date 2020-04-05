@@ -5,6 +5,7 @@ class Field {
         this.name = ""
         this.type = type
         this.options = options
+        this._validations = null
     }
 
     get defaultValue() {
@@ -25,21 +26,13 @@ class Field {
 
     get validation() {
 
-        function typeValidationString(type) {
-            if (type === Number) return "number"
-            if (type === String) return "string"
-            if (type === Date) return "date"
-            if (type === Boolean) return "boolean"
-            if (type.prototype instanceof BaseEntity) return "entity"
-            return undefined
-        }
+        if (this._validations) return this._validations
 
-        const validation = {}
-        validation[this.name] = { type: typeValidationString(this.type) }
+        const validation = { type: this.type }
         if (this.options.validation)
-            Object.assign(validation[this.name], this.options.validation)
+            Object.assign(validation, this.options.validation)
 
-        return validation
+        return this._validations = validation
     }
 
 }

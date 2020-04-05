@@ -4,7 +4,7 @@
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --timeout 999999 --colors --recursive ./test"
   },
   "directories": {
     "lib": "src",
@@ -32,10 +32,9 @@
   "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
-    "dayjs": "^1.8.16",
-    "validate.js": "^0.13.1"
+    "suma": "^1.0.3"
   },
   "devDependencies": {
-    "mocha": "^6.2.0"
+    "mocha": "^7.1.1"
   }
 }

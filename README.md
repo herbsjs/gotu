@@ -53,15 +53,15 @@ const user = new User()
 user.name = 42
 user.plan.monthlyCost = true
 user.validate() 
-user.errors // { name: ["name must be of type string"], plan: { monthlyCost: ["monthlyCost must be of type number"] } }
+user.errors // { name: [ wrongType: 'String' ], plan: { monthlyCost: [ wrongType: 'Number' ] } }
 user.isValid // false
 ```
 
 ### Custom Validation
 
-For custom validation Gotu uses [validate.js](https://validatejs.org/) library under the hood.
+For custom validation Gotu uses Herbs JS [Suma](https://github.com/herbsjs/suma) library under the hood. It has no message defined, only error codes.
 
-Use `{ validation: ... }` to specify a valid validate.js [validation](https://validatejs.org/#validators) (sorry) on the field definition. 
+Use `{ validation: ... }` to specify a valid Suma validation (sorry) on the field definition. 
 
 ```javascript
 const User = 
@@ -69,15 +69,14 @@ const User =
         ...
         password: field(String, validation: { 
             presence: true, 
-            length: { minimum: 6 },
-            message: "must be at least 6 characters"
+            length: { minimum: 6 }
         })
     })
 
 const user = new User()
 user.password = '1234'
 user.validate() 
-user.errors // { password: ["Password must be at least 6 characters"] }
+user.errors // { password: [ { isTooShort: 6 } ] }
 user.isValid // false
 ```
 
@@ -234,7 +233,6 @@ const access = user.hasAccess()
 - [X] Entity hidrate (ex: fromJson)
 - [X] Entity serialize (ex: toJson)
 - [X] Extend / Custom field validation (ex: email, greater than, etc)
-- [ ] Be able to change validation lib (validate.js)
 - [ ] Valitation contexts (ex: Payment validation for [1] credit card or [2] check)
 - [X] Conditional Validation (ex: if email is present, emailConfirmation must be present)
 - [ ] Entities Inheritance (schema and validations inheritance)

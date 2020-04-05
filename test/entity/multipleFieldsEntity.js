@@ -60,10 +60,10 @@ describe('A entity', () => {
             //then
             assert.strictEqual(instance.isValid(), false)
             assert.deepStrictEqual(instance.errors, {
-                "field1": ["Field1 must be of type number"],
-                "field2": ["Field2 must be of type string"],
-                "field3": ["Field3 must be of type date"],
-                "field4": ["Field4 must be of type boolean"]
+                "field1": [{wrongType: 'Number'}],
+                "field2": [{wrongType: 'String'}],
+                "field3": [{wrongType: 'Date'}],
+                "field4": [{wrongType: 'Boolean'}]
             })
         })
 
