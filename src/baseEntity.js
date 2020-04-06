@@ -10,6 +10,8 @@ class BaseEntity {
 
             // ignore functions
             if (checker.isFunction(value)) continue
+
+            // types validation
             const validation = definition.validation
             const retErrors = validateValue(value, validation)
             if (retErrors.errors && retErrors.errors.length > 0) {
@@ -17,7 +19,7 @@ class BaseEntity {
                 continue
             }
 
-            // for entity types (deep validation):
+            // for entity types (deep validation)
             if (value instanceof BaseEntity) {
                 if (value.isValid()) continue
                 errors[name] = value.errors
