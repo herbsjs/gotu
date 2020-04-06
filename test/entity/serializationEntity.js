@@ -95,7 +95,7 @@ describe('A entity', () => {
                 field1: "1",
                 field2: 1,
                 field3: true,
-                field4: new Date('not a date'),
+                field4: new Date('2019-09-30T23:45:34.324Z'),
                 field5: { f1: 2, f2: false },
                 field6: null,
                 method2() { return "Nada" }
@@ -104,7 +104,7 @@ describe('A entity', () => {
             assert.strictEqual(instance['field1'], "1")
             assert.strictEqual(instance['field2'], 1)
             assert.deepStrictEqual(instance['field3'], new Date('1970-01-01T00:00:00.001Z')) // true parsed as Date
-            assert.deepStrictEqual(String(instance['field4']), "Invalid Date")
+            assert.deepStrictEqual(instance['field4'], new Date('2019-09-30T23:45:34.324Z'))
             assert(instance['field5'] instanceof BaseEntity)
             assert.strictEqual(instance['field5']['f1'], 2)
             assert.strictEqual(instance['field5']['f2'], false)
@@ -130,7 +130,6 @@ describe('A entity', () => {
             assert.strictEqual(instance['field1'], 1)
             assert.strictEqual(instance['field2'], "1")
             assert.deepStrictEqual(instance['field3'], undefined)
-            assert.notDeepStrictEqual(instance['field3'], 'Invalid Date')
             assert.strictEqual(instance['field4'], true)
             assert(instance['field5'] instanceof BaseEntity)
             assert.strictEqual(instance['field5']['f1'], true)
