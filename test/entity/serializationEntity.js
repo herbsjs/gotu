@@ -117,6 +117,23 @@ describe('A entity', () => {
             assert.strictEqual(Object.keys(instance.errors).length, 4)
         })
 
+        it('valid data from empty JSON string', () => {
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
+            //when
+            const instance = AnEntity.fromJSON(`{}`)
+            //then
+            assert.strictEqual(instance['field1'], undefined)
+            assert.strictEqual(instance['field2'], undefined)
+            assert.deepStrictEqual(instance['field3'], undefined)
+            assert.strictEqual(instance['field4'], undefined)
+            assert.strictEqual(instance['field5'], undefined)            
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
+
+
     })
 
     describe('should serialize', () => {
