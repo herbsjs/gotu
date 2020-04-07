@@ -7,13 +7,12 @@ describe('A field', () => {
 
     describe('with a entity type', () => {
 
+        const EntityType = entity('A entity type', {
+            f1: field(Boolean),
+            f2: field(Boolean)
+        })
+
         const givenAnEntityToBeUsedAsType = () => {
-
-            const EntityType = entity('A entity type', {
-                f1: field(Boolean),
-                f2: field(Boolean)
-            })
-
             return EntityType
         }
 
@@ -73,18 +72,16 @@ describe('A field', () => {
 
         it('should validate type and have invalid value', () => {
             //given
-            const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
             instance.field1 = 1
 
             //then
             assert.strictEqual(instance.isValid(), false)
-            assert.deepStrictEqual(instance.errors, { field1: ["Field1 must be of type entity"] })
+            assert.deepStrictEqual(instance.errors, { field1: [{ wrongType: 'A entity type' }] })
         })
 
         it('should validate type and have valid deep value', () => {
             //given
-            const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
             instance.field1.f1 = true
 
@@ -95,13 +92,12 @@ describe('A field', () => {
 
         it('should validate type and have invalid deep value', () => {
             //given
-            const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
             instance.field1.f1 = 1
 
             //then
             assert.strictEqual(instance.isValid(), false)
-            assert.deepStrictEqual(instance.errors, { field1: { f1: ['F1 must be of type boolean'] } })
+            assert.deepStrictEqual(instance.errors, { field1: { f1: [{ wrongType: 'Boolean' }] } })
         })
 
     })

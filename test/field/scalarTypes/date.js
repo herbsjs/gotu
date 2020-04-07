@@ -46,7 +46,7 @@ describe('A field', () => {
             instance.field1 = Date('2019-09-30T23:45:34.324Z')
             //then
             assert.strictEqual(instance.isValid(), false)
-            assert.deepStrictEqual(instance.errors, { field1: ["Field1 must be of type date"] })
+            assert.deepStrictEqual(instance.errors, { field1: [{ wrongType: 'Date' }] })
         })
 
     })

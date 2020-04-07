@@ -8,15 +8,13 @@ class EntityBuilder {
     }
 
     build() {
-        class Entity extends BaseEntity { }
+        const Entity = ({[this.name] : class extends BaseEntity {}})[this.name]
         Entity.prototype.meta = {
             name: this.name,
-            validations: {},
             schema: {}
         }
         Entity.prototype.errors = {}
 
-        const validations = {}
         for (const [name, info] of Object.entries(this.body)) {
             if (!(info instanceof Field)) {
                 Entity.prototype[name] = info
@@ -26,10 +24,7 @@ class EntityBuilder {
             info.name = name
             Entity.prototype[name] = info.defaultValue
             Entity.prototype.meta.schema[name] = info
-            const validation = info.validation
-            Object.assign(validations, validation)
         }
-        Entity.prototype.meta.validations = validations
         return Entity
     }
 }

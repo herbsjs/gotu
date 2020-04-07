@@ -57,7 +57,7 @@ describe('A field', () => {
             instance.field1 = 1
             //then
             assert.strictEqual(instance.isValid(), false)
-            assert.deepStrictEqual(instance.errors, { field1: ["Field1 must be of type string"] })
+            assert.deepStrictEqual(instance.errors, { field1: [{ wrongType: 'String' }] })
         })
 
     })

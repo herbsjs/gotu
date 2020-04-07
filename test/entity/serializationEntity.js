@@ -43,7 +43,8 @@ describe('A entity', () => {
                 field4: true,
                 field5: { f1: true, f2: "2" },
                 field6: "Nothing",
-                method2() { return "Nada" }
+                method1() { return "Nada" },
+                method2() { return "Niente" }
             })
             //then
             assert.strictEqual(instance['field1'], 1)
@@ -55,6 +56,7 @@ describe('A entity', () => {
             assert.strictEqual(instance['field5']['f2'], "2")
             assert.strictEqual(instance['field6'], undefined)
             assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance.method1(), 10)
             assert.strictEqual(instance['method2'], undefined)
             assert.strictEqual(instance.isValid(), true)
             assert.deepStrictEqual(instance.errors, {})

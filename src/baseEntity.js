@@ -1,18 +1,29 @@
-const validateJS = require("validate.js")
-const dayJS = require('dayjs')
+const { validate, errorCodes, checker } = require("suma")
+const validateValue = validate
 
 class BaseEntity {
 
     validate() {
-        // for scalar and entity types:
-        let errors = validateJS(this, this.meta.validations) || {}
+        const errors = {}
+        for (const [name, definition] of Object.entries(this.meta.schema)) {
+            const value = this[name]
 
-        // for entity types only (deep validation):
-        for (const field in this.meta.schema) {
-            const fieldValue = this[field]
-            if (!(fieldValue instanceof BaseEntity)) continue
-            if (fieldValue.isValid()) continue
-            errors[field] = fieldValue.errors
+            // ignore functions
+            if (checker.isFunction(value)) continue
+
+            // types validation
+            const validation = definition.validation
+            const retErrors = validateValue(value, validation)
+            if (retErrors.errors && retErrors.errors.length > 0) {
+                errors[name] = retErrors.errors
+                continue
+            }
+
+            // for entity types (deep validation)
+            if (value instanceof BaseEntity) {
+                if (value.isValid()) continue
+                errors[name] = value.errors
+            }
         }
 
         this.__proto__.errors = errors
@@ -34,7 +45,7 @@ class BaseEntity {
             }
             return copy
         }
-        const obj = deepCopy(this) 
+        const obj = deepCopy(this)
         return obj
     }
 
@@ -62,23 +73,6 @@ class BaseEntity {
 
         return instance
     }
-
-
-}
-
-// Date time parser - https://validatejs.org/#validators-datetime
-validateJS.extend(validateJS.validators.datetime, {
-    parse: function (value, options) {
-        return +dayJS(value);
-    },
-    format: function (value, options) {
-        var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
-        return dayJS(value).format(format);
-    }
-})
-
-validateJS.validators.type.types.entity = function (value) {
-    return value instanceof BaseEntity
 }
 
 module.exports = { BaseEntity }
