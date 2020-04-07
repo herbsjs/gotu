@@ -115,28 +115,18 @@ describe('A entity', () => {
             assert.strictEqual(Object.keys(instance.errors).length, 4)
         })
 
-        it('valid data from JSON string, with no Date fields', () => {
+        it('valid data from empty JSON string', () => {
             //given
             const AnEntity = givenAnEntityToReceiveObject()
             //when
-            const instance = AnEntity.fromJSON(`{
-                    "field1": 1,
-                    "field2": "1",
-                    "field4": true,
-                    "field5": {"f1": true, "f2": "2"},
-                    "field6": "Nothing"
-                }`)
+            const instance = AnEntity.fromJSON(`{}`)
             //then
-            assert.strictEqual(instance['field1'], 1)
-            assert.strictEqual(instance['field2'], "1")
+            assert.strictEqual(instance['field1'], undefined)
+            assert.strictEqual(instance['field2'], undefined)
             assert.deepStrictEqual(instance['field3'], undefined)
-            assert.strictEqual(instance['field4'], true)
-            assert(instance['field5'] instanceof BaseEntity)
-            assert.strictEqual(instance['field5']['f1'], true)
-            assert.strictEqual(instance['field5']['f2'], "2")
-            assert.strictEqual(instance['field6'], undefined)
+            assert.strictEqual(instance['field4'], undefined)
+            assert.strictEqual(instance['field5'], undefined)            
             assert(instance['method1'] instanceof Function)
-            assert.strictEqual(instance['method2'], undefined)
             assert.strictEqual(instance.isValid(), true)
             assert.deepStrictEqual(instance.errors, {})
         })
