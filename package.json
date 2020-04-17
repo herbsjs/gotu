@@ -32,7 +32,7 @@
   "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
-    "suma": "^1.0.3"
+    "suma": "^1.0.5"
   },
   "devDependencies": {
     "mocha": "^7.1.1"
