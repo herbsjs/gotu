@@ -1,5 +1,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/herbsjs/gotu/master/docs/logo.png" height="220"></p>
 
+![Node.js CI](https://github.com/herbsjs/gotu/workflows/Node.js%20CI/badge.svg)
+
 # Gotu Kola
 
 Gotu Kola helps define your business entities (*) 
