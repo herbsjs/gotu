@@ -3,11 +3,11 @@ const { field } = require('../../src/field')
 const assert = require('assert')
 const { BaseEntity } = require('../../src/baseEntity')
 
-describe('A entity', () => {
+describe('An entity', () => {
 
     const givenAnEntityToBeUsedAsType = () => {
 
-        const EntityType = entity('A entity type', {
+        const EntityType = entity('An entity type', {
             f1: field(Boolean),
             f2: field(String)
         })
@@ -21,7 +21,7 @@ describe('A entity', () => {
 
             const EntityType = givenAnEntityToBeUsedAsType()
 
-            const AnEntity = entity('A entity', {
+            const AnEntity = entity('An entity', {
                 field1: field(Number),
                 field2: field(String),
                 field3: field(Date),
@@ -32,7 +32,7 @@ describe('A entity', () => {
             return AnEntity
         }
 
-        it('valid data from a object', () => {
+        it('valid data from an object', () => {
             //given
             const AnEntity = givenAnEntityToReceiveObject()
             //when
@@ -89,7 +89,7 @@ describe('A entity', () => {
             assert.deepStrictEqual(instance.errors, {})
         })
 
-        it('invalid data from a object', () => {
+        it('invalid data from an object', () => {
             //given
             const AnEntity = givenAnEntityToReceiveObject()
             //when
