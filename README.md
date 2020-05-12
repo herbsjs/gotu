@@ -1,6 +1,6 @@
 <p align="center"><img src="https://raw.githubusercontent.com/herbsjs/gotu/master/docs/logo.png" height="220"></p>
 
-![Node.js CI](https://github.com/herbsjs/gotu/workflows/Node.js%20CI/badge.svg)
+![Node.js CI](https://github.com/herbsjs/gotu/workflows/Node.js%20CI/badge.svg?branch=master)[![codecov](https://codecov.io/gh/herbsjs/gotu/branch/master/graph/badge.svg)](https://codecov.io/gh/herbsjs/gotu)
 
 # Gotu Kola
 
