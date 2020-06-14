@@ -26,6 +26,6 @@ var user = entity('User', {
 
     lastAccess: field(Date)
 
-});
+})
 
-validate({ password: "bad" }, constraints);
+validate({ password: "bad" }, constraints)
