@@ -32,10 +32,15 @@
   "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
-    "suma": "^1.0.5"
+    "suma": "^1.0.6"
   },
   "devDependencies": {
-    "mocha": "^7.1.1",
-    "nyc": "^15.0.1"
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.0.5"
   }
 }
