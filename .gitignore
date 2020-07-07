@@ -158,5 +158,6 @@ public
 # DynamoDB Local files
 .dynamodb/
 .editorconfig
-.eslintrc.json
+/.eslintrc.json
 .prettierrc
+
