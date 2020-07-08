@@ -1,4 +1,4 @@
-const { validate, errorCodes, checker } = require("suma")
+const { validate, checker } = require("suma")
 const validateValue = validate
 
 class BaseEntity {
