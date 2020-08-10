@@ -95,7 +95,6 @@ describe('A field', () => {
 
             //then
             assert.strictEqual(instance.isValid(), false)
-            console.log(JSON.stringify(instance.errors));
             assert.deepStrictEqual(instance.errors, { field1: [ { f1: [ { wrongType:"Boolean" } ] , f2: [ { wrongType: "Boolean" } ] } ] } )
         })
 
