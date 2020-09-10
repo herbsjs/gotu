@@ -4,12 +4,13 @@
 
 # Gotu Kola
 
-Gotu Kola helps define your business entities (*) 
+Gotu Kola helps define your business entities (*)
 
 (*) Entities: they are the first natural place we should aim to place business logic in domain-driven applications.
 
 ### Installing
-    $ npm install gotu
+
+$ npm install gotu
 
 ### Using
 
@@ -33,7 +34,7 @@ user.validate()
 
 ## Validation
 
-A value of an field can be validated against the field type or its custom validation. 
+A value of an field can be validated against the field type or its custom validation.
 
 ### Type Validation
 
@@ -56,14 +57,16 @@ user.name = 42
 user.plan.monthlyCost = true
 user.validate() 
 user.errors // { name: [ wrongType: 'String' ], plan: { monthlyCost: [ wrongType: 'Number' ] } }
-user.isValid // false
+user.isValid() // false
 ```
+
+You can also simplify you validation method using `isValid()` method that execute validate for you entity and return true/false in a single execution.
 
 ### Custom Validation
 
 For custom validation Gotu uses Herbs JS [Suma](https://github.com/herbsjs/suma) library under the hood. It has no message defined, only error codes.
 
-Use `{ validation: ... }` to specify a valid Suma validation (sorry) on the field definition. 
+Use `{ validation: ... }` to specify a valid Suma validation (sorry) on the field definition.
 
 ```javascript
 const User = 
@@ -122,7 +125,7 @@ A field in an entity can be of basic types, the same as those used by JavaScript
 
 `Boolean`: true or false
 
-`Date`: represents a single moment in time in a platform-independent format. 
+`Date`: represents a single moment in time in a platform-independent format.
 
 ```javascript
 const User = 
@@ -184,12 +187,13 @@ user.hasAccess // false
 
 For scalar types a default value is assumed if a default value is not given:
 
-|Type|Default Value|
-|---|---|
-|`Number`|0|
-|`String`|""|
-|`Boolean`|false|
-|`Date`|null|
+
+| Type | Default Value |
+| - | - |
+| `Number` | 0 |
+| `String` | "" |
+| `Boolean` | false |
+| `Date` | null |
 
 For entity types the default value is a new instance of that type. It is possible to use `null` as default:
 
@@ -227,7 +231,7 @@ const access = user.hasAccess()
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
 - [ ] Field list type definition and validation (ex: "users": [User])
 - [X] Entity custom methods (ex: payment.calculate())
-- [X] Default values 
+- [X] Default values
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [X] Field validation error message (ex: payment.errors )
 - [ ] Field validation error code (ex: payment.errors )
@@ -240,6 +244,7 @@ const access = user.hasAccess()
 - [ ] Entities Inheritance (schema and validations inheritance)
 
 ### Contribute
+
 Come with us to make an awesome *Gotu*.
 
 Now, if you do not have technical knowledge and also have intend to help us, do not feel shy, [click here](https://github.com/dalssoft/gotu/issues) to open an issue and collaborate their ideas, the contribution may be a criticism or a compliment (why not?)
