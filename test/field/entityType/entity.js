@@ -12,6 +12,10 @@ describe('A field', () => {
             f2: field(Boolean)
         })
 
+        const EntityTypeWithObjectField = entity('An entity', {
+            f1: field(Object)
+        })
+
         const givenAnEntityToBeUsedAsType = () => {
             return EntityType
         }
@@ -41,6 +45,13 @@ describe('A field', () => {
             const instance = givenAnEntityWithAEntityField({ default: null })
             //then
             assert.deepStrictEqual(instance.field1, null)
+        }) 
+
+        it('should get undefined value to a field without declared structure', () => {
+            //given
+            const instance = EntityTypeWithObjectField
+            //then
+            assert.deepStrictEqual(instance.field1, undefined)
         })
 
         it('should set a function as a default value to a field', () => {
