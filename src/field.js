@@ -20,13 +20,8 @@ class Field {
     if (type === String) return ""
     if (type === Date) return null
     if (type === Boolean) return false
+    if (Array.isArray(type)) return [];
     if (type.prototype instanceof BaseEntity) return new type()
-
-    if (Array.isArray(type) && type[0].prototype instanceof BaseEntity) {
-      const arr = new Array()
-      arr.__proto__.baseType = type[0]
-      return arr
-    }
 
     return undefined
   }

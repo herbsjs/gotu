@@ -28,12 +28,9 @@ describe('A field', () => {
 
         it('should set a default value to a field', () => {
             //given
-            const EntityType = givenAnEntityToBeUsedAsType()
-            const instanceOfEntityType = new EntityType()
             const instance = givenAnEntityWithAEntityField()
             //then
-            assert(instance.field1.baseType.prototype instanceof BaseEntity)
-            assert.deepStrictEqual(instance.field1.baseType.prototype.constructor.name, instanceOfEntityType.constructor.name)
+            assert.deepStrictEqual(instance.field1, [])
         })
 
         it('should set null as a default value to a field', () => {

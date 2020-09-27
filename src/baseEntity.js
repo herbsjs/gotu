@@ -23,9 +23,9 @@ class BaseEntity {
         if (value.isValid()) continue
         errors[name] = value.errors
       }
-
+      
       // for array of entity types
-      if (Array.isArray(value) && value.baseType.prototype instanceof BaseEntity) {
+      if (Array.isArray(value) && definition.type[0] && definition.type[0].prototype instanceof BaseEntity) {
         const errorList = value.map((item) =>
           !item.isValid() ? item.errors : null
         )
@@ -70,9 +70,9 @@ class BaseEntity {
         return entity
       }
 
-      if (Array.isArray(type) && type.baseType.prototype instanceof BaseEntity) {
+      if (Array.isArray(type) && type[0] && type[0].prototype instanceof BaseEntity) {
         return value.map((item) => {
-          const entity = type.baseType.fromJSON(item)
+          const entity = type[0].fromJSON(item)
           return entity
         })
       }
