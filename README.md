@@ -152,6 +152,24 @@ const User =
     })
 ```
 
+### List of Entity type
+
+For complex types, with deep relationship between entities, a field can contain a list of entity type:
+
+```javascript
+const Plan = 
+    entity('Plan', {
+        ...
+        monthlyCost: field(Number),
+    })
+
+const User = 
+    entity('User', {
+        ...
+        plan: field([Plan])
+    })
+```
+
 ### Default value
 
 It is possible to define a default value when an entity instance is initiate.
