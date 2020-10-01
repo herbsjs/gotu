@@ -20,7 +20,7 @@ class Field {
     if (type === String) return ""
     if (type === Date) return null
     if (type === Boolean) return false
-    if (Array.isArray(type)) return [];
+    if (Array.isArray(type)) return []
     if (type.prototype instanceof BaseEntity) return new type()
 
     return undefined
