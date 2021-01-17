@@ -1,12 +1,25 @@
 const { Field } = require('./field')
 const { BaseEntity } = require('./baseEntity')
 
+/**
+ * Factory to build a entity 
+ * @private
+ * @property {string} name Entity's name
+ * @property {Object} body Entity's fields 
+ */
 class EntityBuilder {
+    /**
+     * @param {string} name Entity's name
+     * @param {Object} body Entity's fields
+     */
     constructor(name, body) {
         this.name = name
         this.body = body
     }
-
+    /**
+     * Build the a entity
+     * @returns { Entity }
+     */
     build() {
         const Entity = ({[this.name] : class extends BaseEntity {}})[this.name]
         Entity.prototype.meta = {
@@ -29,6 +42,10 @@ class EntityBuilder {
     }
 }
 
+/**
+ * Build a entity
+ * @returns { Entity }
+ */
 const entity = (name, body) => {
     const builder = new EntityBuilder(name, body)
     return builder.build()

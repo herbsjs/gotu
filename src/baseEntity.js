@@ -1,7 +1,14 @@
 const { validate, checker } = require("suma")
 const validateValue = validate
 
+/**
+ * this class is the base of entities, every entity must to extends this class
+ */
 class BaseEntity {
+  /**
+   * Validate the entity and add the errors into "errors" property.
+   * @returns {void}
+  */
   validate() {
     const errors = {}
     for (const [name, definition] of Object.entries(this.meta.schema)) {
@@ -38,12 +45,20 @@ class BaseEntity {
 
     this.__proto__.errors = errors
   }
-
+  
+  /**
+   * Check if this entity is valid
+   * @returns {boolean}
+   */
   isValid() {
     this.validate()
     return Object.keys(this.errors).length === 0
   }
 
+  /**
+   * Transform this entity to JSON
+   * @returns {JSON}
+   */
   toJSON() {
     function deepCopy(obj) {
       const copy = {}
@@ -58,7 +73,11 @@ class BaseEntity {
     const obj = deepCopy(this)
     return obj
   }
-
+  /**
+   * Fill the entity with by a filled JSON object
+   * @static
+   * @param {JSON} json 
+   */
   static fromJSON(json) {
     function parse(type, value) {
       if (value === undefined) return undefined

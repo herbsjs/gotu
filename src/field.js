@@ -1,6 +1,18 @@
 const { BaseEntity } = require("./baseEntity")
 
+/**
+ * Entity's field
+ * @property {string} name Field's name
+ * @property {type} type Field's type
+ * @property {object} options Field's options: e.g. { default: false }
+ * @property {any} defaultValue returns the field's default value if it isn't undefined
+ * @property {object} validation returns a validation object
+ */
 class Field {
+  /**
+   * @param {type} type Field's type
+   * @param {object} options Field's options: e.g. { default: false }
+   */
   constructor(type, options = {}) {
     this.name = ""
     this.type = type
@@ -37,6 +49,11 @@ class Field {
   }
 }
 
+/**
+ * Field's factory
+ * @params {type} type Field's type
+ * @params {object} options Field's options: e.g. { default: false }
+ */
 const field = (type, options) => {
   return new Field(type, options)
 }

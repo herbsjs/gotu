@@ -4,7 +4,8 @@
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
-    "test": "mocha --timeout 999999 --colors --recursive ./test"
+    "test": "mocha --timeout 999999 --colors --recursive ./test",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "directories": {
     "lib": "src",
@@ -39,6 +40,8 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
+    "jsdoc": "^3.6.6",
+    "jsdoc-template": "git+https://github.com/braintree/jsdoc-template.git",
     "mocha": "^8.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.1.2"
