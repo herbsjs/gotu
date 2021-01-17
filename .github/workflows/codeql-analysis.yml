@@ -6,9 +6,6 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [master]
-    paths-ignore:
-      - './docs/*'
-      - '**/**/lang-css.js'
   schedule:
     - cron: '0 16 * * 6'
 
@@ -38,6 +35,9 @@ jobs:
     # the head of the pull request instead of the merge commit.
     - run: git checkout HEAD^2
       if: ${{ github.event_name == 'pull_request' }}
+
+    - name: Ignoring docs files codeql
+      run: rm -rf docs
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
