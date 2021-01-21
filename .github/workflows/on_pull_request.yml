@@ -28,8 +28,6 @@ jobs:
           CI: true
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.0.7
-      - name: Ignoring docs files codeql
-        run: rm -rf docs
       - name: Run Super Linter - ESLint
         uses: github/super-linter@v3.3.0
         env:

@@ -50,7 +50,7 @@ class Field {
 }
 
 /**
- * Field's factory
+ * Build an Field instance
  * @params {type} type Field's type
  * @params {object} options Field's options: e.g. { default: false }
  */
