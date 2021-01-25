@@ -51,8 +51,9 @@ class Field {
 
 /**
  * Build an Field instance
- * @params {type} type Field's type
- * @params {object} options Field's options: e.g. { default: false }
+ * @params {type} Field's type
+ * @params {object} Field's options
+ * @example field(String, { default: '' })
  */
 const field = (type, options) => {
   return new Field(type, options)

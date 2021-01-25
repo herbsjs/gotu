@@ -254,12 +254,6 @@ const User =
 const user = new User()
 const access = user.hasAccess()
 ```
-
-## Documentation
-
-Today we use the [JSDocs](https://github.com/jsdoc/jsdoc) to auto generate documentation.
-To auto generate the docs, please, run `npm run doc`
-
 ## TODO
 
 - [X] Field basic JS type definition and validation (ex: "name": String)

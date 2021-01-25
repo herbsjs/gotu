@@ -43,8 +43,8 @@ class EntityBuilder {
 }
 
 /**
- * Build a entity
- * @returns { Entity }
+ * Build a entity class
+ * @returns {Entity}
  */
 const entity = (name, body) => {
     const builder = new EntityBuilder(name, body)
