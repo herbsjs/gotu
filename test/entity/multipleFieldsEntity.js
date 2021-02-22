@@ -16,7 +16,8 @@ describe('An entity', () => {
                 field2: field(String),
                 field3: field(Date),
                 field4: field(Boolean),
-                field5: field(NewEntity)
+                field5: field(NewEntity),
+                field6: field([NewEntity])
             })
             return new AnEntity()
         }
@@ -39,6 +40,7 @@ describe('An entity', () => {
             const newEntity = new NewEntity()
             newEntity.f1 = "abc"
             instance.field5 = newEntity
+            instance.field6 = [newEntity]
             //then
             assert.strictEqual(instance['field1'], 1)
             assert.strictEqual(instance['field2'], "1")
@@ -46,6 +48,8 @@ describe('An entity', () => {
             assert.strictEqual(instance['field4'], true)
             assert.deepStrictEqual(instance['field5'], newEntity)
             assert.deepStrictEqual(instance['field5'].f1, "abc")
+            assert.deepStrictEqual(instance['field6'][0], newEntity)
+            assert.deepStrictEqual(instance['field6'][0].f1, "abc")
         })
 
         it('should validate types and have valid value', () => {
@@ -58,6 +62,7 @@ describe('An entity', () => {
             const newEntity = new NewEntity()
             newEntity.f1 = "abc"
             instance.field5 = newEntity
+            instance.field6 = [newEntity]
             //then
             assert.strictEqual(instance.isValid(), true)
             assert.deepStrictEqual(instance.errors, {})
@@ -71,6 +76,7 @@ describe('An entity', () => {
             instance.field3 = Date('2019-09-30T23:45:34.324Z')
             instance.field4 = 1
             instance.field5 = "text"
+            instance.field6 = ["false"]
             //then
             assert.strictEqual(instance.isValid(), false)
             assert.deepStrictEqual(instance.errors, {
@@ -78,7 +84,8 @@ describe('An entity', () => {
                 "field2": [{wrongType: 'String'}],
                 "field3": [{wrongType: 'Date'}],
                 "field4": [{wrongType: 'Boolean'}],
-                "field5": [{wrongType: 'New Entity'}]
+                "field5": [{wrongType: 'New Entity'}],
+                "field6": [{wrongType: ['New Entity']}]
             })
         })
 

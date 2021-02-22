@@ -17,18 +17,35 @@ $ npm install gotu
 ```javascript
 const { entity, field } = require('gotu')
 
+const Feature = 
+        entity('Feature', {
+            name: field(String),
+            hasAccess: field(Boolean)
+        })
+
+const Plan = 
+    entity('Plan', {
+        name: field(String),
+        monthlyCost: field(Number)
+    })
+
 const User = 
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
         accessCount: field(Number),
-        hasAccess: field(Boolean),
+        features: field([Feature]),
         plan: field(Plan),
     })
 
 const user = new User()
 user.name = "Beth"
 user.plan.monthlyCost = 10
+user.features = [ 
+    new Feature(),
+    new Feature(),
+    new Feature()
+]
 user.validate()
 ```
 
@@ -155,6 +172,24 @@ const User =
     })
 ```
 
+### List of Entity type
+
+For complex types, with deep relationship between entities, a field can contain a list of entity type:
+
+```javascript
+const Plan = 
+    entity('Plan', {
+        ...
+        monthlyCost: field(Number),
+    })
+
+const User = 
+    entity('User', {
+        ...
+        plan: field([Plan])
+    })
+```
+
 ### Default value
 
 It is possible to define a default value when an entity instance is initiate.
@@ -247,9 +282,9 @@ const access = user.hasAccess()
 
 Come with us to make an awesome *Gotu*.
 
-Now, if you do not have technical knowledge and also have intend to help us, do not feel shy, [click here](https://github.com/dalssoft/gotu/issues) to open an issue and collaborate their ideas, the contribution may be a criticism or a compliment (why not?)
+Now, if you do not have technical knowledge and also have intend to help us, do not feel shy, [click here](https://github.com/herbsjs/gotu/issues) to open an issue and collaborate their ideas, the contribution may be a criticism or a compliment (why not?)
 
-We have some conventions to contribute to the *Gotu* project, see more information in our [CONTRIBUTING.md](CONTRIBUTING.md). So please, read this before send to us a [pull requests](https://github.com/dalssoft/gotu/pulls).
+If you would like to help contribute to this repository, please see [CONTRIBUTING](https://github.com/herbsjs/gotu/blob/master/.github/CONTRIBUTING.md)
 
 ### The Herb
 
@@ -262,4 +297,4 @@ https://en.wikipedia.org/wiki/Centella_asiatica
 ### License
 
 **Gotu** is released under the
-[MIT license](https://github.com/dalssoft/gotu/blob/development/LICENSE.md).
+[MIT license](https://github.com/herbsjs/gotu/blob/master/LICENSE.md).
