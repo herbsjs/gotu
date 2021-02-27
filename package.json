@@ -4,7 +4,9 @@
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
-    "test": "mocha --timeout 999999 --colors --recursive ./test"
+    "test": "mocha --timeout 999999 --colors --recursive ./test",
+    "lint": "npx eslint \"**/*.{js,jsx}\" --quiet",
+    "lint:fix": "npx eslint \"**/*.{js,jsx}\" --fix"
   },
   "directories": {
     "lib": "src",
