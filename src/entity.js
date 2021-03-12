@@ -34,4 +34,8 @@ const entity = (name, body) => {
     return builder.build()
 }
 
+entity.isEntity = (instance) => {
+    return instance instanceof BaseEntity
+}
+
 module.exports = { entity }

@@ -44,6 +44,10 @@ class BaseEntity {
     return Object.keys(this.errors).length === 0
   }
 
+  static parentOf(instance) {
+    return this.prototype === instance.__proto__
+  }
+
   toJSON() {
     function deepCopy(obj) {
       const copy = {}

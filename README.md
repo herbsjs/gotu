@@ -259,18 +259,47 @@ const user = new User()
 const access = user.hasAccess()
 ```
 
+## Instance Type Check - `Entity.isParentOf`
+
+Check if a instance is the same type from its parent entity class (similar to `instanceOf`)
+
+```javascript
+        const AnEntity = entity('A entity', {})
+        const AnSecondEntity = entity('A second entity', {})
+
+        const instance1 = new AnEntity()
+        const instance2 = new AnSecondEntity()
+        
+        AnEntity.isParentOf(instance1) // true
+        AnEntity.isParentOf(instance2) // false
+```
+
+## Entity Type Check - `entity.isEntity`
+
+Check if a instance is the same type from its parent entity class (similar to `instanceOf`)
+
+```javascript
+        const AnEntity = entity('A entity', {})
+        const AnSecondEntity = entity('A second entity', {})
+
+        const instance1 = new AnEntity()
+        const instance2 = new AnSecondEntity()
+        
+        AnEntity.isParentOf(instance1) // true
+        AnEntity.isParentOf(instance2) // false
+```
+
 ## TODO
 
 - [X] Field basic JS type definition and validation (ex: "name": String)
 - [X] Field entity type definition and validation (ex: "user": User)
 - [ ] Field enum type definition and validation (ex: "paymentType": ['CC', 'Check'])
-- [ ] Field list type definition and validation (ex: "users": [User])
+- [X] Field list type definition and validation (ex: "users": [User])
 - [X] Entity custom methods (ex: payment.calculate())
 - [X] Default values
 - [ ] Entity (complex) validation (ex: payment.validate() )
 - [X] Field validation error message (ex: payment.errors )
-- [ ] Field validation error code (ex: payment.errors )
-- [ ] I18n field validation error message
+- [X] Field validation error code (ex: payment.errors )
 - [X] Entity hidrate (ex: fromJson)
 - [X] Entity serialize (ex: toJson)
 - [X] Extend / Custom field validation (ex: email, greater than, etc)
