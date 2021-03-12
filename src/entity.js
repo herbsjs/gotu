@@ -35,7 +35,7 @@ const entity = (name, body) => {
 }
 
 entity.isEntity = (instance) => {
-    return instance instanceof BaseEntity
+    return (instance instanceof BaseEntity || instance.prototype instanceof BaseEntity)
 }
 
 module.exports = { entity }
