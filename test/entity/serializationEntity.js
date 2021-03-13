@@ -155,7 +155,6 @@ describe('An entity', () => {
 
             //given
             const AnEntity = givenAnEntityToReceiveObject()
-            const options = { allowExtraKeys: true }
 
             //when
             const instance = AnEntity.fromJSON({
@@ -175,7 +174,9 @@ describe('An entity', () => {
                 field7x: null,
                 method1() { return "Nada" },
                 method2() { return "Niente" }
-            }, options)
+            }, 
+            { allowExtraKeys: true })
+
             //then
             assert.strictEqual(instance['field1'], 1)
             assert.strictEqual(instance['field2'], "1")
@@ -242,6 +243,32 @@ describe('An entity', () => {
             assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}]}')
         })
 
+        it('should allow extra fields from JSON', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSON()
+            const instance = new AnEntity()
+            instance.field1 = 1
+            instance.field2 = "1"
+            instance.field3 = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4 = true
+            instance.field5.f1 = true
+            instance.field5.f2 = "2"
+            instance.field6.push({ f1: true, f2: "2" })
+            instance.field1x = 1
+            instance.field2x = "1"
+            instance.field3x = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4x = true
+            instance.field5x = { f1: true, f2: "2" }
+            instance.field6x = [{ f1: true, f2: "2" }]
+            
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
+
+            //then
+            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}]}')
+        })
+        
         it('invalid data to JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()

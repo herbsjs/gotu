@@ -120,25 +120,17 @@ const user = User.fromJSON({ name: 'Beth'})
 const user = User.fromJSON(`{ "name": "Beth"}`)
 ```
 
-By default `fromJSON` allows serialize only keys that have been defined in the entity. If you want to add other keys during serialization, use `allowExtraKeys: true`.
-
-```javascript
-const User = 
-    entity('User', {
-        name: field(String)
-    })
-
-const user = User.fromJSON({ name: 'Beth', newKey: 'value'}, { allowExtraKeys: true })
-// user = { name: 'Beth', newKey: 'value'}
-```
+By default `fromJSON` serializes only keys that have been defined in the entity. If you want to add other keys during serialization, use `.fromJSON(data, { allowExtraKeys: true })`.
 
 ### `JSON.stringify(entity)`
 
-To serialize an entity to JSON string use `JSON.stringify` function.
+To serialize an entity to JSON string use `JSON.stringify` or `entity.toJSON` function.
 
 ```javascript
-const json = JSON.stringify(user) // { "name": "Beth"}
+const json = JSON.stringify(user) // { "name": "Beth" }
 ```
+
+By default `toJSON` serializes only keys that have been defined in the entity. If you want to add other keys during serialization, use `entity.toJSON({ allowExtraKeys: true })`.
 
 ## Field definition
 

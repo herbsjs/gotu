@@ -48,10 +48,15 @@ class BaseEntity {
     return this.prototype === instance.__proto__
   }
 
-  toJSON() {
+  toJSON(options = { allowExtraKeys: false }) {
     function deepCopy(obj) {
       const copy = {}
-      for (const field in obj.meta.schema) {
+
+      const jsonKeys = options.allowExtraKeys ? Object.keys(obj) : []
+      const entityKeys = Object.keys(obj.meta.schema)
+      const mergedKeys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
+
+      for (const field of mergedKeys) {
         let value = obj[field]
         if (value instanceof BaseEntity) value = deepCopy(value)
         if (value instanceof Function) continue
@@ -89,14 +94,13 @@ class BaseEntity {
 
     const instance = new this()
 
-    const jsonKeys = Object.keys(data)
+    const jsonKeys = options.allowExtraKeys ? Object.keys(data) : []
     const entityKeys = Object.keys(instance.meta.schema)
-    const keys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
+    const mergedKeys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
 
-    for (const key of keys) {
+    for (const key of mergedKeys) {
       const field = instance.meta.schema[key]
       if (field === undefined) {
-        if (!options.allowExtraKeys) continue
         instance[key] = data[key]
         continue
       }
