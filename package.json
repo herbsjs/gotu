@@ -1,6 +1,6 @@
 {
   "name": "gotu",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {

@@ -22,5 +22,11 @@ describe('A entity', () => {
         assert.ok(entity.isEntity(instance1))
         assert.ok(entity.isEntity(instance2))
         assert.ok(entity.isEntity(instance3))
+
+        assert.ok(!entity.isEntity(""))
+        assert.ok(!entity.isEntity([]))
+        assert.ok(!entity.isEntity(Object))
+        assert.ok(!entity.isEntity(String))
+        assert.ok(!entity.isEntity(Array))
     })
 })
