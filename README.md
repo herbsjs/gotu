@@ -114,10 +114,22 @@ const User =
         name: field(String)
     })
 
-// from hash
+// from object
 const user = User.fromJSON({ name: 'Beth'})
 // or string
 const user = User.fromJSON(`{ "name": "Beth"}`)
+```
+
+By default `fromJSON` allows serialize only keys that have been defined in the entity. If you want to add other keys during serialization, use `allowExtraKeys: true`.
+
+```javascript
+const User = 
+    entity('User', {
+        name: field(String)
+    })
+
+const user = User.fromJSON({ name: 'Beth', newKey: 'value'}, { allowExtraKeys: true })
+// user = { name: 'Beth', newKey: 'value'}
 ```
 
 ### `JSON.stringify(entity)`

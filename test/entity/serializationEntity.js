@@ -144,13 +144,65 @@ describe('An entity', () => {
             assert.strictEqual(instance['field2'], undefined)
             assert.deepStrictEqual(instance['field3'], undefined)
             assert.strictEqual(instance['field4'], undefined)
-            assert.strictEqual(instance['field5'], undefined)  
-            assert.strictEqual(instance['field6'], undefined)            
+            assert.strictEqual(instance['field5'], undefined)
+            assert.strictEqual(instance['field6'], undefined)
             assert(instance['method1'] instanceof Function)
             assert.strictEqual(instance.isValid(), true)
             assert.deepStrictEqual(instance.errors, {})
         })
 
+        it('should allow extra fields from JSON', () => {
+
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
+            const options = { allowExtraKeys: true }
+
+            //when
+            const instance = AnEntity.fromJSON({
+                field1: 1,
+                field2: "1",
+                field3: new Date('2019-09-30T23:45:34.324Z'),
+                field4: true,
+                field5: { f1: true, f2: "2" },
+                field6: [{ f1: true, f2: "2" }],
+                field7: null,
+                field1x: 1,
+                field2x: "1",
+                field3x: new Date('2019-09-30T23:45:34.324Z'),
+                field4x: true,
+                field5x: { f1: true, f2: "2" },
+                field6x: [{ f1: true, f2: "2" }],
+                field7x: null,
+                method1() { return "Nada" },
+                method2() { return "Niente" }
+            }, options)
+            //then
+            assert.strictEqual(instance['field1'], 1)
+            assert.strictEqual(instance['field2'], "1")
+            assert.deepStrictEqual(instance['field3'], new Date('2019-09-30T23:45:34.324Z'))
+            assert.strictEqual(instance['field4'], true)
+            assert(instance['field5'] instanceof BaseEntity)
+            assert.strictEqual(instance['field5']['f1'], true)
+            assert.strictEqual(instance['field5']['f2'], "2")
+            assert.strictEqual(instance['field6'][0]['f1'], true)
+            assert.strictEqual(instance['field6'][0]['f2'], "2")
+            assert.strictEqual(instance['field7'], null)
+            assert.strictEqual(instance['field8'], undefined)
+            assert.strictEqual(instance['field1x'], 1)
+            assert.strictEqual(instance['field2x'], "1")
+            assert.deepStrictEqual(instance['field3x'], new Date('2019-09-30T23:45:34.324Z'))
+            assert.strictEqual(instance['field4x'], true)
+            assert.deepStrictEqual(instance['field5x'], { f1: true, f2: "2" })
+            assert.deepStrictEqual(instance['field6x'], [{ f1: true, f2: "2" }])
+            assert.strictEqual(instance['field7x'], null)
+            assert.strictEqual(instance['field8x'], undefined)
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance.method1(), 10)
+            assert(instance['method2'] instanceof Function)
+            assert.strictEqual(instance.method2(), 'Niente')
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
     })
 
@@ -181,7 +233,7 @@ describe('An entity', () => {
             instance.field4 = true
             instance.field5.f1 = true
             instance.field5.f2 = "2"
-            instance.field6.push({f1:true, f2:"2"})
+            instance.field6.push({ f1: true, f2: "2" })
 
             //when
             instance.validate()
@@ -200,7 +252,7 @@ describe('An entity', () => {
             instance.field4 = 1
             instance.field5.f1 = 2
             instance.field5.f2 = true
-            instance.field6.push({f1:2, f2:true})
+            instance.field6.push({ f1: 2, f2: true })
             //when
             instance.validate()
             const json = JSON.stringify(instance)

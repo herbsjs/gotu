@@ -23,7 +23,7 @@ class BaseEntity {
         if (value.isValid()) continue
         errors[name] = value.errors
       }
-      
+
       // for array of entity types
       if (Array.isArray(value) && definition.type[0] && definition.type[0].prototype instanceof BaseEntity) {
         const errorList = value.map((item) =>
@@ -63,7 +63,7 @@ class BaseEntity {
     return obj
   }
 
-  static fromJSON(json) {
+  static fromJSON(json, options = { allowExtraKeys: false }) {
     function parse(type, value) {
       if (value === undefined) return undefined
       if (value === null) return null
@@ -89,10 +89,19 @@ class BaseEntity {
 
     const instance = new this()
 
-    for (const field in instance.meta.schema) {
-      const fieldMeta = instance.meta.schema[field]
-      if (!(fieldMeta.constructor.name === "Field")) continue
-      instance[field] = parse(fieldMeta.type, data[field])
+    const jsonKeys = Object.keys(data)
+    const entityKeys = Object.keys(instance.meta.schema)
+    const keys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
+
+    for (const key of keys) {
+      const field = instance.meta.schema[key]
+      if (field === undefined) {
+        if (!options.allowExtraKeys) continue
+        instance[key] = data[key]
+        continue
+      }
+      if (!(field.constructor.name === "Field")) continue
+      instance[key] = parse(field.type, data[key])
     }
 
     return instance
