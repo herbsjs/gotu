@@ -280,7 +280,7 @@ Check if a instance is the same type from its parent entity class (similar to `i
 
 ## Entity Type Check - `entity.isEntity`
 
-Check if a object is a Gotu Entity instance
+Check if an object is a Gotu Entity class
 
 ```javascript
         const AnEntity = entity('A entity', {})
