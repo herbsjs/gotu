@@ -280,17 +280,15 @@ Check if a instance is the same type from its parent entity class (similar to `i
 
 ## Entity Type Check - `entity.isEntity`
 
-Check if a instance is the same type from its parent entity class (similar to `instanceOf`)
+Check if a object is a Gotu Entity instance
 
 ```javascript
         const AnEntity = entity('A entity', {})
-        const AnSecondEntity = entity('A second entity', {})
 
         const instance1 = new AnEntity()
-        const instance2 = new AnSecondEntity()
         
-        AnEntity.isParentOf(instance1) // true
-        AnEntity.isParentOf(instance2) // false
+        entity.isEntity(AnEntity) // true
+        entity.isEntity(Object) // false
 ```
 
 ## TODO
