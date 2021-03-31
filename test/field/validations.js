@@ -17,6 +17,8 @@ describe('A entity', () => {
         const examples =
             [
                 { type: Number, value: 1, validation: { numericality: { greaterThan: 10 } }, errors: { field1: [{ notGreaterThan: 10 }] } },
+                { type: String, value:  '', validation: { presence: true }, errors: { field1: [{ cantBeEmpty: true }] } },
+                { type: String, value:  null, validation: { presence: true }, errors: { field1: [{ cantBeEmpty: true }] } },
                 { type: String, value: "1", validation: { length: { minimum: 10 } }, errors: { field1: [{ isTooShort: 10 }] } },
                 { type: String, value: "http://##", validation: { url: true }, errors: { field1: [{ invalidURL: true }] } },
                 { type: String, value: "abc.example.com", validation: { email: true }, errors: { field1: [{ invalidEmail: true }] } },

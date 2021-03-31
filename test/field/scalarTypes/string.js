@@ -17,7 +17,7 @@ describe('A field', () => {
             //given
             const instance = givenAnEntityWithAStringField()
             //then
-            assert.strictEqual(instance['field1'], "")
+            assert.strictEqual(instance['field1'], null)
         })
 
         it('should set a different default value to a field', () => {

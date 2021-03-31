@@ -16,8 +16,8 @@ class Field {
     }
 
     const type = this.type
-    if (type === Number) return 0
-    if (type === String) return ""
+    if (type === Number) return null
+    if (type === String) return null
     if (type === Date) return null
     if (type === Boolean) return false
     if (Array.isArray(type)) return []
