@@ -13,7 +13,7 @@ describe('A field', () => {
             return new AnEntity()
         }
 
-        it('should set a default value to a field', () => {
+        it('should set null as default value to a field', () => {
             //given
             const instance = givenAnEntityWithANumberField()
             //then

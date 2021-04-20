@@ -36,8 +36,8 @@ describe('A field', () => {
             const instanceOfEntityType = new EntityType()
             const instance = givenAnEntityWithAEntityField()
             //then
-            assert(instance.field1 instanceof BaseEntity)
-            assert.deepStrictEqual(instance.field1.constructor.name, instanceOfEntityType.constructor.name)
+            assert.strictEqual(instance.field1, null)
+            assert.deepStrictEqual(instanceOfEntityType.constructor.name, instance.meta.schema.field1.type.name)
         })
 
         it('should set null as a default value to a field', () => {
@@ -91,7 +91,9 @@ describe('A field', () => {
 
         it('should validate type and have valid deep value', () => {
             //given
+            const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
+            instance.field1 = new EntityType()
             instance.field1.f1 = true
 
             //then
@@ -101,7 +103,9 @@ describe('A field', () => {
 
         it('should validate type and have invalid deep value', () => {
             //given
+            const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
+            instance.field1 = new EntityType()
             instance.field1.f1 = 1
 
             //then

@@ -26,11 +26,11 @@ describe('A field', () => {
             return new AnEntity()
         }
 
-        it('should set a default value to a field', () => {
+        it('should set null as default value to a field', () => {
             //given
             const instance = givenAnEntityWithAEntityField()
             //then
-            assert.deepStrictEqual(instance.field1, [])
+            assert.deepStrictEqual(instance.field1, null)
         })
 
         it('should set null as a default value to a field', () => {
@@ -58,6 +58,7 @@ describe('A field', () => {
             //given
             const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
+            instance.field1 = []
             instance.field1[0] = new EntityType()
 
             //then
@@ -78,6 +79,7 @@ describe('A field', () => {
         it('should validate type and have valid deep value', () => {
             //given
             const instance = givenAnEntityWithAEntityField()
+            instance.field1 = []
             instance.field1[0] = EntityType.fromJSON({ f1: true, f2: false})
 
             //then
@@ -88,6 +90,7 @@ describe('A field', () => {
         it('should validate type and have invalid deep value', () => {
             //given
             const instance = givenAnEntityWithAEntityField()
+            instance.field1 = [0]
             instance.field1[0] = EntityType.fromJSON({ f1: "true", f2: "false"})
 
             //then

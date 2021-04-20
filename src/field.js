@@ -15,15 +15,7 @@ class Field {
       return this.options.default
     }
 
-    const type = this.type
-    if (type === Number) return null
-    if (type === String) return null
-    if (type === Date) return null
-    if (type === Boolean) return false
-    if (Array.isArray(type)) return []
-    if (type.prototype instanceof BaseEntity) return new type()
-
-    return undefined
+    return null
   }
 
   get validation() {
