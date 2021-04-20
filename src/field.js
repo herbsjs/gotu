@@ -1,5 +1,3 @@
-const { BaseEntity } = require("./baseEntity")
-
 class Field {
   constructor(type, options = {}) {
     this.name = ""
