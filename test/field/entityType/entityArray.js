@@ -26,11 +26,11 @@ describe('A field', () => {
             return new AnEntity()
         }
 
-        it('should set null as default value to a field', () => {
+        it('should set undefined as default value to a field', () => {
             //given
             const instance = givenAnEntityWithAEntityField()
             //then
-            assert.deepStrictEqual(instance.field1, null)
+            assert.deepStrictEqual(instance.field1, undefined)
         })
 
         it('should set null as a default value to a field', () => {

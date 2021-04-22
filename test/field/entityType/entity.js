@@ -30,13 +30,13 @@ describe('A field', () => {
             return new AnEntity()
         }
 
-        it('should set a default value to a field', () => {
+        it('should set undefined as default value to a field', () => {
             //given
             const EntityType = givenAnEntityToBeUsedAsType()
             const instanceOfEntityType = new EntityType()
             const instance = givenAnEntityWithAEntityField()
             //then
-            assert.strictEqual(instance.field1, null)
+            assert.strictEqual(instance.field1, undefined)
             assert.deepStrictEqual(instanceOfEntityType.constructor.name, instance.meta.schema.field1.type.name)
         })
 

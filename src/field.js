@@ -13,7 +13,7 @@ class Field {
       return this.options.default
     }
 
-    return null
+    return undefined
   }
 
   get validation() {
