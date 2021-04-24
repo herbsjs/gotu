@@ -52,6 +52,50 @@ describe('An entity', () => {
             assert.deepStrictEqual(instance['field6'][0].f1, "abc")
         })
 
+        it.only('should have multiple instances with isolated valued from each other', () => {
+            //given
+            const instance1 = givenAnEntityWithMultipleFields()
+            const instance2 = givenAnEntityWithMultipleFields()
+            
+            //when
+            instance1.field1 = 1
+            instance1.field2 = "1"
+            instance1.field3 = new Date('2019-09-30T23:45:34.324Z')
+            instance1.field4 = true
+            const newEntity = new NewEntity()
+            newEntity.f1 = "abc"
+            instance1.field5 = newEntity
+            instance1.field6 = [newEntity]
+
+            const instance3 = givenAnEntityWithMultipleFields()
+
+            //then
+            assert.strictEqual(instance1['field1'], 1)
+            assert.strictEqual(instance1['field2'], "1")
+            assert.deepStrictEqual(instance1['field3'], new Date('2019-09-30T23:45:34.324Z'))
+            assert.strictEqual(instance1['field4'], true)
+            assert.deepStrictEqual(instance1['field5'], newEntity)
+            assert.deepStrictEqual(instance1['field5'].f1, "abc")
+            assert.deepStrictEqual(instance1['field6'][0], newEntity)
+            assert.deepStrictEqual(instance1['field6'][0].f1, "abc")
+
+            assert.strictEqual(instance2['field1'], 0)
+            assert.strictEqual(instance2['field2'], '')
+            assert.deepStrictEqual(instance2['field3'], null)
+            assert.strictEqual(instance2['field4'], false)
+            assert.deepStrictEqual(instance2['field5'], new NewEntity())
+            assert.deepStrictEqual(instance2['field5'].f1, '')
+            assert.deepStrictEqual(instance2['field6'], [])
+
+            assert.strictEqual(instance3['field1'], 0)
+            assert.strictEqual(instance3['field2'], '')
+            assert.deepStrictEqual(instance3['field3'], null)
+            assert.strictEqual(instance3['field4'], false)
+            assert.deepStrictEqual(instance3['field5'], new NewEntity())
+            assert.deepStrictEqual(instance3['field5'].f1, '')
+            assert.deepStrictEqual(instance3['field6'], [])
+        })
+
         it('should validate types and have valid value', () => {
             //given
             const instance = givenAnEntityWithMultipleFields()

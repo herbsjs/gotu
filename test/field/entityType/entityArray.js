@@ -12,16 +12,13 @@ describe('A field', () => {
             f2: field(Boolean)
         })
 
-        const givenAnEntityToBeUsedAsType = () => {
-            return EntityType
-        }
-
         const givenAnEntityWithAEntityField = (fieldOptions) => {
 
-            const EntityType = givenAnEntityToBeUsedAsType()
-
             const AnEntity = entity('A entity', {
-                field1: field([EntityType], fieldOptions)
+                field1: field([EntityType], fieldOptions),
+                isEmpty() {
+                    return this.field1.length === 0
+                },
             })
             return new AnEntity()
         }
@@ -42,7 +39,6 @@ describe('A field', () => {
 
         it('should set a function as a default value to a field', () => {
             //given
-            const EntityType = givenAnEntityToBeUsedAsType()
             const instanceOfEntityType = new EntityType()
             const instance = givenAnEntityWithAEntityField({
                 default: () => {
@@ -56,7 +52,6 @@ describe('A field', () => {
 
         it('should validate type and have valid value', () => {
             //given
-            const EntityType = givenAnEntityToBeUsedAsType()
             const instance = givenAnEntityWithAEntityField()
             instance.field1[0] = new EntityType()
 
@@ -93,6 +88,25 @@ describe('A field', () => {
             //then
             assert.strictEqual(instance.isValid(), false)
             assert.deepStrictEqual(instance.errors, { field1: [ { f1: [ { wrongType:"Boolean" } ] , f2: [ { wrongType: "Boolean" } ] } ] } )
+        })
+
+        it('should have multiple instances with isolated valued from each other', () => {
+            //given
+            const AnEntity = entity('A entity', {
+                field1: field([EntityType]),
+                isEmpty() {
+                    return this.field1.length === 0
+                },
+            })
+  
+            const instance1 = new AnEntity()
+            instance1.field1.push("error")
+
+            const instance2 = new AnEntity()
+
+            //then
+            assert.strictEqual(instance1.isEmpty(), false)
+            assert.strictEqual(instance2.isEmpty(), true)
         })
 
     })

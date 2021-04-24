@@ -266,7 +266,7 @@ describe('An entity', () => {
             const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
 
             //then
-            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}]}')
+            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}]}')
         })
         
         it('invalid data to JSON', () => {

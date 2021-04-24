@@ -22,7 +22,6 @@ class EntityBuilder {
                 continue
             }
             info.name = name
-            Entity.prototype[name] = info.defaultValue
             Entity.prototype.meta.schema[name] = info
         }
         return Entity

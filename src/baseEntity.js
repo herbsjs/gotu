@@ -2,6 +2,16 @@ const { validate, checker } = require("suma")
 const validateValue = validate
 
 class BaseEntity {
+
+  constructor() {
+    for (const [name, definition] of Object.entries(this.meta.schema)) {
+      // ignore functions
+      if (checker.isFunction(definition)) continue
+
+      this[name] = definition.defaultValue
+    }
+  }
+
   validate() {
     const errors = {}
     for (const [name, definition] of Object.entries(this.meta.schema)) {
