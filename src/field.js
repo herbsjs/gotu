@@ -1,5 +1,3 @@
-const { BaseEntity } = require("./baseEntity")
-
 class Field {
   constructor(type, options = {}) {
     this.name = ""
@@ -14,14 +12,6 @@ class Field {
         return this.options.default()
       return this.options.default
     }
-
-    const type = this.type
-    if (type === Number) return 0
-    if (type === String) return ""
-    if (type === Date) return null
-    if (type === Boolean) return false
-    if (Array.isArray(type)) return []
-    if (type.prototype instanceof BaseEntity) return new type()
 
     return undefined
   }

@@ -13,11 +13,11 @@ describe('A field', () => {
             return new AnEntity()
         }
 
-        it('should set a default value to a field', () => {
+        it('should set undefined as default value to a field', () => {
             //given
             const instance = givenAnEntityWithANumberField()
             //then
-            assert.strictEqual(instance['field1'], 0)
+            assert.strictEqual(instance['field1'], undefined)
         })
 
         it('should set a different default value to a field', () => {
