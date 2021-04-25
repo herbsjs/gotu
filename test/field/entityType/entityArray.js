@@ -75,7 +75,7 @@ describe('A field', () => {
             //given
             const instance = givenAnEntityWithAEntityField()
             instance.field1 = []
-            instance.field1[0] = EntityType.fromJSON({ f1: true, f2: false})
+            instance.field1[0] = EntityType.fromJSON({ f1: true, f2: false })
 
             //then
             assert.strictEqual(instance.isValid(), true)
@@ -86,24 +86,24 @@ describe('A field', () => {
             //given
             const instance = givenAnEntityWithAEntityField()
             instance.field1 = [0]
-            instance.field1[0] = EntityType.fromJSON({ f1: "true", f2: "false"})
+            instance.field1[0] = EntityType.fromJSON({ f1: "true", f2: "false" })
 
             //then
             assert.strictEqual(instance.isValid(), false)
-            assert.deepStrictEqual(instance.errors, { field1: [ { f1: [ { wrongType:"Boolean" } ] , f2: [ { wrongType: "Boolean" } ] } ] } )
+            assert.deepStrictEqual(instance.errors, { field1: [{ f1: [{ wrongType: "Boolean" }], f2: [{ wrongType: "Boolean" }] }] })
         })
 
         it('should have multiple instances with isolated valued from each other', () => {
             //given
             const AnEntity = entity('A entity', {
-                field1: field([EntityType]),
+                field1: field([EntityType], { default: [] }),
                 isEmpty() {
                     return this.field1.length === 0
                 },
             })
-  
+
             const instance1 = new AnEntity()
-            instance1.field1.push("error")
+            instance1.field1 = [new EntityType()]
 
             const instance2 = new AnEntity()
 

@@ -52,7 +52,7 @@ describe('An entity', () => {
             assert.deepStrictEqual(instance['field6'][0].f1, "abc")
         })
 
-        it.only('should have multiple instances with isolated valued from each other', () => {
+        it('should have multiple instances with isolated valued from each other', () => {
             //given
             const instance1 = givenAnEntityWithMultipleFields()
             const instance2 = givenAnEntityWithMultipleFields()
@@ -79,21 +79,19 @@ describe('An entity', () => {
             assert.deepStrictEqual(instance1['field6'][0], newEntity)
             assert.deepStrictEqual(instance1['field6'][0].f1, "abc")
 
-            assert.strictEqual(instance2['field1'], 0)
-            assert.strictEqual(instance2['field2'], '')
-            assert.deepStrictEqual(instance2['field3'], null)
-            assert.strictEqual(instance2['field4'], false)
-            assert.deepStrictEqual(instance2['field5'], new NewEntity())
-            assert.deepStrictEqual(instance2['field5'].f1, '')
-            assert.deepStrictEqual(instance2['field6'], [])
+            assert.strictEqual(instance2['field1'], undefined)
+            assert.strictEqual(instance2['field2'], undefined)
+            assert.deepStrictEqual(instance2['field3'], undefined)
+            assert.strictEqual(instance2['field4'], undefined)
+            assert.deepStrictEqual(instance2['field5'], undefined)
+            assert.deepStrictEqual(instance2['field6'], undefined)
 
-            assert.strictEqual(instance3['field1'], 0)
-            assert.strictEqual(instance3['field2'], '')
-            assert.deepStrictEqual(instance3['field3'], null)
-            assert.strictEqual(instance3['field4'], false)
-            assert.deepStrictEqual(instance3['field5'], new NewEntity())
-            assert.deepStrictEqual(instance3['field5'].f1, '')
-            assert.deepStrictEqual(instance3['field6'], [])
+            assert.strictEqual(instance3['field1'], undefined)
+            assert.strictEqual(instance3['field2'], undefined)
+            assert.deepStrictEqual(instance3['field3'], undefined)
+            assert.strictEqual(instance3['field4'], undefined)
+            assert.deepStrictEqual(instance3['field5'], undefined)
+            assert.deepStrictEqual(instance3['field6'], undefined)
         })
 
         it('should validate types and have valid value', () => {
