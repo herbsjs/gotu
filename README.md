@@ -99,7 +99,7 @@ const user = new User()
 user.password = '1234'
 user.validate() 
 user.errors // { password: [ { isTooShort: 6 } ] }
-user.isValid // false
+user.isValid() // false
 ```
 
 ## Serialization
