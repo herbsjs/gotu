@@ -17,19 +17,19 @@ $ npm install gotu
 ```javascript
 const { entity, field } = require('gotu')
 
-const Feature = 
+const Feature =
         entity('Feature', {
             name: field(String),
             hasAccess: field(Boolean)
         })
 
-const Plan = 
+const Plan =
     entity('Plan', {
         name: field(String),
         monthlyCost: field(Number)
     })
 
-const User = 
+const User =
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -41,7 +41,7 @@ const User =
 const user = new User()
 user.name = "Beth"
 user.plan.monthlyCost = 10
-user.features = [ 
+user.features = [
     new Feature(),
     new Feature(),
     new Feature()
@@ -57,13 +57,13 @@ A value of an field can be validated against the field type or its custom valida
 
 ```javascript
 
-const Plan = 
+const Plan =
     entity('Plan', {
         ...
         monthlyCost: field(Number),
     })
 
-const User = 
+const User =
     entity('User', {
         name: field(String),
         plan: field(Plan)
@@ -72,7 +72,7 @@ const User =
 const user = new User()
 user.name = 42
 user.plan.monthlyCost = true
-user.validate() 
+user.validate()
 user.errors // { name: [ wrongType: 'String' ], plan: { monthlyCost: [ wrongType: 'Number' ] } }
 user.isValid() // false
 ```
@@ -86,20 +86,24 @@ For custom validation Gotu uses Herbs JS [Suma](https://github.com/herbsjs/suma)
 Use `{ validation: ... }` to specify a valid Suma validation (sorry) on the field definition.
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         ...
-        password: field(String, validation: { 
-            presence: true, 
+        password: field(String, validation: {
+            presence: true,
             length: { minimum: 6 }
+        }),
+        cardNumber: field(String, validation: {
+          custom: { invalidCardNumber: (value) => value.length === 16 }
         })
     })
 
 const user = new User()
 user.password = '1234'
-user.validate() 
-user.errors // { password: [ { isTooShort: 6 } ] }
-user.isValid() // false
+user.cardNumber = '1234456'
+user.validate()
+user.errors // [{ password: [ { isTooShort: 6 } ] , { "invalidCardNumber": true }]
+user.isValid // false
 ```
 
 ## Serialization
@@ -109,7 +113,7 @@ user.isValid() // false
 Returns a new instance of a entity
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         name: field(String)
     })
@@ -149,7 +153,7 @@ A field in an entity can be of basic types, the same as those used by JavaScript
 `Date`: represents a single moment in time in a platform-independent format.
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         name: field(String),
         lastAccess: field(Date),
@@ -163,13 +167,13 @@ const User =
 For complex types, with deep relationship between entities, a field can be of entity type:
 
 ```javascript
-const Plan = 
+const Plan =
     entity('Plan', {
         ...
         monthlyCost: field(Number),
     })
 
-const User = 
+const User =
     entity('User', {
         ...
         plan: field(Plan)
@@ -181,13 +185,13 @@ const User =
 For complex types, with deep relationship between entities, a field can contain a list of entity type:
 
 ```javascript
-const Plan = 
+const Plan =
     entity('Plan', {
         ...
         monthlyCost: field(Number),
     })
 
-const User = 
+const User =
     entity('User', {
         ...
         plan: field([Plan])
@@ -199,7 +203,7 @@ const User =
 It is possible to define a default value when an entity instance is initiate.
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         ...
         hasAccess: field(Boolean, { default: false })
@@ -213,7 +217,7 @@ user.hasAccess // false
 If the default value is a `function` it will call the function and return the value as default value:
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         ...
         hasAccess: field(Boolean, { default: () => false })
@@ -237,7 +241,7 @@ For scalar types a default value is assumed if a default value is not given:
 For entity types the default value is a new instance of that type. It is possible to use `null` as default:
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         ...
         plan: field(Plan, { default: null })
@@ -252,7 +256,7 @@ user.plan // null
 A method can be defined to create custom behaviour in an entity:
 
 ```javascript
-const User = 
+const User =
     entity('User', {
         ...
         role: field(String),
@@ -273,7 +277,7 @@ Check if a instance is the same type from its parent entity class (similar to `i
 
         const instance1 = new AnEntity()
         const instance2 = new AnSecondEntity()
-        
+
         AnEntity.isParentOf(instance1) // true
         AnEntity.isParentOf(instance2) // false
 ```
@@ -286,7 +290,7 @@ Check if an object is a Gotu Entity class
         const AnEntity = entity('A entity', {})
 
         const instance1 = new AnEntity()
-        
+
         entity.isEntity(AnEntity) // true
         entity.isEntity(Object) // false
 ```

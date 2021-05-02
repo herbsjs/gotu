@@ -16,6 +16,7 @@ describe('A entity', () => {
 
         const examples =
             [
+                { type: String, value: "1234", validation: { custom: { invalidCardNumber: (value) => value.length === 16 } }, errors: { field1: [{ invalidCardNumber: true }] } },
                 { type: Number, value: 1, validation: { numericality: { greaterThan: 10 } }, errors: { field1: [{ notGreaterThan: 10 }] } },
                 { type: String, value:  '', validation: { presence: true }, errors: { field1: [{ cantBeEmpty: true }] } },
                 { type: String, value:  null, validation: { presence: true }, errors: { field1: [{ cantBeEmpty: true }] } },
