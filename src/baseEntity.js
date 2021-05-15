@@ -59,22 +59,31 @@ class BaseEntity {
   }
 
   toJSON(options = { allowExtraKeys: false }) {
-    function deepCopy(obj) {
+    function deepCopy(obj, allowExtraKeys) {
       const copy = {}
 
-      const jsonKeys = options.allowExtraKeys ? Object.keys(obj) : []
-      const entityKeys = Object.keys(obj.meta.schema)
+      let jsonKeys = []
+      let entityKeys = []
+      if (obj instanceof BaseEntity) {
+        jsonKeys = allowExtraKeys ? Object.keys(obj) : []
+        entityKeys = Object.keys(obj.meta.schema)
+      }
+      else {
+        jsonKeys = Object.keys(obj)
+      }
       const mergedKeys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
 
       for (const field of mergedKeys) {
         let value = obj[field]
-        if (value instanceof BaseEntity) value = deepCopy(value)
+        if (value instanceof BaseEntity) value = deepCopy(value, allowExtraKeys)
+        if (Array.isArray(value))
+          value = value.map((i) => deepCopy(i, allowExtraKeys))
         if (value instanceof Function) continue
         copy[field] = value
       }
       return copy
     }
-    const obj = deepCopy(this)
+    const obj = deepCopy(this, options.allowExtraKeys)
     return obj
   }
 
