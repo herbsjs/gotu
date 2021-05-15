@@ -46,7 +46,7 @@ class BaseEntity {
       }
     }
 
-    this.__proto__.errors = errors
+    this.errors = errors
   }
 
   isValid() {

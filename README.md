@@ -267,7 +267,7 @@ const user = new User()
 const access = user.hasAccess()
 ```
 
-## Instance Type Check - `Entity.isParentOf`
+## Instance Type Check - `Entity.parentOf`
 
 Check if a instance is the same type from its parent entity class (similar to `instanceOf`)
 
@@ -278,8 +278,8 @@ Check if a instance is the same type from its parent entity class (similar to `i
         const instance1 = new AnEntity()
         const instance2 = new AnSecondEntity()
 
-        AnEntity.isParentOf(instance1) // true
-        AnEntity.isParentOf(instance2) // false
+        AnEntity.parentOf(instance1) // true
+        AnEntity.parentOf(instance2) // false
 ```
 
 ## Entity Type Check - `entity.isEntity`

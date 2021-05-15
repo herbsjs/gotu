@@ -13,7 +13,6 @@ class EntityBuilder {
             name: this.name,
             schema: {}
         }
-        Entity.prototype.errors = {}
 
         for (const [name, info] of Object.entries(this.body)) {
             if (!(info instanceof Field)) {

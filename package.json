@@ -34,7 +34,7 @@
   "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
-    "suma": "^1.0.8"
+    "suma": "^1.0.9"
   },
   "devDependencies": {
     "eslint": "^7.25.0",

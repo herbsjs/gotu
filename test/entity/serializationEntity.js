@@ -5,21 +5,16 @@ const { BaseEntity } = require('../../src/baseEntity')
 
 describe('An entity', () => {
 
-    const givenAnEntityToBeUsedAsType = () => {
-
-        const EntityType = entity('An entity type', {
-            f1: field(Boolean),
-            f2: field(String)
-        })
-
-        return EntityType
-    }
+    const givenAnEntityToBeUsedAsType = entity('An entity type', {
+        f1: field(Boolean),
+        f2: field(String)
+    })
 
     describe('should deserialize', () => {
 
         const givenAnEntityToReceiveObject = () => {
 
-            const EntityType = givenAnEntityToBeUsedAsType()
+            const EntityType = givenAnEntityToBeUsedAsType
 
             const AnEntity = entity('An entity', {
                 field1: field(Number),
@@ -174,8 +169,8 @@ describe('An entity', () => {
                 field7x: null,
                 method1() { return "Nada" },
                 method2() { return "Niente" }
-            }, 
-            { allowExtraKeys: true })
+            },
+                { allowExtraKeys: true })
 
             //then
             assert.strictEqual(instance['field1'], 1)
@@ -210,7 +205,7 @@ describe('An entity', () => {
     describe('should serialize', () => {
 
         const givenAnEntityToBuildAJSON = () => {
-            const EntityType = givenAnEntityToBeUsedAsType()
+            const EntityType = givenAnEntityToBeUsedAsType
 
             const AnEntity = entity('A entity', {
                 field1: field(Number),
@@ -227,7 +222,7 @@ describe('An entity', () => {
         it('valid data to JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
-            const AnTypeEntity = givenAnEntityToBeUsedAsType()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
 
             const instance = new AnEntity()
             instance.field1 = 1
@@ -250,7 +245,7 @@ describe('An entity', () => {
         it('should allow extra fields from JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
-            const AnTypeEntity = givenAnEntityToBeUsedAsType()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
             const instance = new AnEntity()
             instance.field1 = 1
             instance.field2 = "1"
@@ -259,27 +254,26 @@ describe('An entity', () => {
             instance.field5 = new AnTypeEntity()
             instance.field5.f1 = true
             instance.field5.f2 = "2"
-            instance.field6 = []
-            instance.field6.push({ f1: true, f2: "2" })
+            instance.field6 = [AnTypeEntity.fromJSON({ f1: true, f2: "2" })]
             instance.field1x = 1
             instance.field2x = "1"
             instance.field3x = new Date('2019-09-30T23:45:34.324Z')
             instance.field4x = true
             instance.field5x = { f1: true, f2: "2" }
             instance.field6x = [{ f1: true, f2: "2" }]
-            
+
             //when
             instance.validate()
             const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
 
             //then
-            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}]}')
+            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":[{"f1":true,"f2":"2","errors":{}}],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}]},"errors":{}')
         })
-        
+
         it('invalid data to JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
-            const AnTypeEntity = givenAnEntityToBeUsedAsType()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
             const instance = new AnEntity()
             instance.field1 = "1"
             instance.field2 = 1
