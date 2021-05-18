@@ -1,6 +1,6 @@
 {
   "name": "gotu",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
@@ -34,7 +34,7 @@
   "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
-    "suma": "^1.0.9"
+    "suma": "^1.0.10"
   },
   "devDependencies": {
     "eslint": "^7.25.0",
