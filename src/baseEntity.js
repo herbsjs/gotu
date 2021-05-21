@@ -88,6 +88,7 @@ class BaseEntity {
   }
 
   static fromJSON(json, options = { allowExtraKeys: false }) {
+
     function parse(type, value) {
       if (value === undefined) return undefined
       if (value === null) return null
@@ -123,7 +124,7 @@ class BaseEntity {
         instance[key] = data[key]
         continue
       }
-      if (!(field.constructor.name === "Field")) continue
+      if (!(field.constructor.name === "Field" && !checker.isFunction(field.definition) && data[key] !== undefined)) continue
       instance[key] = parse(field.type, data[key])
     }
 
