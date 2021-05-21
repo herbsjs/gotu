@@ -1,14 +1,14 @@
 {
   "name": "gotu",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
     "test": "mocha --timeout 999999 --colors --recursive ./test",
     "lint": "npx eslint \"**/*.{js,jsx}\" --quiet",
     "lint:fix": "npx eslint \"**/*.{js,jsx}\" --fix",
-      "coverage-report": "nyc --reporter=html --reporter=text mocha --recursive ./test --timeout 10000",
-      "coverage": "nyc --reporter=text mocha --recursive ./test --timeout 10000"
+    "coverage-report": "nyc --reporter=html --reporter=text mocha --recursive ./test --timeout 10000",
+    "coverage": "nyc --reporter=text mocha --recursive ./test --timeout 10000"
   },
   "directories": {
     "lib": "src",
