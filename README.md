@@ -77,7 +77,23 @@ user.errors // { name: [ wrongType: 'String' ], plan: { monthlyCost: [ wrongType
 user.isValid() // false
 ```
 
-You can also simplify you validation method using `isValid()` method that execute validate for you entity and return true/false in a single execution.
+You can also simplify you validation method using `isValid()` method that execute validate implicit for you entity and return true/false in a single execution and also you can check the errors.
+
+```javascript
+
+const Plan =
+    entity('Plan', {
+        ...
+        monthlyCost: field(Number),
+    })
+
+const plan = new Plan()
+plan.plan.monthlyCost = true
+plan.isValid() // false
+plan.errors // { monthlyCost: [ wrongType: 'Number' ] }
+
+```
+
 
 ### Custom Validation
 
