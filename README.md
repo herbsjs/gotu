@@ -10,7 +10,7 @@ Gotu Kola helps define your business entities (*)
 
 ### Installing
 
-$ npm install gotu
+```$ npm install gotu```
 
 ### Using
 
