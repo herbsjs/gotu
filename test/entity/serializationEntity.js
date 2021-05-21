@@ -108,7 +108,7 @@ describe('An entity', () => {
                 field5: { f1: 2, f2: false },
                 field6: [{ f1: 2, f2: false }],
                 field7: null,
-                field8: null,
+                field8: undefined,
                 method2() { return "Nada" }
             })
             //then
@@ -294,7 +294,6 @@ describe('An entity', () => {
         it('invalid data to JSON - allow extra keys', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
-            const AnTypeEntity = givenAnEntityToBeUsedAsType
             const instance = new AnEntity()
             instance.field2 = 1
 

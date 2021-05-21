@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha --timeout 999999 --colors --recursive ./test",
     "lint": "npx eslint \"**/*.{js,jsx}\" --quiet",
-    "lint:fix": "npx eslint \"**/*.{js,jsx}\" --fix"
+    "lint:fix": "npx eslint \"**/*.{js,jsx}\" --fix",
+      "coverage-report": "nyc --reporter=html --reporter=text mocha --recursive ./test --timeout 10000",
+      "coverage": "nyc --reporter=text mocha --recursive ./test --timeout 10000"
   },
   "directories": {
     "lib": "src",
