@@ -126,7 +126,7 @@ const user = User.fromJSON(`{ "name": "Beth"}`)
 
 By default `fromJSON` serializes only keys that have been defined in the entity. If you want to add other keys during serialization, use `.fromJSON(data, { allowExtraKeys: true })`.
 
-If you use fields with the default value, the default value continues if inside the function fromJSON does not have the new value for this variable
+By default, `fromJSON` **default field** values will be applied for keys not present in `value`.
 
 ### `JSON.stringify(entity)`
 
