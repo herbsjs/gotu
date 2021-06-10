@@ -76,7 +76,7 @@ class BaseEntity {
       for (const field of mergedKeys) {
         let value = obj[field]
         if (value instanceof BaseEntity) value = deepCopy(value, allowExtraKeys)
-        if (Array.isArray(value))
+        if (Array.isArray(value) && value[0] instanceof BaseEntity)
           value = value.map((i) => deepCopy(i, allowExtraKeys))
         if (value instanceof Function) continue
         copy[field] = value
