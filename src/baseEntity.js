@@ -62,15 +62,9 @@ class BaseEntity {
     function deepCopy(obj, allowExtraKeys) {
       const copy = {}
 
-      let jsonKeys = []
-      let entityKeys = []
-      if (obj instanceof BaseEntity) {
-        jsonKeys = allowExtraKeys ? Object.keys(obj) : []
-        entityKeys = Object.keys(obj.meta.schema)
-      }
-      else {
-        jsonKeys = Object.keys(obj)
-      }
+     const jsonKeys = allowExtraKeys ? Object.keys(obj) : []
+     const entityKeys = Object.keys(obj.meta.schema)
+      
       const mergedKeys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
 
       for (const field of mergedKeys) {
@@ -90,9 +84,7 @@ class BaseEntity {
   static fromJSON(json, options = { allowExtraKeys: false }) {
 
     function parse(type, value) {
-      if (value === undefined) return undefined
       if (value === null) return null
-
       if (type === Date) return new Date(value)
       if (type.prototype instanceof BaseEntity) {
         const entity = type.fromJSON(value)
