@@ -219,6 +219,21 @@ describe('An entity', () => {
             return AnEntity
         }
 
+        const givenAnEntityToBuildAJSONWithArraysOfPrimitiveType = () => {
+            const EntityType = givenAnEntityToBeUsedAsType
+  
+              const AnEntity = entity('A entity', {
+                  field1: field([Number]),
+                  field2: field(String),
+                  field3: field(Date),
+                  field4: field(Boolean),
+                  field5: field(EntityType),
+                  field6: field([String]),
+                  method1() { return 10 }
+              })
+              return AnEntity
+          }
+
         it('valid data to JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
@@ -272,7 +287,7 @@ describe('An entity', () => {
 
         it('valid data to JSON - primitive type arrays', () => {
             //given
-            const AnEntity = givenAnEntityToBuildAJSONWithArrayOfPrimitiveType()
+            const AnEntity = givenAnEntityToBuildAJSONWithArraysOfPrimitiveType()
             const AnTypeEntity = givenAnEntityToBeUsedAsType
             const instance = new AnEntity()
             instance.field1 = [1, 2]
@@ -338,7 +353,7 @@ describe('An entity', () => {
 
         it('invalid data to JSON - primitive type arrays', () => {
             //given
-            const AnEntity = givenAnEntityToBuildAJSONWithArrayOfPrimitiveType()
+            const AnEntity = givenAnEntityToBuildAJSONWithArraysOfPrimitiveType()
             const instance = new AnEntity()
             instance.field1 = ["a"]
             instance.field2 = "1"
