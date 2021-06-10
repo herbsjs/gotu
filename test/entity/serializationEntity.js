@@ -1,426 +1,366 @@
-const { entity } = require("../../src/entity");
-const { field } = require("../../src/field");
-const assert = require("assert");
-const { BaseEntity } = require("../../src/baseEntity");
+const { entity } = require('../../src/entity')
+const { field } = require('../../src/field')
+const assert = require('assert')
+const { BaseEntity } = require('../../src/baseEntity')
 
-describe("An entity", () => {
-  const givenAnEntityToBeUsedAsType = entity("An entity type", {
-    f1: field(Boolean),
-    f2: field(String),
-  });
+describe('An entity', () => {
 
-  describe("should deserialize", () => {
-    const givenAnEntityToReceiveObject = () => {
-      const EntityType = givenAnEntityToBeUsedAsType;
+    const givenAnEntityToBeUsedAsType = entity('An entity type', {
+        f1: field(Boolean),
+        f2: field(String)
+    })
 
-      const AnEntity = entity("An entity", {
-        field1: field(Number),
-        field2: field(String),
-        field3: field(Date),
-        field4: field(Boolean),
-        field5: field(EntityType),
-        field6: field([EntityType]),
-        field7: field(Number),
-        method1() {
-          return 10;
-        },
-      });
-      return AnEntity;
-    };
+    describe('should deserialize', () => {
 
-    it("valid data from an object", () => {
-      //given
-      const AnEntity = givenAnEntityToReceiveObject();
-      //when
-      const instance = AnEntity.fromJSON({
-        field1: 1,
-        field2: "1",
-        field3: new Date("2019-09-30T23:45:34.324Z"),
-        field4: true,
-        field5: { f1: true, f2: "2" },
-        field6: [{ f1: true, f2: "2" }],
-        field7: null,
-        field8: "Nothing",
-        method1() {
-          return "Nada";
-        },
-        method2() {
-          return "Niente";
-        },
-      });
-      //then
-      assert.strictEqual(instance["field1"], 1);
-      assert.strictEqual(instance["field2"], "1");
-      assert.deepStrictEqual(
-        instance["field3"],
-        new Date("2019-09-30T23:45:34.324Z")
-      );
-      assert.strictEqual(instance["field4"], true);
-      assert(instance["field5"] instanceof BaseEntity);
-      assert.strictEqual(instance["field5"]["f1"], true);
-      assert.strictEqual(instance["field5"]["f2"], "2");
-      assert.strictEqual(instance["field6"][0]["f1"], true);
-      assert.strictEqual(instance["field6"][0]["f2"], "2");
-      assert.strictEqual(instance["field7"], null);
-      assert.strictEqual(instance["field8"], undefined);
-      assert(instance["method1"] instanceof Function);
-      assert.strictEqual(instance.method1(), 10);
-      assert.strictEqual(instance["method2"], undefined);
-      assert.strictEqual(instance.isValid(), true);
-      assert.deepStrictEqual(instance.errors, {});
-    });
+        const givenAnEntityToReceiveObject = () => {
 
-    it("valid data from a JSON string", () => {
-      //given
-      const AnEntity = givenAnEntityToReceiveObject();
-      //when
-      const instance = AnEntity.fromJSON(`{
+            const EntityType = givenAnEntityToBeUsedAsType
+
+            const AnEntity = entity('An entity', {
+                field1: field(Number),
+                field2: field(String),
+                field3: field(Date),
+                field4: field(Boolean),
+                field5: field(EntityType),
+                field6: field([EntityType]),
+                field7: field(Number),
+                method1() { return 10 }
+            })
+            return AnEntity
+        }
+
+        it('valid data from an object', () => {
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
+            //when
+            const instance = AnEntity.fromJSON({
+                field1: 1,
+                field2: "1",
+                field3: new Date('2019-09-30T23:45:34.324Z'),
+                field4: true,
+                field5: { f1: true, f2: "2" },
+                field6: [{ f1: true, f2: "2" }],
+                field7: null,
+                field8: "Nothing",
+                method1() { return "Nada" },
+                method2() { return "Niente" }
+            })
+            //then
+            assert.strictEqual(instance['field1'], 1)
+            assert.strictEqual(instance['field2'], "1")
+            assert.deepStrictEqual(instance['field3'], new Date('2019-09-30T23:45:34.324Z'))
+            assert.strictEqual(instance['field4'], true)
+            assert(instance['field5'] instanceof BaseEntity)
+            assert.strictEqual(instance['field5']['f1'], true)
+            assert.strictEqual(instance['field5']['f2'], "2")
+            assert.strictEqual(instance['field6'][0]['f1'], true)
+            assert.strictEqual(instance['field6'][0]['f2'], "2")
+            assert.strictEqual(instance['field7'], null)
+            assert.strictEqual(instance['field8'], undefined)
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance.method1(), 10)
+            assert.strictEqual(instance['method2'], undefined)
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
+
+        it('valid data from a JSON string', () => {
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
+            //when
+            const instance = AnEntity.fromJSON(`{
                     "field1": 1,
                     "field2": "1",
-                    "field3": "${new Date("2019-09-30T23:45:00.000Z")}",
+                    "field3": "${new Date('2019-09-30T23:45:00.000Z')}",
                     "field4": true,
                     "field5": {"f1": true, "f2": "2"},
                     "field6": [{"f1": true, "f2": "2"}],
                     "field7": null,
                     "field8": "Nothing"
-                }`);
-      //then
-      assert.strictEqual(instance["field1"], 1);
-      assert.strictEqual(instance["field2"], "1");
-      assert.deepStrictEqual(
-        instance["field3"],
-        new Date("2019-09-30T23:45:00.000Z")
-      );
-      assert.strictEqual(instance["field4"], true);
-      assert(instance["field5"] instanceof BaseEntity);
-      assert.strictEqual(instance["field5"]["f1"], true);
-      assert.strictEqual(instance["field5"]["f2"], "2");
-      assert.strictEqual(instance["field6"][0]["f1"], true);
-      assert.strictEqual(instance["field6"][0]["f2"], "2");
-      assert.strictEqual(instance["field7"], null);
-      assert.strictEqual(instance["field8"], undefined);
-      assert(instance["method1"] instanceof Function);
-      assert.strictEqual(instance["method2"], undefined);
-      assert.strictEqual(instance.isValid(), true);
-      assert.deepStrictEqual(instance.errors, {});
-    });
+                }`)
+            //then
+            assert.strictEqual(instance['field1'], 1)
+            assert.strictEqual(instance['field2'], "1")
+            assert.deepStrictEqual(instance['field3'], new Date('2019-09-30T23:45:00.000Z'))
+            assert.strictEqual(instance['field4'], true)
+            assert(instance['field5'] instanceof BaseEntity)
+            assert.strictEqual(instance['field5']['f1'], true)
+            assert.strictEqual(instance['field5']['f2'], "2")
+            assert.strictEqual(instance['field6'][0]['f1'], true)
+            assert.strictEqual(instance['field6'][0]['f2'], "2")
+            assert.strictEqual(instance['field7'], null)
+            assert.strictEqual(instance['field8'], undefined)
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance['method2'], undefined)
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
-    it("invalid data from an object", () => {
-      //given
-      const AnEntity = givenAnEntityToReceiveObject();
-      //when
-      const instance = AnEntity.fromJSON({
-        field1: "1",
-        field2: 1,
-        field3: true,
-        field4: new Date("2019-09-30T23:45:34.324Z"),
-        field5: { f1: 2, f2: false },
-        field6: [{ f1: 2, f2: false }],
-        field7: null,
-        field8: undefined,
-        method2() {
-          return "Nada";
-        },
-      });
-      //then
-      assert.strictEqual(instance["field1"], "1");
-      assert.strictEqual(instance["field2"], 1);
-      assert.deepStrictEqual(
-        instance["field3"],
-        new Date("1970-01-01T00:00:00.001Z")
-      ); // true parsed as Date
-      assert.deepStrictEqual(
-        instance["field4"],
-        new Date("2019-09-30T23:45:34.324Z")
-      );
-      assert(instance["field5"] instanceof BaseEntity);
-      assert.strictEqual(instance["field5"]["f1"], 2);
-      assert.strictEqual(instance["field5"]["f2"], false);
-      assert.strictEqual(instance["field6"][0]["f1"], 2);
-      assert.strictEqual(instance["field6"][0]["f2"], false);
-      assert.strictEqual(instance["field7"], null);
-      assert.strictEqual(instance["field8"], undefined);
-      assert(instance["method1"] instanceof Function);
-      assert.strictEqual(instance["method2"], undefined);
-      assert.strictEqual(instance.isValid(), false);
-      assert.strictEqual(Object.keys(instance.errors).length, 5);
-    });
+        it('invalid data from an object', () => {
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
+            //when
+            const instance = AnEntity.fromJSON({
+                field1: "1",
+                field2: 1,
+                field3: true,
+                field4: new Date('2019-09-30T23:45:34.324Z'),
+                field5: { f1: 2, f2: false },
+                field6: [{ f1: 2, f2: false }],
+                field7: null,
+                field8: undefined,
+                method2() { return "Nada" }
+            })
+            //then
+            assert.strictEqual(instance['field1'], "1")
+            assert.strictEqual(instance['field2'], 1)
+            assert.deepStrictEqual(instance['field3'], new Date('1970-01-01T00:00:00.001Z')) // true parsed as Date
+            assert.deepStrictEqual(instance['field4'], new Date('2019-09-30T23:45:34.324Z'))
+            assert(instance['field5'] instanceof BaseEntity)
+            assert.strictEqual(instance['field5']['f1'], 2)
+            assert.strictEqual(instance['field5']['f2'], false)
+            assert.strictEqual(instance['field6'][0]['f1'], 2)
+            assert.strictEqual(instance['field6'][0]['f2'], false)
+            assert.strictEqual(instance['field7'], null)
+            assert.strictEqual(instance['field8'], undefined)
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance['method2'], undefined)
+            assert.strictEqual(instance.isValid(), false)
+            assert.strictEqual(Object.keys(instance.errors).length, 5)
+        })
 
-    it("valid data from empty JSON string", () => {
-      //given
-      const AnEntity = givenAnEntityToReceiveObject();
-      //when
-      const instance = AnEntity.fromJSON(`{}`);
-      //then
-      assert.strictEqual(instance["field1"], undefined);
-      assert.strictEqual(instance["field2"], undefined);
-      assert.deepStrictEqual(instance["field3"], undefined);
-      assert.strictEqual(instance["field4"], undefined);
-      assert.strictEqual(instance["field5"], undefined);
-      assert.strictEqual(instance["field6"], undefined);
-      assert(instance["method1"] instanceof Function);
-      assert.strictEqual(instance.isValid(), true);
-      assert.deepStrictEqual(instance.errors, {});
-    });
+        it('valid data from empty JSON string', () => {
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
+            //when
+            const instance = AnEntity.fromJSON(`{}`)
+            //then
+            assert.strictEqual(instance['field1'], undefined)
+            assert.strictEqual(instance['field2'], undefined)
+            assert.deepStrictEqual(instance['field3'], undefined)
+            assert.strictEqual(instance['field4'], undefined)
+            assert.strictEqual(instance['field5'], undefined)
+            assert.strictEqual(instance['field6'], undefined)
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
-    it("should allow extra fields from JSON", () => {
-      //given
-      const AnEntity = givenAnEntityToReceiveObject();
+        it('should allow extra fields from JSON', () => {
 
-      //when
-      const instance = AnEntity.fromJSON(
-        {
-          field1: 1,
-          field2: "1",
-          field3: new Date("2019-09-30T23:45:34.324Z"),
-          field4: true,
-          field5: { f1: true, f2: "2" },
-          field6: [{ f1: true, f2: "2" }],
-          field7: null,
-          field1x: 1,
-          field2x: "1",
-          field3x: new Date("2019-09-30T23:45:34.324Z"),
-          field4x: true,
-          field5x: { f1: true, f2: "2" },
-          field6x: [{ f1: true, f2: "2" }],
-          field7x: null,
-          method1() {
-            return "Nada";
-          },
-          method2() {
-            return "Niente";
-          },
-        },
-        { allowExtraKeys: true }
-      );
+            //given
+            const AnEntity = givenAnEntityToReceiveObject()
 
-      //then
-      assert.strictEqual(instance["field1"], 1);
-      assert.strictEqual(instance["field2"], "1");
-      assert.deepStrictEqual(
-        instance["field3"],
-        new Date("2019-09-30T23:45:34.324Z")
-      );
-      assert.strictEqual(instance["field4"], true);
-      assert(instance["field5"] instanceof BaseEntity);
-      assert.strictEqual(instance["field5"]["f1"], true);
-      assert.strictEqual(instance["field5"]["f2"], "2");
-      assert.strictEqual(instance["field6"][0]["f1"], true);
-      assert.strictEqual(instance["field6"][0]["f2"], "2");
-      assert.strictEqual(instance["field7"], null);
-      assert.strictEqual(instance["field8"], undefined);
-      assert.strictEqual(instance["field1x"], 1);
-      assert.strictEqual(instance["field2x"], "1");
-      assert.deepStrictEqual(
-        instance["field3x"],
-        new Date("2019-09-30T23:45:34.324Z")
-      );
-      assert.strictEqual(instance["field4x"], true);
-      assert.deepStrictEqual(instance["field5x"], { f1: true, f2: "2" });
-      assert.deepStrictEqual(instance["field6x"], [{ f1: true, f2: "2" }]);
-      assert.strictEqual(instance["field7x"], null);
-      assert.strictEqual(instance["field8x"], undefined);
-      assert(instance["method1"] instanceof Function);
-      assert.strictEqual(instance.method1(), 10);
-      assert(instance["method2"] instanceof Function);
-      assert.strictEqual(instance.method2(), "Niente");
-      assert.strictEqual(instance.isValid(), true);
-      assert.deepStrictEqual(instance.errors, {});
-    });
-  });
+            //when
+            const instance = AnEntity.fromJSON({
+                field1: 1,
+                field2: "1",
+                field3: new Date('2019-09-30T23:45:34.324Z'),
+                field4: true,
+                field5: { f1: true, f2: "2" },
+                field6: [{ f1: true, f2: "2" }],
+                field7: null,
+                field1x: 1,
+                field2x: "1",
+                field3x: new Date('2019-09-30T23:45:34.324Z'),
+                field4x: true,
+                field5x: { f1: true, f2: "2" },
+                field6x: [{ f1: true, f2: "2" }],
+                field7x: null,
+                method1() { return "Nada" },
+                method2() { return "Niente" }
+            },
+                { allowExtraKeys: true })
 
-  describe("should serialize", () => {
-    const givenAnEntityToBuildAJSON = () => {
-      const EntityType = givenAnEntityToBeUsedAsType;
+            //then
+            assert.strictEqual(instance['field1'], 1)
+            assert.strictEqual(instance['field2'], "1")
+            assert.deepStrictEqual(instance['field3'], new Date('2019-09-30T23:45:34.324Z'))
+            assert.strictEqual(instance['field4'], true)
+            assert(instance['field5'] instanceof BaseEntity)
+            assert.strictEqual(instance['field5']['f1'], true)
+            assert.strictEqual(instance['field5']['f2'], "2")
+            assert.strictEqual(instance['field6'][0]['f1'], true)
+            assert.strictEqual(instance['field6'][0]['f2'], "2")
+            assert.strictEqual(instance['field7'], null)
+            assert.strictEqual(instance['field8'], undefined)
+            assert.strictEqual(instance['field1x'], 1)
+            assert.strictEqual(instance['field2x'], "1")
+            assert.deepStrictEqual(instance['field3x'], new Date('2019-09-30T23:45:34.324Z'))
+            assert.strictEqual(instance['field4x'], true)
+            assert.deepStrictEqual(instance['field5x'], { f1: true, f2: "2" })
+            assert.deepStrictEqual(instance['field6x'], [{ f1: true, f2: "2" }])
+            assert.strictEqual(instance['field7x'], null)
+            assert.strictEqual(instance['field8x'], undefined)
+            assert(instance['method1'] instanceof Function)
+            assert.strictEqual(instance.method1(), 10)
+            assert(instance['method2'] instanceof Function)
+            assert.strictEqual(instance.method2(), 'Niente')
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
-      const AnEntity = entity("A entity", {
-        field1: field(Number),
-        field2: field(String),
-        field3: field(Date),
-        field4: field(Boolean),
-        field5: field(EntityType),
-        field6: field([EntityType]),
-        method1() {
-          return 10;
-        },
-      });
-      return AnEntity;
-    };
+    })
 
-    const givenAnEntityToBuildAJSONWithArrayOfPrimitiveType = () => {
-      const EntityType = givenAnEntityToBeUsedAsType;
+    describe('should serialize', () => {
 
-      const AnEntity = entity("A entity", {
-        field1: field([Number]),
-        field2: field(String),
-        field3: field(Date),
-        field4: field(Boolean),
-        field5: field(EntityType),
-        field6: field([String]),
-        method1() {
-          return 10;
-        },
-      });
-      return AnEntity;
-    };
+        const givenAnEntityToBuildAJSON = () => {
+            const EntityType = givenAnEntityToBeUsedAsType
 
-    it("valid data to JSON", () => {
-      //given
-      const AnEntity = givenAnEntityToBuildAJSON();
-      const AnTypeEntity = givenAnEntityToBeUsedAsType;
+            const AnEntity = entity('A entity', {
+                field1: field(Number),
+                field2: field(String),
+                field3: field(Date),
+                field4: field(Boolean),
+                field5: field(EntityType),
+                field6: field([EntityType]),
+                method1() { return 10 }
+            })
+            return AnEntity
+        }
 
-      const instance = new AnEntity();
-      instance.field1 = 1;
-      instance.field2 = "1";
-      instance.field3 = new Date("2019-09-30T23:45:34.324Z");
-      instance.field4 = true;
-      instance.field5 = new AnTypeEntity();
-      instance.field5.f1 = true;
-      instance.field5.f2 = "2";
-      instance.field6 = [];
-      instance.field6.push({ f1: true, f2: "2" });
+        it('valid data to JSON', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSON()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
 
-      //when
-      instance.validate();
-      const json = JSON.stringify(instance);
-      //then
-      assert.deepStrictEqual(
-        json,
-        '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}]}'
-      );
-    });
+            const instance = new AnEntity()
+            instance.field1 = 1
+            instance.field2 = "1"
+            instance.field3 = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4 = true
+            instance.field5 = new AnTypeEntity()
+            instance.field5.f1 = true
+            instance.field5.f2 = "2"
+            instance.field6 = []
+            instance.field6.push({ f1: true, f2: "2" })
 
-    it("valid data to JSON - allow extra keys", () => {
-      //given
-      const AnEntity = givenAnEntityToBuildAJSON();
-      const AnTypeEntity = givenAnEntityToBeUsedAsType;
-      const instance = new AnEntity();
-      instance.field1 = 1;
-      instance.field2 = "1";
-      instance.field3 = new Date("2019-09-30T23:45:34.324Z");
-      instance.field4 = true;
-      instance.field5 = new AnTypeEntity();
-      instance.field5.f1 = true;
-      instance.field5.f2 = "2";
-      instance.field6 = [
-        AnTypeEntity.fromJSON({ f1: true, f2: "2" }),
-        AnTypeEntity.fromJSON({ f1: false, f2: "3" }),
-      ];
-      instance.field1x = 1;
-      instance.field2x = "1";
-      instance.field3x = new Date("2019-09-30T23:45:34.324Z");
-      instance.field4x = true;
-      instance.field5x = { f1: true, f2: "2" };
-      instance.field6x = [{ f1: true, f2: "2" }];
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance)
+            //then
+            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2"},"field6":[{"f1":true,"f2":"2"}]}')
+        })
 
-      //when
-      instance.validate();
-      const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }));
+        it('valid data to JSON - allow extra keys', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSON()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
+            const instance = new AnEntity()
+            instance.field1 = 1
+            instance.field2 = "1"
+            instance.field3 = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4 = true
+            instance.field5 = new AnTypeEntity()
+            instance.field5.f1 = true
+            instance.field5.f2 = "2"
+            instance.field6 = [AnTypeEntity.fromJSON({ f1: true, f2: "2" }), AnTypeEntity.fromJSON({ f1: false, f2: "3" })]
+            instance.field1x = 1
+            instance.field2x = "1"
+            instance.field3x = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4x = true
+            instance.field5x = { f1: true, f2: "2" }
+            instance.field6x = [{ f1: true, f2: "2" }]
 
-      //then
-      assert.deepStrictEqual(
-        json,
-        '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":[{"f1":true,"f2":"2","errors":{}},{"f1":false,"f2":"3","errors":{}}],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"errors":{}}'
-      );
-    });
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
 
-    it("valid data to JSON - primitive type arrays", () => {
-      //given
-      const AnEntity = givenAnEntityToBuildAJSONWithArrayOfPrimitiveType();
-      const AnTypeEntity = givenAnEntityToBeUsedAsType;
-      const instance = new AnEntity();
-      instance.field1 = [1, 2];
-      instance.field2 = "1";
-      instance.field3 = new Date("2019-09-30T23:45:34.324Z");
-      instance.field4 = true;
-      instance.field5 = new AnTypeEntity();
-      instance.field5.f1 = true;
-      instance.field5.f2 = "2";
-      instance.field6 = ["testing", "primitive"];
-      instance.field1x = 1;
-      instance.field2x = "1";
-      instance.field3x = new Date("2019-09-30T23:45:34.324Z");
-      instance.field4x = true;
-      instance.field5x = { f1: true, f2: "2" };
-      instance.field6x = [{ f1: true, f2: "2" }];
+            //then
+            assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":[{"f1":true,"f2":"2","errors":{}},{"f1":false,"f2":"3","errors":{}}],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"errors":{}}')
+        })
 
-      //when
-      instance.validate();
-      const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }));
+        it('valid data to JSON - primitive type arrays', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSONWithArrayOfPrimitiveType()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
+            const instance = new AnEntity()
+            instance.field1 = [1, 2]
+            instance.field2 = "1"
+            instance.field3 = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4 = true
+            instance.field5 = new AnTypeEntity()
+            instance.field5.f1 = true
+            instance.field5.f2 = "2"
+            instance.field6 = ["testing", "primitive"]
+            instance.field1x = 1
+            instance.field2x = "1"
+            instance.field3x = new Date('2019-09-30T23:45:34.324Z')
+            instance.field4x = true
+            instance.field5x = { f1: true, f2: "2" }
+            instance.field6x = [{ f1: true, f2: "2" }]
+      
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
+      
+            //then
+            assert.deepStrictEqual(
+              json,
+              '{"field1":[1,2],"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":["testing","primitive"],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"errors":{}}'
+            )
+          })
 
-      //then
-      assert.deepStrictEqual(
-        json,
-        '{"field1":[1,2],"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":["testing","primitive"],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"errors":{}}'
-      );
-    });
+        it('invalid data to JSON', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSON()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
+            const instance = new AnEntity()
+            instance.field1 = "1"
+            instance.field2 = 1
+            instance.field3 = 1
+            instance.field4 = 1
+            instance.field5 = new AnTypeEntity()
+            instance.field5.f1 = 2
+            instance.field5.f2 = true
+            instance.field6 = []
+            instance.field6.push({ f1: 2, f2: true })
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance)
+            //then
+            assert.deepStrictEqual(json, '{"field1":"1","field2":1,"field3":1,"field4":1,"field5":{"f1":2,"f2":true},"field6":[{"f1":2,"f2":true}]}')
+        })
 
-    it("invalid data to JSON", () => {
-      //given
-      const AnEntity = givenAnEntityToBuildAJSON();
-      const AnTypeEntity = givenAnEntityToBeUsedAsType;
-      const instance = new AnEntity();
-      instance.field1 = "1";
-      instance.field2 = 1;
-      instance.field3 = 1;
-      instance.field4 = 1;
-      instance.field5 = new AnTypeEntity();
-      instance.field5.f1 = 2;
-      instance.field5.f2 = true;
-      instance.field6 = [];
-      instance.field6.push({ f1: 2, f2: true });
-      //when
-      instance.validate();
-      const json = JSON.stringify(instance);
-      //then
-      assert.deepStrictEqual(
-        json,
-        '{"field1":"1","field2":1,"field3":1,"field4":1,"field5":{"f1":2,"f2":true},"field6":[{"f1":2,"f2":true}]}'
-      );
-    });
+        it('invalid data to JSON - allow extra keys', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSON()
+            const instance = new AnEntity()
+            instance.field2 = 1
 
-    it("invalid data to JSON - allow extra keys", () => {
-      //given
-      const AnEntity = givenAnEntityToBuildAJSON();
-      const instance = new AnEntity();
-      instance.field2 = 1;
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
 
-      //when
-      instance.validate();
-      const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }));
+            //then
+            assert.deepStrictEqual(json, '{"field2":1,"errors":{"field2":[{"wrongType":"String"}]}}')
+        })
 
-      //then
-      assert.deepStrictEqual(
-        json,
-        '{"field2":1,"errors":{"field2":[{"wrongType":"String"}]}}'
-      );
-    });
-
-    it("invalid data to JSON - primitive type arrays", () => {
-      //given
-      const AnEntity = givenAnEntityToBuildAJSONWithArrayOfPrimitiveType();
-      const instance = new AnEntity();
-      instance.field1 = ["a"];
-      instance.field2 = "1";
-      instance.field6 = ["testing", "primitive"];
-
-      //when
-      instance.validate();
-      const json = JSON.stringify(instance.toJSON());
-
-      //then
-      assert.deepStrictEqual(
-        json,
-        '{"field1":["a"],"field2":"1","field6":["testing","primitive"]}'
-      );
-
-      assert.deepStrictEqual(instance.errors, {
-        field1: [
-          {
-            wrongType: ["Number"],
-          },
-        ],
-      });
-    });
-  });
-});
+        it('invalid data to JSON - primitive type arrays', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSONWithArrayOfPrimitiveType()
+            const instance = new AnEntity()
+            instance.field1 = ["a"]
+            instance.field2 = "1"
+            instance.field6 = ["testing", "primitive"]
+      
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON())
+      
+            //then
+            assert.deepStrictEqual(
+              json,
+              '{"field1":["a"],"field2":"1","field6":["testing","primitive"]}'
+            )
+      
+            assert.deepStrictEqual(instance.errors, {
+              field1: [
+                {
+                  wrongType: ["Number"],
+                },
+              ],
+            })
+          })
+    })
+})
