@@ -219,6 +219,20 @@ describe('An entity', () => {
             return AnEntity
         }
 
+        const givenAnEntityToBuildAJSONWithArraysOfPrimitiveType = () => {
+            const EntityType = givenAnEntityToBeUsedAsType
+  
+              const AnEntity = entity('A entity', {
+                  field1: field([Number]),
+                  field2: field([String]),
+                  field3: field([Object]),
+                  field4: field([Date]),
+                  field5: field([Boolean]),
+                  field6: field([EntityType]),
+              })
+              return AnEntity
+          }
+
         it('valid data to JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
@@ -270,6 +284,29 @@ describe('An entity', () => {
             assert.deepStrictEqual(json, '{"field1":1,"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":[{"f1":true,"f2":"2","errors":{}},{"f1":false,"f2":"3","errors":{}}],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"errors":{}}')
         })
 
+        it('valid data to JSON - primitive type arrays', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSONWithArraysOfPrimitiveType()
+            const instance = new AnEntity()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
+            instance.field1 = [1, 2]
+            instance.field2 = ["testing", "primitive"]
+            instance.field3 = [{ f1: true, f2: "2" }]
+            instance.field4 = [new Date('2019-09-30T23:45:34.324Z'), new Date('2019-09-30T23:45:34.324Z')],
+            instance.field5 = [true, false],
+            instance.field6 = [new AnTypeEntity(), new AnTypeEntity()]
+      
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON({ allowExtraKeys: true }))
+      
+            //then
+            assert.deepStrictEqual(
+              json,
+              '{"field1":[1,2],"field2":["testing","primitive"],"field3":[{"f1":true,"f2":"2"}],"field4":["2019-09-30T23:45:34.324Z","2019-09-30T23:45:34.324Z"],"field5":[true,false],"field6":[{"errors":{}},{"errors":{}}],"errors":{}}'
+            )
+          })
+
         it('invalid data to JSON', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSON()
@@ -304,5 +341,31 @@ describe('An entity', () => {
             //then
             assert.deepStrictEqual(json, '{"field2":1,"errors":{"field2":[{"wrongType":"String"}]}}')
         })
+
+        it('invalid data to JSON - primitive type arrays', () => {
+            //given
+            const AnEntity = givenAnEntityToBuildAJSONWithArraysOfPrimitiveType()
+            const instance = new AnEntity()
+            instance.field1 = [1,2]
+            instance.field2 = [1]
+      
+            //when
+            instance.validate()
+            const json = JSON.stringify(instance.toJSON())
+      
+            //then
+            assert.deepStrictEqual(
+              json,
+              '{"field1":[1,2],"field2":[1]}'
+            )
+      
+            assert.deepStrictEqual(instance.errors, {
+              field2: [
+                {
+                  wrongType: ["String"],
+                },
+              ],
+            })
+          })
     })
 })
