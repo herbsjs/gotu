@@ -224,12 +224,11 @@ describe('An entity', () => {
   
               const AnEntity = entity('A entity', {
                   field1: field([Number]),
-                  field2: field(String),
-                  field3: field(Date),
-                  field4: field(Boolean),
-                  field5: field(EntityType),
-                  field6: field([String]),
-                  method1() { return 10 }
+                  field2: field([String]),
+                  field3: field([Object]),
+                  field4: field([Date]),
+                  field5: field([Boolean]),
+                  field6: field([EntityType]),
               })
               return AnEntity
           }
@@ -288,22 +287,14 @@ describe('An entity', () => {
         it('valid data to JSON - primitive type arrays', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSONWithArraysOfPrimitiveType()
-            const AnTypeEntity = givenAnEntityToBeUsedAsType
             const instance = new AnEntity()
+            const AnTypeEntity = givenAnEntityToBeUsedAsType
             instance.field1 = [1, 2]
-            instance.field2 = "1"
-            instance.field3 = new Date('2019-09-30T23:45:34.324Z')
-            instance.field4 = true
-            instance.field5 = new AnTypeEntity()
-            instance.field5.f1 = true
-            instance.field5.f2 = "2"
-            instance.field6 = ["testing", "primitive"]
-            instance.field1x = 1
-            instance.field2x = "1"
-            instance.field3x = new Date('2019-09-30T23:45:34.324Z')
-            instance.field4x = true
-            instance.field5x = { f1: true, f2: "2" }
-            instance.field6x = [{ f1: true, f2: "2" }]
+            instance.field2 = ["testing", "primitive"]
+            instance.field3 = [{ f1: true, f2: "2" }]
+            instance.field4 = [new Date('2019-09-30T23:45:34.324Z'), new Date('2019-09-30T23:45:34.324Z')],
+            instance.field5 = [true, false],
+            instance.field6 = [new AnTypeEntity(), new AnTypeEntity()]
       
             //when
             instance.validate()
@@ -312,7 +303,7 @@ describe('An entity', () => {
             //then
             assert.deepStrictEqual(
               json,
-              '{"field1":[1,2],"field2":"1","field3":"2019-09-30T23:45:34.324Z","field4":true,"field5":{"f1":true,"f2":"2","errors":{}},"field6":["testing","primitive"],"field1x":1,"field2x":"1","field3x":"2019-09-30T23:45:34.324Z","field4x":true,"field5x":{"f1":true,"f2":"2"},"field6x":[{"f1":true,"f2":"2"}],"errors":{}}'
+              '{"field1":[1,2],"field2":["testing","primitive"],"field3":[{"f1":true,"f2":"2"}],"field4":["2019-09-30T23:45:34.324Z","2019-09-30T23:45:34.324Z"],"field5":[true,false],"field6":[{"errors":{}},{"errors":{}}],"errors":{}}'
             )
           })
 
@@ -355,9 +346,8 @@ describe('An entity', () => {
             //given
             const AnEntity = givenAnEntityToBuildAJSONWithArraysOfPrimitiveType()
             const instance = new AnEntity()
-            instance.field1 = ["a"]
-            instance.field2 = "1"
-            instance.field6 = ["testing", "primitive"]
+            instance.field1 = [1,2]
+            instance.field2 = [1]
       
             //when
             instance.validate()
@@ -366,13 +356,13 @@ describe('An entity', () => {
             //then
             assert.deepStrictEqual(
               json,
-              '{"field1":["a"],"field2":"1","field6":["testing","primitive"]}'
+              '{"field1":[1,2],"field2":[1]}'
             )
       
             assert.deepStrictEqual(instance.errors, {
-              field1: [
+              field2: [
                 {
-                  wrongType: ["Number"],
+                  wrongType: ["String"],
                 },
               ],
             })
