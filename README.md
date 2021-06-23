@@ -10,12 +10,12 @@ Gotu Kola helps define your business entities (*)
 
 ### Installing
 
-```$ npm install gotu```
+```$ npm install @herbsjs/gotu```
 
 ### Using
 
 ```javascript
-const { entity, field } = require('gotu')
+const { entity, field } = require('@herbsjs/gotu')
 
 const Feature =
         entity('Feature', {
