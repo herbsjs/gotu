@@ -1,4 +1,4 @@
-const { validate, checker } = require("suma")
+const { validate, checker } = require("@herbsjs/suma")
 const validateValue = validate
 
 class BaseEntity {
@@ -64,7 +64,7 @@ class BaseEntity {
 
      const jsonKeys = allowExtraKeys ? Object.keys(obj) : []
      const entityKeys = Object.keys(obj.meta.schema)
-      
+
       const mergedKeys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
 
       for (const field of mergedKeys) {

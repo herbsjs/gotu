@@ -1,6 +1,6 @@
 {
-  "name": "gotu",
-  "version": "1.0.22",
+  "name": "@herbsjs/gotu",
+  "version": "1.0.0",
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
@@ -8,16 +8,14 @@
     "lint": "npx eslint \"**/*.{js,jsx}\" --quiet",
     "lint:fix": "npx eslint \"**/*.{js,jsx}\" --fix",
     "coverage-report": "nyc --reporter=html --reporter=text mocha --recursive ./test --timeout 10000",
-    "coverage": "nyc --reporter=text mocha --recursive ./test --timeout 10000"
+    "coverage": "nyc --reporter=text mocha --recursive ./test --timeout 10000",
+    "semantic-release": "semantic-release",
+    "commit": "cz"
   },
   "directories": {
     "lib": "src",
     "test": "test",
     "example": "examples"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/herbsjs/gotu.git"
   },
   "bugs": {
     "url": "https://github.com/herbsjs/gotu/issues/"
@@ -36,15 +34,35 @@
   "license": "MIT",
   "homepage": "https://github.com/herbsjs/gotu#readme",
   "dependencies": {
-    "suma": "^1.0.10"
+    "@herbsjs/suma": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^7.25.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^8.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/github": "^7.2.3",
+    "@semantic-release/npm": "^7.1.3",
+    "@semantic-release/release-notes-generator": "^9.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^17.4.4",
+    "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.4.0",
-    "mocha": "^8.3.2",
+    "mocha": "^9.0.1",
     "nyc": "^15.1.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/herbsjs/gotu.git"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
