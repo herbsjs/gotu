@@ -6,7 +6,8 @@ class Field {
     this.isId = !!options.isId
     this._validations = null
 
-    if (this.isId) if (!this.type === Number || String) this.isId = false
+    if (this.isId)
+      if (!(this.type === Number) && !(this.type === String)) this.isId = false
   }
 
   get defaultValue() {

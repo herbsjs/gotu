@@ -20,6 +20,8 @@ describe('An entity', () => {
         field7: id(Number),
         field8: id(String),
         field9: field(Number, { isId: true }),
+        field10: id(Date),
+        field11: field(Boolean, { isId: true }),
       })
       return new AnEntity()
     }
@@ -140,19 +142,22 @@ describe('An entity', () => {
     })
 
     it('should set a field as id', () => {
-        //given
-        const instance = givenAnEntityWithMultipleFields()
+      //given
+      const instance = givenAnEntityWithMultipleFields()
 
-        //then
-        assert.strictEqual(instance.isValid(), false)
-        assert.deepStrictEqual(instance.errors, {
-            "field1": [{wrongType: 'Number'}],
-            "field2": [{wrongType: 'String'}],
-            "field3": [{wrongType: 'Date'}],
-            "field4": [{wrongType: 'Boolean'}],
-            "field5": [{wrongType: 'New Entity'}],
-            "field6": [{wrongType: ['New Entity']}]
-        })
+      //then
+      assert.strictEqual(instance.__proto__.meta.schema.field7.isId, true)
+      assert.strictEqual(instance.__proto__.meta.schema.field8.isId, true)
+      assert.strictEqual(instance.__proto__.meta.schema.field9.isId, true)
+    })
+
+    it('should not set a field as id with wrong type', () => {
+      //given
+      const instance = givenAnEntityWithMultipleFields()
+
+      //then
+      assert.strictEqual(instance.__proto__.meta.schema.field10.isId, false)
+      assert.strictEqual(instance.__proto__.meta.schema.field11.isId, false)
     })
   })
 })
