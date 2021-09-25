@@ -216,9 +216,9 @@ const User =
     })
 ```
 
-### Id Fields
+### ID Fields
 
-It is possible to define a field as one id of the entity, wich will take impact on the entity metadata and our glue libs.
+It is possible to declare a field as an id, wich will take impact on the entity metadata and our glue libs.
 
 We can do it in two ways:
 
@@ -238,7 +238,7 @@ const User =
     })
 ```
 
-Id Fields only accepts ```Number``` or ```String``` type.
+ID Fields only accepts ```Number``` or ```String``` type.
 
 ### Default value
 
