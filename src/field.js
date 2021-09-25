@@ -1,14 +1,17 @@
 class Field {
   constructor(type, options = {}) {
-    this.name = ""
+    this.name = ''
     this.type = type
     this.options = options
+    this.isId = !!options.isId
     this._validations = null
+
+    if (this.isId) if (!this.type === Number || String) this.isId = false
   }
 
   get defaultValue() {
     if (this.options.default !== undefined) {
-      if (typeof this.options.default === "function")
+      if (typeof this.options.default === 'function')
         return this.options.default()
       return this.options.default
     }
@@ -20,6 +23,7 @@ class Field {
     if (this._validations) return this._validations
 
     const validation = { type: this.type }
+
     if (this.options.validation)
       Object.assign(validation, this.options.validation)
 
