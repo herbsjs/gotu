@@ -216,6 +216,30 @@ const User =
     })
 ```
 
+### Id Fields
+
+It is possible to define a field as one id of the entity, wich will take impact on the entity metadata and our glue libs.
+
+We can do it in two ways:
+
+```javascript
+// The direct way
+const User =
+    entity('User', {
+        id: field(Number, { isId: true }),
+        ...
+    })
+
+// The short way
+const User =
+    entity('User', {
+        id: id(Number),
+        ...
+    })
+```
+
+Id Fields only accepts ```Number``` or ```String``` type.
+
 ### Default value
 
 It is possible to define a default value when an entity instance is initiate.
