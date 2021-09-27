@@ -218,7 +218,7 @@ const User =
 
 ### ID Fields
 
-It is possible to declare a field as an id, wich will take impact on the entity metadata and our glue libs.
+It is possible to declare a field as an ID. This metadata will be used by glues to enrich the infrastructure interfaces (Database, REST, GraphQL, etc).
 
 We can do it in two ways:
 
