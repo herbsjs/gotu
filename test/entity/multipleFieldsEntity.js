@@ -143,8 +143,8 @@ describe('An entity', () => {
             instance.field8 = new Date('2021-12-12')
 
             //then
-            assert.strictEqual(instance.__proto__.meta.schema.field7.isId, true)
-            assert.strictEqual(instance.__proto__.meta.schema.field8.isId, true)
+            assert.strictEqual(instance.__proto__.meta.schema.field7.options.isId, true)
+            assert.strictEqual(instance.__proto__.meta.schema.field8.options.isId, true)
             assert.strictEqual(instance['field7'], 1)
             assert.strictEqual(instance['field8'].getTime(), new Date('2021-12-12').getTime())
             assert.strictEqual(instance.isValid(), true)
@@ -158,7 +158,7 @@ describe('An entity', () => {
           instance.field9 = 1
 
           //then
-          assert.strictEqual(instance.__proto__.meta.schema.field9.isId, true)
+          assert.strictEqual(instance.__proto__.meta.schema.field9.options.isId, true)
           assert.strictEqual(instance['field9'], 1)
           assert.strictEqual(instance.isValid(), true)
           assert.deepStrictEqual(instance.errors, {})

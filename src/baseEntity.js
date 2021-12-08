@@ -20,7 +20,7 @@ class BaseEntity {
       // ignore functions
       if (checker.isFunction(value)) continue
 
-      if (options && options.exceptIDs && definition.isId) continue
+      if (options && options.exceptIDs && definition.options.isId) continue
 
       // types validation
       const validation = definition.validation

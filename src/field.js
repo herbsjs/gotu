@@ -3,7 +3,6 @@ class Field {
     this.name = ''
     this.type = type
     this.options = options
-    this.isId = !!options.isId
     this._validations = null
   }
 

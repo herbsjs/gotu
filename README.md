@@ -259,6 +259,16 @@ const User =
     })
 ```
 
+You can check if a field isId accessing the options of the field, like this:
+
+```javascript
+
+const instance = User()
+
+//should be equals ```true```
+instance.__proto__.meta.schema.id.options.isId
+```
+
 ### Default value
 
 It is possible to define a default value when an entity instance is initiate.
