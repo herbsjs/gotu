@@ -194,7 +194,7 @@ describe('An entity', () => {
         assert.strictEqual(instance.isValid(), false)
         assert.strictEqual(instance['field10'], 12345678)
         assert.deepStrictEqual(instance.errors, {
-          "field10": [{wrongLength:'10'}]
+          "field10": [{wrongLength:10}]
       })
     })
 
