@@ -136,7 +136,7 @@ describe('An entity', () => {
             })
         })
 
-        it('should set a field as ID using id module', () => {
+        it('should set a field as ID and have valid entity', () => {
             //given
             const instance = givenAnEntityWithMultipleFields()
             instance.field7 = 1
@@ -152,7 +152,7 @@ describe('An entity', () => {
         })
 
 
-        it('should set a field as ID using field module with isId option', () => {
+        it('should set a field as ID using field with isId option', () => {
           //given
           const instance = givenAnEntityWithMultipleFields()
           instance.field9 = 1
@@ -164,7 +164,7 @@ describe('An entity', () => {
           assert.deepStrictEqual(instance.errors, {})
       })
 
-        it('should validate types with invalid id value', () => {
+        it('should validate types with invalid ID value', () => {
           //given
           const instance = givenAnEntityWithMultipleFields()
           instance.field7 = '1'
@@ -176,7 +176,7 @@ describe('An entity', () => {
         })
       })
 
-        it('should validate types with invalid id value, but ignore errors using isValid({exceptIDs: true})', () => {
+        it('should validate types with invalid ID value, but ignore errors using isValid({exceptIDs: true})', () => {
           //given
           const instance = givenAnEntityWithMultipleFields()
           instance.field7 = '1'
@@ -186,7 +186,7 @@ describe('An entity', () => {
           assert.deepStrictEqual(instance.errors, {})
       })
 
-      it('should validate types with valid id value but with wrong length validation', () => {
+      it('should validate types with valid ID value but with wrong length validation', () => {
         //given
         const instance = givenAnEntityWithMultipleFields()
         instance.field10 = 12345678
