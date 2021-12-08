@@ -263,10 +263,10 @@ You can check if a field isId accessing the options of the field, like this:
 
 ```javascript
 
-const instance = User()
+const user = new User()
 
 //should be equals ```true```
-instance.__proto__.meta.schema.id.options.isId
+user.__proto__.meta.schema.id.options.isId
 ```
 
 ### Default value
