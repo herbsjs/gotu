@@ -94,6 +94,27 @@ plan.errors // { monthlyCost: [ wrongType: 'Number' ] }
 
 ```
 
+You can ignore id field validation using `isValid({exceptIDs: true})`. Example: Imagine that your id should not be null, but sometimes, in an insertion case, the ID only exists after an insertion in the database, so you can validate the hole entity, except the id field.
+
+```javascript
+
+const Plan =
+    entity('Plan', {
+        ...
+        myId: id(Number),
+        monthlyCost: field(Number),
+    })
+
+const plan = new Plan()
+plan.plan.myId = '123'
+plan.plan.monthlyCost = 500
+plan.isValid({exceptIDs: true}) // true
+
+plan.isValid() // false
+plan.errors // { myId: [ wrongType: 'Number' ] }
+
+```
+
 
 ### Custom Validation
 
@@ -215,6 +236,30 @@ const User =
         plan: field([Plan])
     })
 ```
+
+### ID Fields
+
+It is possible to declare a field as an ID. This metadata will be used by glues to enrich the infrastructure interfaces (Database, REST, GraphQL, etc).
+
+We can do it in two ways:
+
+```javascript
+// The explicit way
+const User =
+    entity('User', {
+        id: field(Number, { isId: true }),
+        ...
+    })
+
+// The short way
+const User =
+    entity('User', {
+        id: id(Number),
+        ...
+    })
+```
+
+ID Fields only accepts ```Number``` or ```String``` type.
 
 ### Default value
 

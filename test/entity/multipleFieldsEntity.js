@@ -1,5 +1,6 @@
 const { entity } = require('../../src/entity')
 const { field } = require('../../src/field')
+const { id } = require('../../src/customTypes/id')
 const assert = require('assert')
 
 describe('An entity', () => {
@@ -9,7 +10,7 @@ describe('An entity', () => {
         const NewEntity = entity('New Entity', {
             f1: field(String)
         })
-        
+
         const givenAnEntityWithMultipleFields = () => {
             const AnEntity = entity('An entity', {
                 field1: field(Number),
@@ -17,7 +18,10 @@ describe('An entity', () => {
                 field3: field(Date),
                 field4: field(Boolean),
                 field5: field(NewEntity),
-                field6: field([NewEntity])
+                field6: field([NewEntity]),
+                field7: id(Number),
+                field8: id(String),
+                field9: field(Number, { isId: true })
             })
             return new AnEntity()
         }
@@ -56,7 +60,7 @@ describe('An entity', () => {
             //given
             const instance1 = givenAnEntityWithMultipleFields()
             const instance2 = givenAnEntityWithMultipleFields()
-            
+
             //when
             instance1.field1 = 1
             instance1.field2 = "1"
@@ -130,6 +134,56 @@ describe('An entity', () => {
                 "field6": [{wrongType: ['New Entity']}]
             })
         })
+
+        it('should set a field as ID using id module', () => {
+            //given
+            const instance = givenAnEntityWithMultipleFields()
+            instance.field7 = 1
+            instance.field8 = '1'
+
+            //then
+            assert.strictEqual(instance.__proto__.meta.schema.field7.isId, true)
+            assert.strictEqual(instance.__proto__.meta.schema.field8.isId, true)
+            assert.strictEqual(instance['field7'], 1)
+            assert.strictEqual(instance['field8'], "1")
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
+
+
+        it('should set a field as ID using field module with isId option', () => {
+          //given
+          const instance = givenAnEntityWithMultipleFields()
+          instance.field9 = 1
+
+          //then
+          assert.strictEqual(instance.__proto__.meta.schema.field9.isId, true)
+          assert.strictEqual(instance['field9'], 1)
+          assert.strictEqual(instance.isValid(), true)
+          assert.deepStrictEqual(instance.errors, {})
+      })
+
+        it('should validate types with invalid id value', () => {
+          //given
+          const instance = givenAnEntityWithMultipleFields()
+          instance.field7 = '1'
+          //then
+          assert.strictEqual(instance.isValid(), false)
+          assert.strictEqual(instance['field7'], '1')
+          assert.deepStrictEqual(instance.errors, {
+            "field7": [{wrongType:'Number'}]
+        })
+      })
+
+        it('should validate types with invalid id value, but ignore errors using isValid({exceptIDs: true})', () => {
+          //given
+          const instance = givenAnEntityWithMultipleFields()
+          instance.field7 = '1'
+          //then
+          assert.strictEqual(instance.isValid({exceptIDs: true}), true)
+          assert.strictEqual(instance['field7'], '1')
+          assert.deepStrictEqual(instance.errors, {})
+      })
 
     })
 })
