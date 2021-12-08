@@ -20,8 +20,9 @@ describe('An entity', () => {
                 field5: field(NewEntity),
                 field6: field([NewEntity]),
                 field7: id(Number),
-                field8: id(String),
-                field9: field(Number, { isId: true })
+                field8: id(Date),
+                field9: field(Number, { isId: true }),
+                field10: id(Number, { validation: { length: { is: 10 }  }})
             })
             return new AnEntity()
         }
@@ -139,13 +140,13 @@ describe('An entity', () => {
             //given
             const instance = givenAnEntityWithMultipleFields()
             instance.field7 = 1
-            instance.field8 = '1'
+            instance.field8 = new Date('2021-12-12')
 
             //then
             assert.strictEqual(instance.__proto__.meta.schema.field7.isId, true)
             assert.strictEqual(instance.__proto__.meta.schema.field8.isId, true)
             assert.strictEqual(instance['field7'], 1)
-            assert.strictEqual(instance['field8'], "1")
+            assert.strictEqual(instance['field8'].getTime(), new Date('2021-12-12').getTime())
             assert.strictEqual(instance.isValid(), true)
             assert.deepStrictEqual(instance.errors, {})
         })
@@ -184,6 +185,18 @@ describe('An entity', () => {
           assert.strictEqual(instance['field7'], '1')
           assert.deepStrictEqual(instance.errors, {})
       })
+
+      it('should validate types with valid id value but with wrong length validation', () => {
+        //given
+        const instance = givenAnEntityWithMultipleFields()
+        instance.field10 = 12345678
+        //then
+        assert.strictEqual(instance.isValid(), false)
+        assert.strictEqual(instance['field10'], 12345678)
+        assert.deepStrictEqual(instance.errors, {
+          "field10": [{wrongLength:'10'}]
+      })
+    })
 
     })
 })

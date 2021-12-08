@@ -259,8 +259,6 @@ const User =
     })
 ```
 
-ID Fields only accepts ```Number``` or ```String``` type.
-
 ### Default value
 
 It is possible to define a default value when an entity instance is initiate.
