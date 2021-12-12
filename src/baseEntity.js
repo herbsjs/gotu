@@ -12,13 +12,15 @@ class BaseEntity {
     }
   }
 
-  validate() {
+  validate(options) {
     const errors = {}
     for (const [name, definition] of Object.entries(this.meta.schema)) {
       const value = this[name]
 
       // ignore functions
       if (checker.isFunction(value)) continue
+
+      if (options && options.exceptIDs && definition.options.isId) continue
 
       // types validation
       const validation = definition.validation
@@ -49,8 +51,8 @@ class BaseEntity {
     this.errors = errors
   }
 
-  isValid() {
-    this.validate()
+  isValid(options) {
+    this.validate(options)
     return Object.keys(this.errors).length === 0
   }
 
