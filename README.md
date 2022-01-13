@@ -403,4 +403,4 @@ https://en.wikipedia.org/wiki/Centella_asiatica
 ### License
 
 **Gotu** is released under the
-[MIT license](https://github.com/herbsjs/gotu/blob/master/LICENSE.md).
+[MIT license](https://github.com/herbsjs/gotu/blob/master/LICENSE).
