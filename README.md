@@ -49,6 +49,52 @@ user.features = [
 user.validate()
 ```
 
+## Deep copy entity
+
+To clone the entity, we can use `entity.fromJSON()`, like the example below:
+
+```js
+const Customer =
+    entity('Customer', {
+        name: field(String),
+        age: field(Number),
+        gender: field(String)
+    })
+
+const customer1 = new Customer()
+customer1.name = 'John Doe'
+customer1.age = 20
+customer1.gender = 'Male'
+
+const customer2 = Customer.fromJSON(customer1)
+//customer1.name = 'John Doe'
+//customer1.age = 20
+//customer1.gender = 'Male'
+```
+
+To do a clone changing original entity, you can use desestructuring method, like this:
+
+```js
+const Customer =
+    entity('Customer', {
+        name: field(String),
+        age: field(Number),
+        gender: field(String)
+    })
+
+const customer1 = new Customer()
+customer1.name = 'John Doe'
+customer1.age = 20
+customer1.gender = 'Male'
+
+const customer2 = Customer.fromJSON({ ...customer1, name: 'Billy Jean' })
+//customer1.name = 'Billy Jean'
+//customer1.age = 20
+//customer1.gender = 'Male'
+
+
+```
+
 ## Validation
 
 A value of an field can be validated against the field type or its custom validation.
