@@ -259,16 +259,6 @@ const User =
     })
 ```
 
-You can check if a field isId accessing the options of the field, like this:
-
-```javascript
-
-const user = new User()
-
-//should be equals ```true```
-user.__proto__.meta.schema.id.options.isId
-```
-
 ### Default value
 
 It is possible to define a default value when an entity instance is initiate.
@@ -364,6 +354,80 @@ Check if an object is a Gotu Entity class
 
         entity.isEntity(AnEntity) // true
         entity.isEntity(Object) // false
+```
+
+## Entity schema - `entity.schema`
+
+It is possible to access the schema information of your entity. There are two special properties:
+
+### fields
+
+Returns an list with all the fields of the entity:
+```javascript
+const User = entity('User', {
+    id: id(Number),
+    name: field(String, { validation: { presence: true }})
+})
+
+const fields = User.schema.fields
+
+// results in
+// [
+//   Field {
+//     name: 'id',
+//     type: [Function: Number],
+//     options: { isId: true },
+//     _validations: null
+//   },
+//   Field {
+//     name: 'name',
+//     type: [Function: String],
+//     options: { validation: [Object] },
+//     _validations: null
+//   }
+// ]
+```
+If the entity has no field, so it returns an emtpy array (`[]`)
+
+### ids
+
+Returns an list with all the ids of the entity:
+```javascript
+const User = entity('User', {
+    id: id(Number),
+    anotherId: field(String, { isId: true }),
+    name: field(String)
+})
+
+const ids = User.schema.ids
+
+// results in
+// [
+//   Field {
+//     name: 'id',
+//     type: [Function: Number],
+//     options: { isId: true },
+//     _validations: null
+//   },
+//   Field {
+//     name: 'anotherId',
+//     type: [Function: String],
+//     options: { isId: true },
+//     _validations: null
+//   }
+// ]
+```
+
+If the entity has no id, so it returns an emtpy array (`[]`)
+
+Another way to verify if a specific property is an id, is accessing the `isId` property in the field's options, like this:
+
+```javascript
+
+const user = new User()
+
+//should be equals ```true```
+user.__proto__.meta.schema.id.options.isId
 ```
 
 ## TODO
