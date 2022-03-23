@@ -2,6 +2,21 @@
 
 ![Node.js CI](https://github.com/herbsjs/gotu/workflows/Node.js%20CI/badge.svg?branch=master) [![codecov](https://codecov.io/gh/herbsjs/gotu/branch/master/graph/badge.svg)](https://codecov.io/gh/herbsjs/gotu)
 
+- [Introduction](#gotu-kola)
+- [Installing](#installing)
+- [Using](#using)
+- [Validation](#salidation)
+- [Serialization](#serialization)
+- [Field definition](#field-definition)
+- [Scalar types](#scalar-types)
+- [Method definition](#method-definition)
+- [Value Objects](#value-objects)
+- [Instance Type Check](#instance-type-check)
+- [TODO](#TODO)
+- [Contribute](#contribute)
+- [The Herb](#the-herb)
+- [License](#license)
+
 # Gotu Kola
 
 Gotu Kola helps define your business entities (*)
@@ -338,7 +353,40 @@ const user = new User()
 const access = user.hasAccess()
 ```
 
-## Instance Type Check - `Entity.parentOf`
+## Value objects
+
+
+The `asValueObject` method returns a new entity without `id` and `omitable` fields.
+
+Who you could to avoid create a second object just to receive your basic entity data without processed fields?
+e.g:
+
+``` js
+const User =
+    entity('User', {
+        id: id(String),
+        thirtyPartID: field(String, { isID: true }),
+        createdAt: field(Date, { omitable: true, presence: true }),
+        updatedat: field(Date, { omitable: true }),
+        deletedAt: field(Date, { omitable: true }),
+        name: field(String),
+        age: field(Number),
+        country: field(String)
+    })
+
+// To create this user we can't receive the ID, thirtyPartID, createdAt... because this properties will be generated into runtime, to avoid this we cloud to use the asValueObject method.
+
+const secondEntity = User.asValueObject()
+/* secondEntity's fields
+        name: field(String),
+        age: field(Number),
+        country: field(String)
+```
+
+
+## Instance Type Check 
+
+### `Entity.parentOf`
 
 Check if a instance is the same type from its parent entity class (similar to `instanceOf`)
 
@@ -353,7 +401,7 @@ Check if a instance is the same type from its parent entity class (similar to `i
         AnEntity.parentOf(instance2) // false
 ```
 
-## Entity Type Check - `entity.isEntity`
+### `entity.isEntity`
 
 Check if an object is a Gotu Entity class
 

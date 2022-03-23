@@ -13,7 +13,7 @@ describe('A entity', () => {
             field1: field(Number)
         })
         const instance1 = new AnEntity()
-        const instance2 = new AnEntity()
+        const instance2 = new (AnEntity.asValueObject())()
         const instance3 = new ASecondEntity()
         //then
         assert.ok(entity.isEntity(AnEntity))

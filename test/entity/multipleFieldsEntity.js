@@ -1,5 +1,5 @@
 const { entity } = require('../../src/entity')
-const { field } = require('../../src/field')
+const { field, Field } = require('../../src/field')
 const { id } = require('../../src/customTypes/id')
 const assert = require('assert')
 
@@ -11,32 +11,33 @@ describe('An entity', () => {
             f1: field(String)
         })
 
-        const givenAnEntityWithMultipleFields = () => {
-            const AnEntity = entity('An entity', {
-                field1: field(Number),
-                field2: field(String),
-                field3: field(Date),
-                field4: field(Boolean),
-                field5: field(NewEntity),
-                field6: field([NewEntity]),
-                field7: id(Number),
-                field8: id(Date),
-                field9: field(Number, { isId: true }),
-                field10: id(Number, { validation: { length: { is: 10 }  }})
-            })
-            return new AnEntity()
+        const EntityWithMultipleFields = entity('An entity', {
+            field1: field(Number),
+            field2: field(String),
+            field3: field(Date),
+            field4: field(Boolean),
+            field5: field(NewEntity, { omitable: true, presence: true }),
+            field6: field([NewEntity], { omitable: true }),
+            field7: id(Number),
+            field8: id(Date),
+            field9: field(Number, { isId: true }),
+            field10: id(Number, { omitable: true, validation: { length: { is: 10 } } })
+        })
+
+        const anEntityInstanceWithMultipleFields = () => {
+            return new EntityWithMultipleFields()
         }
 
         it('should initiate', () => {
             //given
-            const instance = givenAnEntityWithMultipleFields()
+            const instance = anEntityInstanceWithMultipleFields()
             //then
             assert.equal(instance.meta.name, 'An entity')
         })
 
         it('should set a value to multiple fields', () => {
             //given
-            const instance = givenAnEntityWithMultipleFields()
+            const instance = anEntityInstanceWithMultipleFields()
             //when
             instance.field1 = 1
             instance.field2 = "1"
@@ -59,8 +60,8 @@ describe('An entity', () => {
 
         it('should have multiple instances with isolated valued from each other', () => {
             //given
-            const instance1 = givenAnEntityWithMultipleFields()
-            const instance2 = givenAnEntityWithMultipleFields()
+            const instance1 = anEntityInstanceWithMultipleFields()
+            const instance2 = anEntityInstanceWithMultipleFields()
 
             //when
             instance1.field1 = 1
@@ -72,7 +73,7 @@ describe('An entity', () => {
             instance1.field5 = newEntity
             instance1.field6 = [newEntity]
 
-            const instance3 = givenAnEntityWithMultipleFields()
+            const instance3 = anEntityInstanceWithMultipleFields()
 
             //then
             assert.strictEqual(instance1['field1'], 1)
@@ -101,7 +102,7 @@ describe('An entity', () => {
 
         it('should validate types and have valid value', () => {
             //given
-            const instance = givenAnEntityWithMultipleFields()
+            const instance = anEntityInstanceWithMultipleFields()
             instance.field1 = 1
             instance.field2 = "1"
             instance.field3 = new Date('2019-09-30T23:45:34.324Z')
@@ -117,7 +118,7 @@ describe('An entity', () => {
 
         it('should validate types and have invalid value', () => {
             //given
-            const instance = givenAnEntityWithMultipleFields()
+            const instance = anEntityInstanceWithMultipleFields()
             instance.field1 = "1"
             instance.field2 = 1
             instance.field3 = Date('2019-09-30T23:45:34.324Z')
@@ -127,18 +128,18 @@ describe('An entity', () => {
             //then
             assert.strictEqual(instance.isValid(), false)
             assert.deepStrictEqual(instance.errors, {
-                "field1": [{wrongType: 'Number'}],
-                "field2": [{wrongType: 'String'}],
-                "field3": [{wrongType: 'Date'}],
-                "field4": [{wrongType: 'Boolean'}],
-                "field5": [{wrongType: 'New Entity'}],
-                "field6": [{wrongType: ['New Entity']}]
+                "field1": [{ wrongType: 'Number' }],
+                "field2": [{ wrongType: 'String' }],
+                "field3": [{ wrongType: 'Date' }],
+                "field4": [{ wrongType: 'Boolean' }],
+                "field5": [{ wrongType: 'New Entity' }],
+                "field6": [{ wrongType: ['New Entity'] }]
             })
         })
 
         it('should set a field as ID and have valid entity', () => {
             //given
-            const instance = givenAnEntityWithMultipleFields()
+            const instance = anEntityInstanceWithMultipleFields()
             instance.field7 = 1
             instance.field8 = new Date('2021-12-12')
 
@@ -153,50 +154,62 @@ describe('An entity', () => {
 
 
         it('should set a field as ID using field with isId option', () => {
-          //given
-          const instance = givenAnEntityWithMultipleFields()
-          instance.field9 = 1
+            //given
+            const instance = anEntityInstanceWithMultipleFields()
+            instance.field9 = 1
 
-          //then
-          assert.strictEqual(instance.__proto__.meta.schema.field9.options.isId, true)
-          assert.strictEqual(instance['field9'], 1)
-          assert.strictEqual(instance.isValid(), true)
-          assert.deepStrictEqual(instance.errors, {})
-      })
+            //then
+            assert.strictEqual(instance.__proto__.meta.schema.field9.options.isId, true)
+            assert.strictEqual(instance['field9'], 1)
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
         it('should validate types with invalid ID value', () => {
-          //given
-          const instance = givenAnEntityWithMultipleFields()
-          instance.field7 = '1'
-          //then
-          assert.strictEqual(instance.isValid(), false)
-          assert.strictEqual(instance['field7'], '1')
-          assert.deepStrictEqual(instance.errors, {
-            "field7": [{wrongType:'Number'}]
+            //given
+            const instance = anEntityInstanceWithMultipleFields()
+            instance.field7 = '1'
+            //then
+            assert.strictEqual(instance.isValid(), false)
+            assert.strictEqual(instance['field7'], '1')
+            assert.deepStrictEqual(instance.errors, {
+                "field7": [{ wrongType: 'Number' }]
+            })
         })
-      })
 
         it('should validate types with invalid ID value, but ignore errors using isValid({exceptIDs: true})', () => {
-          //given
-          const instance = givenAnEntityWithMultipleFields()
-          instance.field7 = '1'
-          //then
-          assert.strictEqual(instance.isValid({exceptIDs: true}), true)
-          assert.strictEqual(instance['field7'], '1')
-          assert.deepStrictEqual(instance.errors, {})
-      })
+            //given
+            const instance = anEntityInstanceWithMultipleFields()
+            instance.field7 = '1'
+            //then
+            assert.strictEqual(instance.isValid({ exceptIDs: true }), true)
+            assert.strictEqual(instance['field7'], '1')
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
-      it('should validate types with valid ID value but with wrong length validation', () => {
-        //given
-        const instance = givenAnEntityWithMultipleFields()
-        instance.field10 = 12345678
-        //then
-        assert.strictEqual(instance.isValid(), false)
-        assert.strictEqual(instance['field10'], 12345678)
-        assert.deepStrictEqual(instance.errors, {
-          "field10": [{wrongLength:10}]
-      })
-    })
+        it('should validate types with valid ID value but with wrong length validation', () => {
+            //given
+            const instance = anEntityInstanceWithMultipleFields()
+            instance.field10 = 12345678
+            //then
+            assert.strictEqual(instance.isValid(), false)
+            assert.strictEqual(instance['field10'], 12345678)
+            assert.deepStrictEqual(instance.errors, {
+                "field10": [{ wrongLength: 10 }]
+            })
+        })
+
+        it('should returns a new entity without omitable fields', () => {
+            //given
+            const Entity = EntityWithMultipleFields.asValueObject()
+            const { prototype: { meta: { schema } } } = Entity
+            for (let i = 5; i < 11; i++)
+                assert.strictEqual(schema[`field${i}`], undefined)
+
+            for (let i = 1; i < 5; i++) {
+                assert.equal(schema[`field${i}`].constructor, Field)
+            }
+        })
 
     })
 })

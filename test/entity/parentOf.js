@@ -13,11 +13,11 @@ describe('A entity', () => {
             field1: field(Number)
         })
         const instance1 = new AnEntity()
-        const instance2 = new AnEntity()
+        const instance2 = new (AnEntity.asValueObject())()
         const instance3 = new AnSecondEntity()
         //then
         assert.ok(AnEntity.parentOf(instance1))
-        assert.ok(AnEntity.parentOf(instance2))
+        assert.ok(!AnEntity.parentOf(instance2))
         assert.ok(!AnEntity.parentOf(instance3))
     })
 })
