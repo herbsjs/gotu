@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/herbsjs/gotu/compare/v1.1.0...v1.1.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* update suma version ([1cfe4a6](https://github.com/herbsjs/gotu/commit/1cfe4a62d62cfd1ddfe330f01498e7d2a5fb260e))
+
 # [1.1.0](https://github.com/herbsjs/gotu/compare/v1.0.0...v1.1.0) (2021-12-12)
 
 

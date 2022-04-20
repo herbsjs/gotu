@@ -1,6 +1,6 @@
 {
   "name": "@herbsjs/gotu",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Domain entities javascript library.",
   "main": "./src/gotu.js",
   "scripts": {
