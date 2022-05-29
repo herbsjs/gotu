@@ -1,3 +1,18 @@
+## [1.1.2](https://github.com/herbsjs/gotu/compare/v1.1.1...v1.1.2) (2022-04-21)
+
+
+### Bug Fixes
+
+* **deps:** bump ansi-regex from 3.0.0 to 3.0.1 ([afd20bf](https://github.com/herbsjs/gotu/commit/afd20bf4972d7e785d58c5b4204be3a9851bfeb9))
+* **deps:** bump node-fetch from 2.6.6 to 2.6.7 ([bee0ff7](https://github.com/herbsjs/gotu/commit/bee0ff77a3bff0138d8bb43a97704ddff5ab0583))
+
+## [1.1.1](https://github.com/herbsjs/gotu/compare/v1.1.0...v1.1.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* update suma version ([1cfe4a6](https://github.com/herbsjs/gotu/commit/1cfe4a62d62cfd1ddfe330f01498e7d2a5fb260e))
+
 # [1.1.0](https://github.com/herbsjs/gotu/compare/v1.0.0...v1.1.0) (2021-12-12)
 
 
