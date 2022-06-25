@@ -126,12 +126,12 @@ Use `{ validation: ... }` to specify a valid Suma validation (sorry) on the fiel
 const User =
     entity('User', {
         ...
-        password: field(String, validation: {
+        password: field(String, { validation: {
             presence: true,
-            length: { minimum: 6 }
+            length: { minimum: 6 } }
         }),
-        cardNumber: field(String, validation: {
-          custom: { invalidCardNumber: (value) => value.length === 16 }
+        cardNumber: field(String, { validation: {
+          custom: { invalidCardNumber: (value) => value.length === 16 } }
         })
     })
 
