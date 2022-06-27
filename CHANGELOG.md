@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/herbsjs/gotu/compare/v1.1.2...v1.1.3) (2022-06-27)
+
+
+### Bug Fixes
+
+* **deps:** update herbs and lint dependencies ([6675a32](https://github.com/herbsjs/gotu/commit/6675a32406f7071bf3cadac0ea4db6235c9903a6))
+
 ## [1.1.2](https://github.com/herbsjs/gotu/compare/v1.1.1...v1.1.2) (2022-04-21)
 
 
