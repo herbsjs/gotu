@@ -1,5 +1,4 @@
-const { validate, checker } = require("@herbsjs/suma")
-const validateValue = validate
+const { validate: validateValue, checker } = require("@herbsjs/suma")
 
 class BaseEntity {
 
@@ -64,8 +63,8 @@ class BaseEntity {
     function deepCopy(obj, allowExtraKeys) {
       const copy = {}
 
-     const jsonKeys = allowExtraKeys ? Object.keys(obj) : []
-     const entityKeys = Object.keys(obj.meta.schema)
+      const jsonKeys = allowExtraKeys ? Object.keys(obj) : []
+      const entityKeys = Object.keys(obj.meta.schema)
 
       const mergedKeys = jsonKeys.concat(entityKeys.filter((item) => jsonKeys.indexOf(item) < 0))
 
@@ -123,6 +122,20 @@ class BaseEntity {
     }
 
     return instance
+  }
+
+  static get schema() {
+    const schema = this.prototype.meta.schema
+
+    return {
+      ...schema,
+      get fields() {
+        return Object.values(schema)
+      }, 
+      get ids() {
+        return Object.values(schema).filter(({ options }) => options.isId)
+      }
+    }
   }
 }
 
