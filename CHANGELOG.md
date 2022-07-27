@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/herbsjs/gotu/compare/v1.1.3...v1.2.0) (2022-07-27)
+
+
+### Features
+
+* **base-entity:** fields and ids getters on base entity ([1e88326](https://github.com/herbsjs/gotu/commit/1e8832621a79e20577fae40029e3ad88a6dd4262))
+
 ## [1.1.3](https://github.com/herbsjs/gotu/compare/v1.1.2...v1.1.3) (2022-06-27)
 
 
