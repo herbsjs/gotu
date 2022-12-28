@@ -38,7 +38,7 @@ describe('A field', () => {
             })
             //when
             const instance = new AnEntity()
-            //then
+            //then            
             assert.deepStrictEqual(instance['field1'], "Of Life")
         })
 
