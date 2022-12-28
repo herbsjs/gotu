@@ -15,7 +15,7 @@ class BaseEntity {
         get: function() {
           return this[`_${name}`];
         },
-      });         
+      });
 
       this[name] = definition.defaultValue;
     }
@@ -26,11 +26,11 @@ class BaseEntity {
       if (definition.options && checker.isFunction(definition.options.value)) {
         const functionValue = definition.options.value;
 
+        delete this[field];
         Object.defineProperty(this, field, {
-          get: function() {
-            return functionValue(this);
-          },
-          set: function() {
+          configurable: true,
+          get: () => functionValue(this),
+          set: () => {
             throw new Error('Cannot set a property of function type');
           },
         });
