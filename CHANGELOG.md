@@ -1,3 +1,10 @@
+# [1.3.0-beta.1](https://github.com/herbsjs/gotu/compare/v1.2.0...v1.3.0-beta.1) (2023-03-29)
+
+
+### Features
+
+* **entity:** try Parse - a method to cast the data loaded to a entity to the correct type ([2efb440](https://github.com/herbsjs/gotu/commit/2efb44052136dd1ee6e73ef3453ccabdbf60bcd3)), closes [#29](https://github.com/herbsjs/gotu/issues/29)
+
 # [1.2.0](https://github.com/herbsjs/gotu/compare/v1.1.3...v1.2.0) (2022-07-27)
 
 
