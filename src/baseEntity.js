@@ -1,5 +1,4 @@
-const { validate: validateValue, checker } = require("@herbsjs/suma")
-const { tryParse } = require("./parsers/tryParse")
+const { validate: validateValue, checker, tryParse: tryParser } = require("@herbsjs/suma")
 class BaseEntity {
 
   constructor() {
@@ -139,7 +138,25 @@ class BaseEntity {
   }
 
   tryParse() {
-    return tryParse(this, BaseEntity)
+    for (const [name, definition] of Object.entries(this.meta.schema)) {
+      const value = this[name]
+      const type = definition.type
+
+      // for entity types (deep validation)
+      if (value instanceof BaseEntity) {
+        value.tryParse()
+        continue
+      }
+
+      // for array of entity types
+      if (Array.isArray(value) && definition.type[0] && definition.type[0].prototype instanceof BaseEntity) {
+        value.map((item) => item.tryParse())
+        continue
+      }
+
+      // try to parse the value to the correct type
+      this[name] = tryParser(value, type)
+    }
   }
 }
 
