@@ -1,5 +1,5 @@
 const { validate: validateValue, checker } = require("@herbsjs/suma")
-
+const { tryParse } = require("./parsers/tryParse")
 class BaseEntity {
 
   constructor() {
@@ -131,11 +131,15 @@ class BaseEntity {
       ...schema,
       get fields() {
         return Object.values(schema)
-      }, 
+      },
       get ids() {
         return Object.values(schema).filter(({ options }) => options.isId)
       }
     }
+  }
+
+  tryParse() {
+    return tryParse(this, BaseEntity)
   }
 }
 
