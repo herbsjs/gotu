@@ -18,12 +18,16 @@ class BaseEntity {
       // ignore functions
       if (checker.isFunction(value)) continue
 
-      if (options && options.exceptIDs && definition.options.isId) continue
+      // onlyIDs
+      if (options?.onlyIDs && !definition.options.isId) continue
+
+      // exceptIDs
+      if (options?.exceptIDs && definition.options.isId) continue
 
       // types validation
       const validation = definition.validation
       const retErrors = validateValue(value, validation)
-      if (retErrors.errors && retErrors.errors.length > 0) {
+      if (retErrors?.errors?.length > 0) {
         errors[name] = retErrors.errors
         continue
       }

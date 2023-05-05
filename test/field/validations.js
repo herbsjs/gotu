@@ -1,6 +1,7 @@
 const { entity } = require('../../src/entity')
 const { field } = require('../../src/field')
 const assert = require('assert')
+const { id } = require('../../src/customTypes/id')
 
 describe('A entity', () => {
 
@@ -66,6 +67,46 @@ describe('A entity', () => {
             assert.deepStrictEqual(instance1.errors, {})
             assert.deepStrictEqual(instance2.errors, { field1: [{ cantBeEmpty: true }] })
 
+        })
+    })
+
+    describe('with ID validation', () => {
+        it('should ignore errors on IDs', () => {
+            //given
+            const AnEntity = entity('A entity', {
+                field1: id(Number, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                field3: field(Number, { validation: { presence: true } }),
+            })
+            const instance = new AnEntity()
+
+            //when
+            instance.field1 = undefined
+            instance.field2 = 'value2'
+            instance.field3 = 3
+            instance.validate({ exceptIDs: true })
+
+            //then
+            assert.deepStrictEqual(instance.errors, {})
+        })
+
+        it('should validate errors only on IDs', () => {
+            //given
+            const AnEntity = entity('A entity', {
+                field1: id(Number, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                field3: field(Number, { validation: { presence: true } }),
+            })
+            const instance = new AnEntity()
+
+            //when
+            instance.field1 = undefined
+            instance.field2 = undefined
+            instance.field3 = undefined
+            instance.validate({ onlyIDs: true })
+
+            //then
+            assert.deepStrictEqual(instance.errors, { field1: [{ cantBeEmpty: true }] })
         })
     })
 })
