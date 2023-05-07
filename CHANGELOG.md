@@ -1,3 +1,11 @@
+# [1.3.0-beta.2](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2023-05-07)
+
+
+### Features
+
+* **validation:** onlyIDs - validate only ID fields ([cc08622](https://github.com/herbsjs/gotu/commit/cc08622af5be87e0e643346d6e9b212352663979))
+* **validation:** reference Validation - Validation option only for reference/entity types ([39faa00](https://github.com/herbsjs/gotu/commit/39faa00fceb1371dfd63cc54ce9df14304bc4bfa))
+
 # [1.3.0-beta.1](https://github.com/herbsjs/gotu/compare/v1.2.0...v1.3.0-beta.1) (2023-03-29)
 
 
