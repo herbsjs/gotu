@@ -57,7 +57,7 @@ describe('A entity', () => {
                 })
             const instance1 = new AnEntity()
             const instance2 = new AnEntity()
-            
+
             //when
             instance1.field1 = 1
             instance1.validate()
@@ -107,6 +107,193 @@ describe('A entity', () => {
 
             //then
             assert.deepStrictEqual(instance.errors, { field1: [{ cantBeEmpty: true }] })
+        })
+    })
+
+    describe('with reference validation', () => {
+        it('should validate errors on references', () => {
+            //given
+            const AnEntity1 = entity('A entity', {
+                id1: id(Number, { validation: { presence: true } }),
+                field1: field(String, { validation: { presence: true } })
+            })
+            const AnEntity2 = entity('A entity', {
+                id2: id(Number, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                fieldEntity2: field(AnEntity1, { validation: { presence: true } }),
+                fieldEntities2: field([AnEntity1], { validation: { presence: true } })
+            })
+            const AnEntity3 = entity('A entity', {
+                id3: id(Number, { validation: { presence: true } }),
+                field3: field(String, { validation: { presence: true } }),
+                fieldEntity3: field(AnEntity2, { validation: { presence: true } })
+            })
+            const instance = AnEntity3.fromJSON({
+                id3: '3',
+                field3: undefined,
+                fieldEntity3: {
+                    id2: 2,
+                    field2: 'value2',
+                    fieldEntity2: { id1: undefined, field1: 'value1' },
+                    fieldEntities2: [
+                        { id1: '1', field1: undefined },
+                        { id1: undefined, field1: 'value1' }]
+                }
+            })
+
+            //when
+            instance.validate()
+
+            //then
+            assert.deepStrictEqual(instance.errors, {
+                id3: [{ wrongType: 'Number' }],
+                field3: [{ cantBeEmpty: true }],
+                fieldEntity3: {
+                    fieldEntities2: [
+                        { field1: [{ cantBeEmpty: true }], id1: [{ wrongType: 'Number' }] },
+                        { id1: [{ cantBeEmpty: true }] }
+                    ],
+                    fieldEntity2: { id1: [{ cantBeEmpty: true }] }
+                }
+            })
+        })
+
+        it('should validate errors on references with option onlyIDs', () => {
+            //given
+            const AnEntity1 = entity('A entity', {
+                id1: id(Number, { validation: { presence: true } }),
+                field1: field(String, { validation: { presence: true } })
+            })
+            const AnEntity2 = entity('A entity', {
+                id21: id(Number, { validation: { presence: true } }),
+                id22: id(String, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                fieldEntity2: field(AnEntity1, { validation: { presence: true } }),
+                fieldEntities2: field([AnEntity1], { validation: { presence: true } })
+            })
+            const AnEntity3 = entity('A entity', {
+                id3: id(Number, { validation: { presence: true } }),
+                field3: field(String, { validation: { presence: true } }),
+                fieldEntity3: field(AnEntity2, { validation: { presence: true } })
+            })
+            const instance = AnEntity3.fromJSON({
+                id3: '3',
+                field3: undefined,
+                fieldEntity3: {
+                    id21: '2',
+                    id22: 2,
+                    field2: 'value2',
+                    fieldEntity2: { id1: undefined, field1: 'value1' },
+                    fieldEntities2: [
+                        { id1: '1', field1: undefined },
+                        { id1: undefined, field1: 'value1' }]
+                }
+            })
+
+            //when
+            instance.validate({ references: { onlyIDs: true } })
+
+            //then
+            assert.deepStrictEqual(instance.errors, {
+                id3: [{ wrongType: 'Number' }],
+                field3: [{ cantBeEmpty: true }],
+                fieldEntity3: {
+                    id21: [{ wrongType: 'Number' }],
+                    id22: [{ wrongType: 'String' }],
+                }
+            })
+        })
+
+        it('should validate errors on references with option exceptIDs', () => {
+            //given
+            const AnEntity1 = entity('A entity', {
+                id1: id(Number, { validation: { presence: true } }),
+                field1: field(String, { validation: { presence: true } })
+            })
+            const AnEntity2 = entity('A entity', {
+                id21: id(Number, { validation: { presence: true } }),
+                id22: id(String, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                fieldEntity2: field(AnEntity1, { validation: { presence: true } }),
+                fieldEntities2: field([AnEntity1], { validation: { presence: true } })
+            })
+            const AnEntity3 = entity('A entity', {
+                id3: id(Number, { validation: { presence: true } }),
+                field3: field(String, { validation: { presence: true } }),
+                fieldEntity3: field(AnEntity2, { validation: { presence: true } })
+            })
+            const instance = AnEntity3.fromJSON({
+                id3: '3',
+                field3: undefined,
+                fieldEntity3: {
+                    id21: '2',
+                    id22: 2,
+                    field2: 2,
+                    fieldEntity2: { id1: undefined, field1: 2 },
+                    fieldEntities2: [
+                        { id1: '1', field1: 'value1' },
+                        { id1: undefined, field1: undefined }]
+                }
+            })
+
+            //when
+            instance.validate({ references: { exceptIDs: true } })
+
+            //then
+            assert.deepStrictEqual(instance.errors, {
+                id3: [{ wrongType: 'Number' }],
+                field3: [{ cantBeEmpty: true }],
+                fieldEntity3: {
+                    field2: [{ wrongType: 'String' }],
+                    fieldEntity2: { field1: [{ wrongType: 'String' }] },
+                    fieldEntities2: [null, { field1: [{ cantBeEmpty: true }] }]
+                }
+            })
+        })
+
+        it('should validate errors with exceptIDs and on references with option onlyIDs', () => {
+            //given
+            const AnEntity1 = entity('A entity', {
+                id1: id(Number, { validation: { presence: true } }),
+                field1: field(String, { validation: { presence: true } })
+            })
+            const AnEntity2 = entity('A entity', {
+                id21: id(Number, { validation: { presence: true } }),
+                id22: id(String, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                fieldEntity2: field(AnEntity1, { validation: { presence: true } }),
+                fieldEntities2: field([AnEntity1], { validation: { presence: true } })
+            })
+            const AnEntity3 = entity('A entity', {
+                id3: id(Number, { validation: { presence: true } }),
+                field3: field(String, { validation: { presence: true } }),
+                fieldEntity3: field(AnEntity2, { validation: { presence: true } })
+            })
+            const instance = AnEntity3.fromJSON({
+                id3: '3',
+                field3: undefined,
+                fieldEntity3: {
+                    id21: '2',
+                    id22: 2,
+                    field2: 2,
+                    fieldEntity2: { id1: undefined, field1: 2 },
+                    fieldEntities2: [
+                        { id1: '1', field1: 'value1' },
+                        { id1: undefined, field1: undefined }]
+                }
+            })
+
+            //when
+            instance.validate({ exceptIDs: true, references: { onlyIDs: true } })
+
+            //then
+            assert.deepStrictEqual(instance.errors, {
+                field3: [{ cantBeEmpty: true }],
+                fieldEntity3: {
+                    id21: [{ wrongType: 'Number' }],
+                    id22: [{ wrongType: 'String' }],
+                }
+            })
         })
     })
 })

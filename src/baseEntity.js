@@ -10,7 +10,7 @@ class BaseEntity {
     }
   }
 
-  validate(options) {
+  validate(options = {}) {
     const errors = {}
     for (const [name, definition] of Object.entries(this.meta.schema)) {
       const value = this[name]
@@ -32,16 +32,18 @@ class BaseEntity {
         continue
       }
 
+      const newOptions = { ...options.references, references: { ...options.references } }
+
       // for entity types (deep validation)
       if (value instanceof BaseEntity) {
-        if (value.isValid()) continue
+        if (value.isValid(newOptions)) continue
         errors[name] = value.errors
       }
 
       // for array of entity types
       if (Array.isArray(value) && definition.type[0] && definition.type[0].prototype instanceof BaseEntity) {
         const errorList = value.map((item) =>
-          !item.isValid() ? item.errors : null
+          !item.isValid(newOptions) ? item.errors : null
         )
         const errorFound = errorList.filter((error) => !!error)
 
