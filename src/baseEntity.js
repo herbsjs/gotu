@@ -138,7 +138,7 @@ class BaseEntity {
         return Object.values(schema)
       },
       get ids() {
-        return Object.values(schema).filter(({ options }) => options.isId)
+        return Object.values(schema).filter(({ options }) => options?.isId)
       }
     }
   }
