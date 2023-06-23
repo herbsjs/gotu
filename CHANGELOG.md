@@ -1,3 +1,10 @@
+# [1.3.0-beta.3](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.2...v1.3.0-beta.3) (2023-06-23)
+
+
+### Bug Fixes
+
+* **base entity:** fix bug on schema ids ([06b6f9b](https://github.com/herbsjs/gotu/commit/06b6f9b9069c26bc183eb89e392aed2e3f96ed6a))
+
 # [1.3.0-beta.2](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2023-05-07)
 
 
