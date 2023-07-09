@@ -34,8 +34,9 @@ const entity = (name, body) => {
 
 entity.isEntity = (instance) => {
     return (
-        instance instanceof BaseEntity || 
-        instance.prototype instanceof BaseEntity)
+        instance instanceof BaseEntity ||
+        instance.prototype instanceof BaseEntity ||
+        instance.toString()?.includes('extends BaseEntity'))
 }
 
 module.exports = { entity }

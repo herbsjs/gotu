@@ -29,4 +29,22 @@ describe('A entity', () => {
         assert.ok(!entity.isEntity(String))
         assert.ok(!entity.isEntity(Array))
     })
+
+    it('should validate if a class instance or an object instance is a Gotu nested entity ', () => {
+        //given
+        const ChildEntity = entity('A second entity', {
+            field1: field(Number)
+        })
+
+        const AnEntity = entity('A entity', {
+            field1: field(Number),
+            childEntity: field(ChildEntity)
+        })
+
+        const instance1 = new AnEntity()
+        instance1.field1 = 1
+        instance1.childEntity = new ChildEntity()
+        //then
+        assert.ok(entity.isEntity(instance1.childEntity))
+    })
 })
