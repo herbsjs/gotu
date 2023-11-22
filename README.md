@@ -150,7 +150,7 @@ plan.plan.myId = '123'
 plan.plan.monthlyCost = 500
 plan.isValid({exceptIDs: true}) // true
 
-plan.isValid() // true
+plan.isValid() // false
 plan.errors // { }
 
 ```
@@ -168,8 +168,8 @@ const Plan =
     })
 
 const plan = new Plan()
-plan.plan.myId = '123'
-plan.plan.monthlyCost = 500
+plan.plan.myId = 123
+plan.plan.monthlyCost = '500'
 plan.isValid({onlyIDs: true}) // true
 
 plan.isValid() // false
@@ -177,6 +177,52 @@ plan.errors // { myId: [ wrongType: 'Number' ] }
 
 ```
 
+You can validate references too. Gotu will automatically validate subentities, however with the reference key, you can select whether you want to validate only the Ids or except the Ids
+
+```javascript
+
+            const AnEntity1 = entity('A entity', {
+                id1: id(Number, { validation: { presence: true } }),
+                field1: field(String, { validation: { presence: true } })
+            })
+            const AnEntity2 = entity('A entity', {
+                id21: id(Number, { validation: { presence: true } }),
+                id22: id(String, { validation: { presence: true } }),
+                field2: field(String, { validation: { presence: true } }),
+                fieldEntity2: field(AnEntity1, { validation: { presence: true } }),
+                fieldEntities2: field([AnEntity1], { validation: { presence: true } })
+            })
+            const AnEntity3 = entity('A entity', {
+                id3: id(Number, { validation: { presence: true } }),
+                field3: field(String, { validation: { presence: true } }),
+                fieldEntity3: field(AnEntity2, { validation: { presence: true } })
+            })
+            const instance = AnEntity3.fromJSON({
+                id3: '3',
+                field3: undefined,
+                fieldEntity3: {
+                    id21: '2',
+                    id22: 2,
+                    field2: 'value2',
+                    fieldEntity2: { id1: undefined, field1: 'value1' },
+                    fieldEntities2: [
+                        { id1: '1', field1: undefined },
+                        { id1: undefined, field1: 'value1' }]
+                }
+            })
+
+
+            instance.validate({ references: { onlyIDs: true } })
+
+            instance.errors /* 
+               { id3: [{ wrongType: 'Number' }],
+                 field3: [{ cantBeEmpty: true }],
+                    fieldEntity3: {
+                       id21: [{ wrongType: 'Number' }],
+                      id22: [{ wrongType: 'String' }],
+                  }})}*/
+
+```
 
 ### Custom Validation
 
