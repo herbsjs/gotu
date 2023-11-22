@@ -1,3 +1,19 @@
+# [1.3.0](https://github.com/herbsjs/gotu/compare/v1.2.0...v1.3.0) (2023-11-22)
+
+
+### Bug Fixes
+
+* 🐛 update eslint ([903f7da](https://github.com/herbsjs/gotu/commit/903f7daa6722d7166e49f99484702af90861e609))
+* 🐛 update suma ([de458fd](https://github.com/herbsjs/gotu/commit/de458fdb4c73170469e1e5295f10789d27bff59e))
+* **base entity:** fix bug on schema ids ([06b6f9b](https://github.com/herbsjs/gotu/commit/06b6f9b9069c26bc183eb89e392aed2e3f96ed6a))
+
+
+### Features
+
+* **entity:** try Parse - a method to cast the data loaded to a entity to the correct type ([2efb440](https://github.com/herbsjs/gotu/commit/2efb44052136dd1ee6e73ef3453ccabdbf60bcd3)), closes [#29](https://github.com/herbsjs/gotu/issues/29)
+* **validation:** onlyIDs - validate only ID fields ([cc08622](https://github.com/herbsjs/gotu/commit/cc08622af5be87e0e643346d6e9b212352663979))
+* **validation:** reference Validation - Validation option only for reference/entity types ([39faa00](https://github.com/herbsjs/gotu/commit/39faa00fceb1371dfd63cc54ce9df14304bc4bfa))
+
 # [1.3.0-beta.5](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.4...v1.3.0-beta.5) (2023-11-22)
 
 
