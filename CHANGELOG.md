@@ -1,3 +1,10 @@
+# [1.3.0-beta.4](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.3...v1.3.0-beta.4) (2023-11-22)
+
+
+### Bug Fixes
+
+* 🐛 update suma ([de458fd](https://github.com/herbsjs/gotu/commit/de458fdb4c73170469e1e5295f10789d27bff59e))
+
 # [1.3.0-beta.3](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.2...v1.3.0-beta.3) (2023-06-23)
 
 
