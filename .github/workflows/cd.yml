@@ -2,16 +2,16 @@ name: CD Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, next, beta, alpha ]
 
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v2

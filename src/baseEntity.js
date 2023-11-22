@@ -1,5 +1,4 @@
-const { validate: validateValue, checker } = require("@herbsjs/suma")
-
+const { validate: validateValue, checker, tryParse: tryParser } = require("@herbsjs/suma")
 class BaseEntity {
 
   constructor() {
@@ -11,7 +10,7 @@ class BaseEntity {
     }
   }
 
-  validate(options) {
+  validate(options = {}) {
     const errors = {}
     for (const [name, definition] of Object.entries(this.meta.schema)) {
       const value = this[name]
@@ -19,26 +18,32 @@ class BaseEntity {
       // ignore functions
       if (checker.isFunction(value)) continue
 
-      if (options && options.exceptIDs && definition.options.isId) continue
+      // onlyIDs
+      if (options?.onlyIDs && !definition.options.isId) continue
+
+      // exceptIDs
+      if (options?.exceptIDs && definition.options.isId) continue
 
       // types validation
       const validation = definition.validation
       const retErrors = validateValue(value, validation)
-      if (retErrors.errors && retErrors.errors.length > 0) {
+      if (retErrors?.errors?.length > 0) {
         errors[name] = retErrors.errors
         continue
       }
 
+      const newOptions = { ...options.references, references: { ...options.references } }
+
       // for entity types (deep validation)
       if (value instanceof BaseEntity) {
-        if (value.isValid()) continue
+        if (value.isValid(newOptions)) continue
         errors[name] = value.errors
       }
 
       // for array of entity types
       if (Array.isArray(value) && definition.type[0] && definition.type[0].prototype instanceof BaseEntity) {
         const errorList = value.map((item) =>
-          !item.isValid() ? item.errors : null
+          !item.isValid(newOptions) ? item.errors : null
         )
         const errorFound = errorList.filter((error) => !!error)
 
@@ -131,10 +136,32 @@ class BaseEntity {
       ...schema,
       get fields() {
         return Object.values(schema)
-      }, 
+      },
       get ids() {
-        return Object.values(schema).filter(({ options }) => options.isId)
+        return Object.values(schema).filter(({ options }) => options?.isId)
       }
+    }
+  }
+
+  tryParse() {
+    for (const [name, definition] of Object.entries(this.meta.schema)) {
+      const value = this[name]
+      const type = definition.type
+
+      // for entity types (deep validation)
+      if (value instanceof BaseEntity) {
+        value.tryParse()
+        continue
+      }
+
+      // for array of entity types
+      if (Array.isArray(value) && definition.type[0] && definition.type[0].prototype instanceof BaseEntity) {
+        value.map((item) => item.tryParse())
+        continue
+      }
+
+      // try to parse the value to the correct type
+      this[name] = tryParser(value, type)
     }
   }
 }

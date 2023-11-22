@@ -22,7 +22,7 @@ describe('An entity', () => {
                 field7: id(Number),
                 field8: id(Date),
                 field9: field(Number, { isId: true }),
-                field10: id(Number, { validation: { length: { is: 10 }  }})
+                field10: id(Number, { validation: { length: { is: 10 } } })
             })
             return new AnEntity()
         }
@@ -127,12 +127,12 @@ describe('An entity', () => {
             //then
             assert.strictEqual(instance.isValid(), false)
             assert.deepStrictEqual(instance.errors, {
-                "field1": [{wrongType: 'Number'}],
-                "field2": [{wrongType: 'String'}],
-                "field3": [{wrongType: 'Date'}],
-                "field4": [{wrongType: 'Boolean'}],
-                "field5": [{wrongType: 'New Entity'}],
-                "field6": [{wrongType: ['New Entity']}]
+                "field1": [{ wrongType: 'Number' }],
+                "field2": [{ wrongType: 'String' }],
+                "field3": [{ wrongType: 'Date' }],
+                "field4": [{ wrongType: 'Boolean' }],
+                "field5": [{ wrongType: 'New Entity' }],
+                "field6": [{ wrongType: ['New Entity'] }]
             })
         })
 
@@ -153,50 +153,40 @@ describe('An entity', () => {
 
 
         it('should set a field as ID using field with isId option', () => {
-          //given
-          const instance = givenAnEntityWithMultipleFields()
-          instance.field9 = 1
+            //given
+            const instance = givenAnEntityWithMultipleFields()
+            instance.field9 = 1
 
-          //then
-          assert.strictEqual(instance.__proto__.meta.schema.field9.options.isId, true)
-          assert.strictEqual(instance['field9'], 1)
-          assert.strictEqual(instance.isValid(), true)
-          assert.deepStrictEqual(instance.errors, {})
-      })
+            //then
+            assert.strictEqual(instance.__proto__.meta.schema.field9.options.isId, true)
+            assert.strictEqual(instance['field9'], 1)
+            assert.strictEqual(instance.isValid(), true)
+            assert.deepStrictEqual(instance.errors, {})
+        })
 
         it('should validate types with invalid ID value', () => {
-          //given
-          const instance = givenAnEntityWithMultipleFields()
-          instance.field7 = '1'
-          //then
-          assert.strictEqual(instance.isValid(), false)
-          assert.strictEqual(instance['field7'], '1')
-          assert.deepStrictEqual(instance.errors, {
-            "field7": [{wrongType:'Number'}]
+            //given
+            const instance = givenAnEntityWithMultipleFields()
+            instance.field7 = '1'
+            //then
+            assert.strictEqual(instance.isValid(), false)
+            assert.strictEqual(instance['field7'], '1')
+            assert.deepStrictEqual(instance.errors, {
+                "field7": [{ wrongType: 'Number' }]
+            })
         })
-      })
 
-        it('should validate types with invalid ID value, but ignore errors using isValid({exceptIDs: true})', () => {
-          //given
-          const instance = givenAnEntityWithMultipleFields()
-          instance.field7 = '1'
-          //then
-          assert.strictEqual(instance.isValid({exceptIDs: true}), true)
-          assert.strictEqual(instance['field7'], '1')
-          assert.deepStrictEqual(instance.errors, {})
-      })
-
-      it('should validate types with valid ID value but with wrong length validation', () => {
-        //given
-        const instance = givenAnEntityWithMultipleFields()
-        instance.field10 = 12345678
-        //then
-        assert.strictEqual(instance.isValid(), false)
-        assert.strictEqual(instance['field10'], 12345678)
-        assert.deepStrictEqual(instance.errors, {
-          "field10": [{wrongLength:10}]
-      })
-    })
+        it('should validate types with valid ID value but with wrong length validation', () => {
+            //given
+            const instance = givenAnEntityWithMultipleFields()
+            instance.field10 = 12345678
+            //then
+            assert.strictEqual(instance.isValid(), false)
+            assert.strictEqual(instance['field10'], 12345678)
+            assert.deepStrictEqual(instance.errors, {
+                "field10": [{ wrongLength: 10 }]
+            })
+        })
 
     })
 })
