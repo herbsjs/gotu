@@ -1,3 +1,10 @@
+# [1.3.0-beta.5](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.4...v1.3.0-beta.5) (2023-11-22)
+
+
+### Bug Fixes
+
+* 🐛 update eslint ([903f7da](https://github.com/herbsjs/gotu/commit/903f7daa6722d7166e49f99484702af90861e609))
+
 # [1.3.0-beta.4](https://github.com/herbsjs/gotu/compare/v1.3.0-beta.3...v1.3.0-beta.4) (2023-11-22)
 
 
