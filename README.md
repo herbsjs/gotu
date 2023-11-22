@@ -150,6 +150,28 @@ plan.plan.myId = '123'
 plan.plan.monthlyCost = 500
 plan.isValid({exceptIDs: true}) // true
 
+plan.isValid() // true
+plan.errors // { }
+
+```
+
+
+You can validate only id field validation using `isValid({onlyIDs: true})`. Example: Imagine that your entity you want to validate only the id because you should insert first the id.
+
+```javascript
+
+const Plan =
+    entity('Plan', {
+        ...
+        myId: id(Number),
+        monthlyCost: field(Number),
+    })
+
+const plan = new Plan()
+plan.plan.myId = '123'
+plan.plan.monthlyCost = 500
+plan.isValid({onlyIDs: true}) // true
+
 plan.isValid() // false
 plan.errors // { myId: [ wrongType: 'Number' ] }
 
