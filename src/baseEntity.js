@@ -4,9 +4,36 @@ class BaseEntity {
   constructor() {
     for (const [name, definition] of Object.entries(this.meta.schema)) {
       // ignore functions
-      if (checker.isFunction(definition)) continue
+      if (checker.isFunction(definition)) continue;
+  
+      Object.defineProperty(this, name, {
+        set: function(value) {
+          this[`_${name}`] = value;
+          this.updateFunctionProperties();
+        },
+        get: function() {
+          return this[`_${name}`];
+        },
+      });
 
-      this[name] = definition.defaultValue
+      this[name] = definition.defaultValue;
+    }
+  }
+
+  updateFunctionProperties() {
+    for (const [field, definition] of Object.entries(this.meta.schema)) {
+      if (definition.options && checker.isFunction(definition.options.value)) {
+        const functionValue = definition.options.value;
+
+        delete this[field];
+        Object.defineProperty(this, field, {
+          configurable: true,
+          get: () => functionValue(this),
+          set: () => {
+            throw new Error('Cannot set a property of function type');
+          },
+        });
+      }
     }
   }
 
